@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <h1 class="BigTopic TexAlCenter titre">GESTION DES LIMITES SUR TRANSACTIONS PAR PROFILS CLIENTS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+
+                    <div class="ContainerIndent">
+                        
+                        <p:fieldset>
+                            <div class="layout-portlets-box">
+                                <div class="Container100">
+                                    <div class="ContainerIndent TexAlCenter">
+                                        <h1 class="BigTopic TexAlCenter titre">PARAMETRAGE </h1>
+                                        <h:form id="form2">
+                                            <p:growl id="message" showDetail="true" sticky="true"/>
+                                            <p:fieldset toggleable="true" legend="GESTION DES LIMITES " rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"> 
+                                                <p:panelGrid id="panelGrid2" columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent">
+                                                    <p:outputLabel value="TYPE DE TRANSACTION" for="serviceField" styleClass="Fleft"/>
+                                                    <p:selectOneMenu id="serviceField" value="#{limitesTransactionsManager.typeTransaction}" title="SERVICE" required="Fleft" styleClass="Fleft " style="min-width: 169px;width: 169px;">
+                                                        <f:selectItem itemLabel="WALLET TO BANK" itemValue="WALLET TO BANK"/>
+                                                        <f:selectItem itemLabel="BANK TO WALLET" itemValue="BANK TO WALLET"/>
+                                                    </p:selectOneMenu>
+                                                    <p:outputLabel value="PROFIL CLIENTS :" for="profField" styleClass="Fleft" />
+                                                    <p:selectOneMenu id="profField"  value="#{limitesTransactionsManager.leProfilClient}" title="PROFIL" required="true" styleClass="Fright"  style="min-width: 169px;width: 169px;" >
+                                                        <f:selectItems value="#{limitesTransactionsManager.listProfils}"  var="pr" itemLabel="#{pr.designationProfils}" itemValue="#{pr.designationProfils}" itemLabelEscaped="true" />
+                                                    </p:selectOneMenu>
+                                                    <p:outputLabel value=" PARAMETRE :" for="limitesField" styleClass="Fleft" />
+                                                    <p:selectOneMenu id="limitesField" value="#{limitesTransactionsManager.leParametre}" title="LIMITES" required="true" styleClass="Fleft"  style="min-width: 190px;width: 220px;" >
+                                                        <f:selectItem itemLabel="Nombre d'operation mensuel " itemValue="Nombre d'operation mensuel"/>
+                                                        <f:selectItem itemLabel="Nombre d'operation Journalier" itemValue="Nombre d'operation Journalier"/>
+                                                        <f:selectItem itemLabel="Transaction Limite journaliere" itemValue="Transaction Limite journaliere"/>
+                                                        <f:selectItem itemLabel="plafonnement mensuel" itemValue="plafonnement mensuel"/>
+                                                    </p:selectOneMenu>
+                                                    
+                                                    <p:outputLabel value="VALEUR :"  styleClass="Fleft" />
+                                                    <p:spinner id="valeur" value="#{limitesTransactionsManager.newPamValue}" title="valeur" styleClass="Fright" required="true" min="0" />
+                                                </p:panelGrid>
+                                            </p:fieldset>
+                                            <div class="EmptyBox30"></div>
+                                            <p:commandButton value="VALIDER" actionListener="#{limitesTransactionsManager.transactionsParamsUpdate()}" onclick="setTimeout('location.reload();', 700);" type="submit" icon="fa fa-plus"  update="tarifDT  message " rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"/>
+                                            <p:commandButton value="ANNULER" actionListener="#{limitesTransactionsManager.resetParamUpdate()}" styleClass="RedButton"    update="form2 message "  process="@this" rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"  />
+                                        
+                                        <div class="EmptyBox30"></div>
+                                        
+                                            <p:dataTable value="#{limitesTransactionsManager.listeLimites}" var="item" 
+                                                         id="tarifDT" widgetVar="dt2"     selectionMode="single" resizableColumns="true" rowKey="#{item.id}" 
+                                                         emptyMessage="Aucune donnée ne correspond à votre recherche"   
+                                                         rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"   
+                                                         paginator="true" rowsPerPageTemplate="5,10,15">
+                                               
+                                                <f:facet name="header">
+                                                    <p:outputLabel value="LIMITES ACTUELLES" />
+                                                </f:facet>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <p:outputLabel value="PARAMETRES"/>
+                                                    </f:facet>
+                                                    <p:outputLabel value="#{item.typelimite}"/>
+                                                </p:column>
+
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <p:outputLabel value="TYPES D'OPERATIONS"/>
+                                                    </f:facet>
+                                                    <p:outputLabel value="#{item.typeTransaction}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <p:outputLabel value="PROFILS CLIENTS"/>
+                                                    </f:facet>
+                                                    <p:outputLabel value="#{item.profilclient}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <p:outputLabel value="VALEURS"/>
+                                                    </f:facet>
+                                                    <p:outputLabel value="#{item.valeur}"/>
+                                                </p:column>
+                                            </p:dataTable>
+
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:fieldset>
+
+                        <div class="EmptyBox30"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

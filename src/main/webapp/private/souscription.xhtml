@@ -1,0 +1,169 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function controlSaisie(evt) {
+                //var event=window.event || evt;
+                var keyCode = evt.charCode;
+                //<![CDATA[
+                if ((keyCode >= 48 && keyCode <= 57) || (keyCode == 0)) {
+                    return true;
+                } else {
+                    return false;
+                }
+                //]]>
+            }
+        </script>
+
+    </ui:define>
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter">SOUSCRIPTION ORANGE</h1>
+        <div class="layout-portlets-box">
+
+            <div class="Container100">
+
+                <div class="ContainerIndent TexAlCenter">
+                    <h1 class="BigTopic TexAlCenter titre">Informations pour la recherche </h1>
+                    <h:form id="searchForm">
+                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+                        <div class="Container50 Responsive ">
+
+                            <div class="ContainerIndent ">
+                                <p:fieldset legend="OPERATEUR" style=" ">
+                                    <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter ">
+
+                                        <p:outputLabel value="CLE D'ACTIVATION" for="keyField" styleClass="Fleft" />
+                                        <p:inputText styleClass="Wid90 Fleft" placeholder="CLE D'ACTIVATION" id="keyField" value="#{souscription.activationKey}"
+                                                     required="true">
+                                            <!--                                            <f:convertNumber integerOnly="true"/>-->
+
+                                        </p:inputText>
+                                        <p:outputLabel value="TELEPHONE" for="msisdnField" styleClass="Fleft" />
+                                        <p:inputText styleClass="Wid90 Fleft" id="msisdnField" value="#{souscription.msisdn}" 
+                                                     onkeypress=" return controlSaisie(event)" required="true">
+                                            <!--                                           <f:convertNumber integerOnly="true"/>-->
+
+                                        </p:inputText>
+
+                                    </p:panelGrid>
+                                </p:fieldset>
+                            </div>
+                        </div>
+                        <div class="Container50 Responsive ">
+                            <div class="ContainerIndent ">
+                                <p:fieldset legend="BANQUE" style=" ">
+                                    <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+                                        <p:outputLabel value="RACINE" for="racineField" styleClass="Fleft" />
+                                        <p:inputText styleClass="Wid90 Fleft" id="racineField" value="#{souscription.customerRoot}" onkeypress=" return controlSaisie(event)">
+                                        </p:inputText>
+                                        <!--                                        <p:outputLabel value="NUMERO DE COMPTE" for="cpteField" styleClass="Fleft" />
+                                                                                <p:inputText styleClass="Wid90 Fleft" placeholder="000000000" id="cpteField" value=""/>-->
+                                    </p:panelGrid>
+                                </p:fieldset>
+                            </div>
+                        </div>
+                        <div class="EmptyBox10" ></div>
+                        <p:commandButton validateClient="true" styleClass="commandbutton" value="Rechercher" icon="fa fa-search" actionListener="#{souscription.checkKYC()}" process="searchForm"    update="resultsForm growl" type="submit" />
+                    </h:form >
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+
+            <div class="Container100">
+
+                <div class="ContainerIndent TexAlCenter">
+                    <h1 class="BigTopic TexAlCenter">Résultats des recherches</h1>
+                    <h:form id="resultsForm">
+                        <div class="Container50 Responsive">
+                            <div class="ContainerIndent">
+                                <p:fieldset legend="OPERATEUR" style="height: 450px ;">
+                                    <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;margin: auto;" styleClass="FormContent caracter">
+                                        <p:outputLabel value="MSISDN" for="msisdnResultField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="msisdnResultField" value="#{souscription.abOm.msisdn}" />
+                                        <p:outputLabel value="NOM" for="nameOperatorField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="nameOperatorField" value="#{souscription.abOm.nom}"/>
+                                        <p:outputLabel value="PRENOMS" for="prenomOperatorField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="prenomOperatorField" value="#{souscription.abOm.prenoms}" />
+                                        <p:outputLabel value="DATE DE NAISSANCE" for="birthDayOperatorField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="birthDayOperatorField" value="#{souscription.abOm.dateNaissance}"/>
+                                        <p:outputLabel value="CNI" for="cniOperatorResultField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="cniOperatorResultField" value="#{souscription.abOm.cni}" />
+                                        <p:outputLabel value="CODE RETOUR" for="codeRetourField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="codeRetourField" value="#{souscription.abOm.codeRetour}" />
+                                        <p:outputLabel value="LIBELLE CODE RETOUR" for="libellecodeRetourField" styleClass="Fleft"/>
+                                        <p:inputText styleClass="Wid90 Fleft" readonly="true" id="libellecodeRetourField" value="#{souscription.libelleCodeRetour}" />
+                                        <p:outputLabel value="CODE SERVICE" for="serviceCodeField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="serviceCodeField" style="min-width:266px; width:266px;" styleClass=" Fleft Container100" value="#{souscription.newAbonnement.service}" required="true" requiredMessage="Choisissez un code de service" >
+                                            <f:selectItem itemLabel="Selectionnez un service" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="CASH IN" itemValue="1"></f:selectItem>
+                                            <f:selectItem itemLabel="CASH OUT" itemValue="2"></f:selectItem>
+                                            <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="3"></f:selectItem>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="DEVISE" for="deviseBankRResultField"  styleClass="Fleft"/>
+                                        <p:inputText  styleClass="Wid90 Fleft"  id="deviseBankRResultField" value="#{souscription.newAbonnement.devise}" readonly="true" />
+                                    </p:panelGrid>
+                                </p:fieldset>
+
+                            </div>
+                        </div>
+                        <div class="Container50 Responsive">
+                            <div class="ContainerIndent">
+                                <p:fieldset legend="BANQUE" style="height: 450px ;">
+                                    <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+                                        <p:outputLabel value="LISTE DES NUMEROS" for="msisdnListField" styleClass="Fleft"/>
+                                        <p:selectOneMenu  styleClass="Wid90 Fleft Responsive"  id="msisdnListField" style="min-width:266px; width:266px;"  value="#{souscription.newAbonnement.numerotelephone}" required="true" requiredMessage="Choisissez un numéro" >
+                                            <f:selectItem itemLabel="Selectionnez un numéro" itemValue=""></f:selectItem>
+                                            <f:selectItems itemLabel="#{tel}" value="#{souscription.listPhone}" var="tel" itemValue="#{tel}" itemLabelEscaped="true" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="LISTE DES COMPTES CANDIDATS" for="accountList" styleClass="Fleft Fs14"/>
+                                        <p:selectOneMenu styleClass="Wid90 Fleft Responsive" id="accountList" value="#{souscription.newAbonnement.compte}"    style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un compte"  >
+                                            <f:selectItem itemLabel="Selectionnez un compte" itemValue=""></f:selectItem>
+                                            <f:selectItems itemLabel="#{cpte.nuemro}" value="#{souscription.listCpte}" var="cpte" itemValue="#{cpte.nuemro}" itemLabelEscaped="true"  />
+                                            <p:ajax event="change" listener="#{souscription.updateAccountLabel}" update="labelField"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="LIBELLE DU COMPTE" for="labelField" styleClass="Fleft"/> 
+                                        <p:inputText required="true" styleClass="Wid90 Fleft"   id="labelField" value="#{souscription.newAbonnement.label}"/> 
+                                        <p:outputLabel value="NOM" for="nameBankField" styleClass="Fleft"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true"   id="nameBankField" value="#{souscription.newAbonnement.nom}"/>
+                                        <p:outputLabel value="PRENOMS" for="prenomBankField" styleClass="Fleft"/>
+                                        <p:inputText  styleClass="Wid90 Fleft" readonly="true"  id="prenomBankField" value="#{souscription.newAbonnement.prenoms}" />
+                                        <p:outputLabel value="DATE DE NAISSANCE" for="birthDayBankField" styleClass="Fleft Fleft" />
+                                        <p:inputText styleClass="Wid90 Fleft" id="birthDayBankField" value="#{souscription.newAbonnement.datenaissance}" readonly="true" />
+                                        <p:outputLabel value="CNI" for="cniBankRResultField" styleClass="Fleft"/>
+                                        <p:inputText  styleClass="Wid90 Fleft"  id="cniBankRResultField" value="#{souscription.newAbonnement.cni}" readonly="true"  />
+                                        <p:outputLabel value="PROFIL CLIENT" for="profilField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="profilField" value="#{souscription.newAbonnement.profil}" styleClass="Wid90 Fleft Responsive"   style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un profil"   converter="#{souscription.profilConverter}">
+<!--                                            <f:selectItem itemLabel="Selectionnez un profil" itemValue="" noSelectionOption="true"></f:selectItem>-->
+                                            <f:selectItems value="#{souscription.listProfils}" var="pr" itemLabel="#{pr.designationProfils}" itemValue="#{pr}" itemLabelEscaped="true"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="TYPE DE COMPTE" for="typeField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="typeField" value="#{souscription.newAbonnement.typecompte}" styleClass="Wid90 Fleft Responsive"   style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un type">
+                                            <f:selectItem itemLabel="Selectionnez un type" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="ENTREPRISE" itemValue="ENTREPRISE"></f:selectItem>
+                                            <f:selectItem itemLabel="PARTICULIER" itemValue="PARTICULIER"></f:selectItem>
+                                        </p:selectOneMenu>
+                                    </p:panelGrid>
+                                </p:fieldset>
+                            </div>
+                        </div>
+                        <div class="EmptyBox10" ></div>
+                        <p:commandButton value="Valider"   actionListener="#{souscription.enregistrerAbonnement()}" id="validerBtn" rendered="#{parametrageManager.supvalidation}"  type="submit" icon="fa fa-save" styleClass="commandbutton" update="resultsForm searchForm " />
+                        <p:commandButton value="Valider"   actionListener="#{souscription.enregistrerAbonnement()}" id="validerBtn2"    ajax="false" rendered="#{!parametrageManager.supvalidation}" onclick="setTimeout('location.reload();', 10000);"                                         type="submit" icon="fa fa-save" styleClass="commandbutton" update="resultsForm searchForm " />
+                        <p:blockUI block="resultsForm" trigger="validerBtn" animate="true" rendered="#{parametrageManager.supvalidation}" />
+                        <p:blockUI block="resultsForm" trigger="validerBtn2" animate="true" rendered="#{!parametrageManager.supvalidation}" />
+                        <p:blockUI block="searchForm" trigger="validerBtn" animate="true" rendered="#{parametrageManager.supvalidation}" />
+                        <p:blockUI block="searchForm" trigger="validerBtn2" animate="true" rendered="#{!parametrageManager.supvalidation}" />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

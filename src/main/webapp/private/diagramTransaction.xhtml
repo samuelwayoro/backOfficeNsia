@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+     
+    <h:head>
+        <title>Cars</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+     
+    <h:body>
+        <h:form>
+             <div class="ContainerIndent TexAlCenter">
+                                            <h1 class="BigTopic TexAlCenter">Recapitulatif </h1>
+                                            <div class="Container50 Responsive ">
+                                                <p:fieldset legend="BANQUE">
+                                                    <p:chart type="pie" model="{reconciliationAbonnements.modelrecapitulatifEnNombreParTypeAbonnement}" />
+                                                </p:fieldset>
+                                            </div>
+                                            <div class="Container50 Responsive ">
+                                                <p:fieldset legend="OPERATEUR">
+                                                    <p:chart type="pie" model="{reconciliationAbonnements.modelrecapitulatifEnNombreParTypeAbonnementOrange}" />
+                                                </p:fieldset>
+                                            </div>
+                                        </div>-->
+        </h:form>
+    </h:body>
+     
+</html>

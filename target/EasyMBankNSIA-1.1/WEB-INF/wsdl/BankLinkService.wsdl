@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="AccLinkService" targetNamespace="http://receiveWebService.mmoney.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://receiveWebService.mmoney.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://receiveWebService.mmoney.com/" xmlns:tns="http://receiveWebService.mmoney.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="userDetails" type="tns:userDetails"/>
+	<xs:element name="userDetailsResponse" type="tns:userDetailsResponse"/>
+  <xs:element name="bankAccountLink" type="tns:bankAccountLink"/>
+  <xs:element name="bankAccountLinkResponse" type="tns:bankAccountLinkResponse"/>
+  <xs:element name="bankAccountDLink" type="tns:bankAccountDLink"/>
+  <xs:element name="bankAccountDLinkResponse" type="tns:bankAccountDLinkResponse"/>
+  <xs:complexType name="userDetails">
+    <xs:sequence>      
+      <xs:element minOccurs="0" name="keyOperator" type="xs:string"/>
+      <xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="userDetailsResponse">
+    <xs:sequence> 
+      <xs:element minOccurs="0" name="responseCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="KYCrspFirstname" type="xs:string"/>
+	  <xs:element minOccurs="0" name="KYCrspLastname" type="xs:string"/>
+	  <xs:element minOccurs="0" name="KYCrspIdRefNo" type="xs:string"/>
+	  <xs:element minOccurs="0" name="KYCrspDOB" type="xs:string"/>
+	  <xs:element minOccurs="0" name="KYCrspType " type="xs:string"/>	  
+	  <xs:element minOccurs="0" name="mobileNumber" type="xs:string"/>	      
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bankAccountLink">
+    <xs:sequence>  
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+	  <xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+	  <xs:element minOccurs="0" name="bankName" type="xs:string"/>
+      <xs:element minOccurs="0" name="accountAlias" type="xs:string"/>
+	  <xs:element minOccurs="0" name="cifId" type="xs:string"/>
+      <xs:element minOccurs="0" name="userRole" type="xs:string"/>
+	  <xs:element minOccurs="0" name="otp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bankAccountLinkResponse">
+    <xs:sequence>      
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="status" type="xs:string"/>
+      <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bankAccountDLink">
+    <xs:sequence>  
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+	  <xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+	  <xs:element minOccurs="0" name="bankName" type="xs:string"/>
+      <xs:element minOccurs="0" name="accountAlias" type="xs:string"/>
+	  <xs:element minOccurs="0" name="cifId" type="xs:string"/>
+      <xs:element minOccurs="0" name="userRole" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bankAccountDLinkResponse">
+    <xs:sequence>      
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="status" type="xs:string"/>
+      <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MuleException" type="tns:MuleException"/>
+  <xs:complexType name="MuleException">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+   <wsdl:message name="userDetails">
+    <wsdl:part element="tns:userDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="userDetailsResponse">
+    <wsdl:part element="tns:userDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bankAccountLink">
+    <wsdl:part element="tns:bankAccountLink" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bankAccountLinkResponse">
+    <wsdl:part element="tns:bankAccountLinkResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bankAccountDLink">
+    <wsdl:part element="tns:bankAccountDLink" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bankAccountDLinkResponse">
+    <wsdl:part element="tns:bankAccountDLinkResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MuleException">
+    <wsdl:part element="tns:MuleException" name="MuleException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AccLink">    
+   <wsdl:operation name="userDetails">
+      <wsdl:input message="tns:userDetails" name="userDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:userDetailsResponse" name="userDetailsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MuleException" name="MuleException">
+    </wsdl:fault>
+    </wsdl:operation>
+	<wsdl:operation name="bankAccountLink">
+      <wsdl:input message="tns:bankAccountLink" name="bankAccountLink">
+    </wsdl:input>
+      <wsdl:output message="tns:bankAccountLinkResponse" name="bankAccountLinkResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MuleException" name="MuleException">
+    </wsdl:fault>
+    </wsdl:operation>
+	<wsdl:operation name="bankAccountDLink">
+      <wsdl:input message="tns:bankAccountDLink" name="bankAccountDLink">
+    </wsdl:input>
+      <wsdl:output message="tns:bankAccountDLinkResponse" name="bankAccountDLinkResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MuleException" name="MuleException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccLinkServiceSoapBinding" type="tns:AccLink">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<wsdl:operation name="userDetails">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="userDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="userDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MuleException">
+        <soap:fault name="MuleException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+	<wsdl:operation name="bankAccountLink">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="bankAccountLink">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bankAccountLinkResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MuleException">
+        <soap:fault name="MuleException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+	<wsdl:operation name="bankAccountDLink">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="bankAccountDLink">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bankAccountDLinkResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MuleException">
+        <soap:fault name="MuleException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccLinkService">
+    <wsdl:port binding="tns:AccLinkServiceSoapBinding" name="AccLinkPort">
+      <soap:address location="http://10.48.2.13:9517/webservice"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

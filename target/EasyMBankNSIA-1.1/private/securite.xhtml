@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">SECURITE</h1>
+        <div class="layout-portlets-box">
+            <p:growl id="message" showDetail="true" sticky="true"/>
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="DELAI D'EXPIRATION DES MOTS DE PASSE">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="DELAI (jours)" for="delaiExpirationField" styleClass="Fleft" />
+                                <p:spinner id="delaiExpirationField" value="#{securityManager.delaiValiditePass.valeur}" min="1" styleClass="Fright" />
+                                                                                   
+                            </p:panelGrid>
+
+
+                            <p:commandButton actionListener="#{securityManager.enregistrerDelaiValiditePass()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="REUTILISATION DES MOTS DE PASSE">
+                            <p:panelGrid columns="3" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="LES MOTS DE PASSE DOIVENT ETRE DIFFERENTS DES" for="checkingOldPassField" styleClass="Fleft" />
+                                <p:spinner id="checkingOldPassField" value="#{securityManager.nbrePassToCheck.valeur}" min="0" styleClass="Fright" />
+                                <p:outputLabel value="DERNIERS MOTS DE PASSE"  styleClass="Fright" />                                                 
+                                   
+                            </p:panelGrid>
+
+
+                            <p:commandButton actionListener="#{securityManager.enregistrerNbrePassToCheck()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="HISTORISATION DES MOTS DE PASSE">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="NOMBRE MAXIMUM DE MOTS DE PASSE A HISTORISER PAR UTILISATEUR" for="logOldPassField" styleClass="Fleft" />
+                                <p:spinner id="logOldPassField" value="#{securityManager.maxPassParUtililisateur.valeur}" min="1" styleClass="Fright" />
+                                                                               
+                                   
+                            </p:panelGrid>
+
+
+                            <p:commandButton actionListener="#{securityManager.enregistrerNbreMaxPassUser()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="BLOCAGE DE COMPTE">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="NOMBRE MAXIMUM DE TENTATIVES DE CONNEXION" for="checkingOldPassField" styleClass="Fleft" />
+                                <p:spinner id="checkingOldPassField" value="#{securityManager.maxTentativeConnexion.valeur}" min="1" styleClass="Fright" />
+                                                                               
+                                   
+                            </p:panelGrid>
+
+
+                            <p:commandButton actionListener="#{securityManager.enregistrerMaxConnexion()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        
+    </ui:define>
+
+</ui:composition>

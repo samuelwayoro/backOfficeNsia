@@ -1,0 +1,201 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">PARAMETRAGE WIZALL CI </h1>
+        <div class="layout-portlets-box">
+            <p:growl id="message" showDetail="true" sticky="true"/>
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="MODE DE SOUSCRIPTION">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="MODALITES DE SOUSCRIPTION" for="optionSouscriptionField" styleClass="Fleft" />
+                                <p:selectOneMenu id="optionSouscriptionField" value="#{parametrageWizallManager.selectedModeSouscription.valeur}" style="min-width: 200px;width: 200px;" styleClass="Fleft" >
+                                    <f:selectItems value="#{parametrageWizallManager.listValeursSouscription}" var="val" itemLabel="#{val.valeur}" itemValue="#{val.codeparam}" itemLabelEscaped="true"  />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                            <!--                            <p:ajax event="click" update="mode"/>-->
+                            <p:commandButton actionListener="#{parametrageWizallManager.enregistrerModeSouscription()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+                        </p:fieldset> <br/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form id="idleForm">
+                        <p:fieldset legend="INDISPONIBILITE">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="SERVER" for="indisponibliteField" styleClass="Fleft" />
+                                <p:inputSwitch id="indisponibliteField" value="#{parametrageWizallManager.idle}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierDisponibilite()}" update="message idleForm">
+                                        <p:confirm header="Confirmation" message="Etes-vous sûr ?" icon="ui-icon-alert" /> 
+                                    </p:ajax>
+                                </p:inputSwitch>
+                            </p:panelGrid>
+                            <p:confirmDialog message="Vous"  header="DECLARATION D'INDISPONIBILITE" severity="alert" global="true" showEffect="fade" hideEffect="fade"
+                                             widgetVar="cd">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes"  icon="ui-icon-check" />
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </p:fieldset>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="SUPERVALIDATION">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="SUPERVALIDATION" for="supervalidationField" styleClass="Fleft" />
+                                <p:inputSwitch id="supervalidationField" value="#{parametrageWizallManager.supvalidation}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierSupervalidation()}" update="message">
+                                        <p:confirm header="Confirmation" message="Etes-vous sûr ?" icon="ui-icon-alert" /> 
+                                    </p:ajax>
+                                </p:inputSwitch>
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="AUTORISATIONS DES OPERATIONS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="DEMANDE DE SOLDE" for="soldeField" styleClass="Fleft" />
+                                <p:inputSwitch id="soldeField" value="#{parametrageWizallManager.balanceAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationBalance()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="DEMANDE DE MINI RELEVE" for="statementField" styleClass="Fleft" />
+                                <p:inputSwitch id="statementField" value="#{parametrageWizallManager.statementAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationStatement()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT B2W" for="b2wField" styleClass="Fleft" />
+                                <p:inputSwitch id="b2wField" value="#{parametrageWizallManager.b2wAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationB2W()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT W2B" for="w2bField" styleClass="Fleft" />
+                                <p:inputSwitch id="w2bField" value="#{parametrageWizallManager.w2bAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationW2B()}" update="message" />
+
+                                </p:inputSwitch>
+
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>  
+                </div>
+            </div>
+        </div>   
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="AUTORISATIONS DE PRELEVEMENT SUR OPERATIONS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="SOUSCRIPTION" for="registerTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="registerTarifField" value="#{parametrageWizallManager.registerTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationTarifRegister()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="RESILIATION" for="unregisterTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="unregisterTarifField" value="#{parametrageWizallManager.unregisterTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationTarifUnregister()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="DEMANDE DE SOLDE" for="soldeTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="soldeTarifField" value="#{parametrageWizallManager.balanceTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationTarifBalance()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="DEMANDE DE MINI RELEVE" for="statementTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="statementTarifField" value="#{parametrageWizallManager.statementTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationTarifStatement()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT B2W" for="b2wTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="b2wTarifField" value="#{parametrageWizallManager.b2wTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationTarifB2W()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT W2B" for="w2bTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="w2bTarifField" value="#{parametrageWizallManager.w2bTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageWizallManager.modifierAutorisationTarifW2B()}" update="message" />
+
+                                </p:inputSwitch>
+
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>  
+                </div>
+            </div>  
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="TARIFICATION PAR PALIERS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="TARIFICATION"  styleClass="Fleft" />
+                                <p:selectOneRadio  columns="2" value="#{parametrageWizallManager.modeTarif}" >
+                                    <f:selectItem itemLabel="VARIABLE" itemValue="TARIFICATION_VARIABLE" />
+                                    <f:selectItem itemLabel="FIXE" itemValue="TARIFICATION_FIXE" />
+                                    <p:ajax listener="#{parametrageWizallManager.modifierModeTarification()}" update="message" />
+                                </p:selectOneRadio>
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>  
+                </div>
+            </div>
+        </div>
+        <ui:remove>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <h:form>
+                            <p:fieldset legend="NOMBRE DE CONSULTATIONS JOURNALIERES DE SOLDE / CLIENT">
+                                <p:selectBooleanCheckbox value="#{parametrageWizallManager.isSoldeLimited}" itemLabel="Limiter la consultation" >
+                                    <p:ajax event="change"  />
+                                </p:selectBooleanCheckbox>
+                                <div class="EmptyBox20"></div>
+                                <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                    <p:outputLabel value="LIMITE DE CONSULTATION DE SOLDE" for="maxDemandeSoldeField" styleClass="Fleft"/>
+                                    <p:spinner id="maxDemandeSoldeField" value="" min="0" disabled="#{not parametrageWizallManager.isSoldeLimited}" widgetVar="jMaxDemandeSoldeField" class="stateChangeable"/>
+                                </p:panelGrid>
+                                <p:commandButton type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+                            </p:fieldset>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <h:form>
+                            <p:fieldset legend="PLAFOND DU MONTANT DE TRANSACTIONS JOURNALIERES">
+                                <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                    <p:outputLabel value="MAXIMUM DE TRANSACTIONS PAR  CLIENT" for="montantMaxField" styleClass="Fleft" />
+                                    <p:spinner id="montantMaxField" value="#{parametrageWizallManager.montantMaxTrancations.valeur}" min="0" stepFactor="100" />
+
+                                </p:panelGrid>
+                                <p:commandButton actionListener="#{parametrageWizallManager.enregistrerMontantMaxTransactions()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+                            </p:fieldset>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:remove>
+    </ui:define>
+</ui:composition>

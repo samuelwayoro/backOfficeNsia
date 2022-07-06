@@ -1,0 +1,201 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <h1 class="BigTopic TexAlCenter titre">GESTION DES PROFILS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+
+                    <p:outputLabel rendered="#{loginManager.utilisateur.idprofils.creationProfils}"><h1 class="BigTopic TexAlCenter">Informations du nouveau profil </h1></p:outputLabel> 
+                    <h:form id="form">
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:messages id="messages" autoUpdate="true"  />
+
+                        <p:fieldset toggleable="true" legend="AJOUTER UN NOUVEAU PROFIL" rendered="#{loginManager.utilisateur.idprofils.creationProfils}" >
+                            <p:panelGrid id="panelGrid" columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter ">
+                                <p:outputLabel value="NOM DU PROFIL" for="nameField" styleClass="Fleft"/>
+                                <p:inputText  value="#{profilsManager.newProfils.libelle}" requiredMessage="Entrer un code de profil" 
+                                              id="nameField" styleClass="Fleft" required="#{not empty profilsManager.newProfils.idprofils}" 
+                                              disabled="#{not empty profilsManager.newProfils.idprofils  }" />
+                                <p:outputLabel value="SECURITE" for="securiteField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.securite}" id="securiteField" styleClass="Fright" onLabel="Oui" offLabel="Non"/>
+                                <p:outputLabel value="CONNEXION" for="connexionField" styleClass="Fleft "/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.connexion}" id="connexionField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="ABONNER LES CLIENTS" for="enregistrerField" styleClass="Fleft "/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.souscription}" id="enregistrerField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="RESILIER" for="resiliationField" styleClass="Fleft "/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.resiliation}" id="resiliationField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="CREER DES PROFILS" for="creationProfilsField" styleClass="Fleft "/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.creationProfils}" id="creationProfilsField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="SUPPRIMER DES PROFILS" for="suppressionProfilsField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.suppressionProfils}" id="suppressionProfilsField" styleClass="Fleft " onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="CREER DES UTILISATEURS" for="creationUserField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.creationUtilisateur}" id="creationUserField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="SUPPRIMER DES UTILISATEURS" for="suppressionUserField" styleClass="Fleft "/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.suppressionUtilisateur}" id="suppressionUserField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="MODIFIER LES PROFILS DES UTILISATEURS" for="modificationProfilsUserField" styleClass="Fleft TexAlLeft" style="width: 450px;"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.modificationProfilsUtilisateur}" id="modificationProfilsUserField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="PARAMETRER L'APPLICATION" for="parametrageField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.parametrage}" id="parametrageField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="REINITIALISER DES UTILISATEURS" for="reinitialisationField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.reinitialisationUtilisateur}" id="reinitialisationField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="CREER DES AGENCES" for="creationAgenceField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.creationAgence}" id="creationAgenceField" 
+                                               styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="SUPPRIMER DES AGENCES" for="suppressionAgenceField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.suppressionAgence}" id="suppressionAgenceField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="SUPERVALIDER" for="supervalidationField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.supervalidation}" id="supervalidationField" 
+                                               styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="EDITER LES ETATS" for="reportingField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.reporting}" id="reportingField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="CREER DES PROFILS CLIENTS" for="creationProfilsClientsField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.creationProfilsClients}" id="creationProfilsClientsField" 
+                                               styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="SUPPRIMER DES PROFILS CLIENTS" for="suppressionProfilsClientsField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.suppressionProfilsClients}" id="suppressionProfilsClientsField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VOIR LES TRANSACTIONS" for="transactionsField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.transactions}" id="transactionsField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VOIR LES COMMISSIONS" for="commissionsField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.listCommissions}" id="commissionsField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VOIR LES ABONNEMENTS/RESILIATIONS" for="abonnementsField" styleClass="Fleft TexAlLeft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.listAbonnements}" id="abonnementsField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="PISTE D'AUDIT" for="auditField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.audits}" id="auditField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="CREER DES PALIERS DE COMMISSIONS" for="creationCommissionsField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.creationCommissions}" id="creationCommissionsField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="SUPPRIMER DES PALIERS DE COMMISSIONS" for="suppressionCommissionsField" styleClass="Fleft TexAlLeft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.suppressionCommissions}" id="suppressionCommissionsField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VOIR LES ABONNEMENTS DE TOUTES LES AGENCES" for="abonnementsAllField" styleClass="Fleft TexAlLeft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.abonn_ttes_age}" id="abonnementsAllField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VOIR LES TRANSACTIONS DE TOUTES LES AGENCES" for="transactionsAllField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.transac_ttes_age}" id="transactionsAllField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VALIDER LES ABONNEMENTS DE TOUTES LES AGENCES" for="valideAllField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.valide_ttes_age}" id="valideAllField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="MONITORING DE TOUTES LES AGENCES" for="auditAllField" styleClass="Fleft TexAlLeft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.audit_ttes_age}" id="auditAllField" styleClass="Fright" onLabel="Oui" offLabel="Non" />
+                                <p:outputLabel value="VOIR LES CONNEXIONS DE TOUTES LES AGENCES" for="viewAllConnectedField" styleClass="Fleft"/>
+                                <p:inputSwitch value="#{profilsManager.newProfils.connexion_ttes_age}" id="viewAllConnectedField" styleClass="Fleft" onLabel="Oui" offLabel="Non" />
+
+
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <div class="EmptyBox30"></div>
+                        <p:commandButton value="ENREGISTRER" icon="fa fa-plus" actionListener="#{profilsManager.creerProfils}"
+                                         update="profilsDT messages panelGrid"  
+                                         process="@this nameField connexionField enregistrerField resiliationField creationProfilsField transactionsField creationProfilsClientsField
+                                         suppressionProfilsField creationUserField modificationProfilsUserField suppressionUserField auditField suppressionProfilsClientsField abonnementsField commissionsField
+                                         parametrageField reinitialisationField creationAgenceField suppressionAgenceField supervalidationField reportingField securiteField creationCommissionsField suppressionCommissionsField
+                                         abonnementsAllField transactionsAllField valideAllField auditAllField viewAllConnectedField"
+                                         rendered="#{loginManager.utilisateur.idprofils.creationProfils}" />
+
+
+                        <p:commandButton value="ANNULER" actionListener="#{profilsManager.resetProfil}" icon="fa fa-times" styleClass="RedButton"
+                                         update="profilsDT panelGrid messages"  
+                                         rendered="#{loginManager.utilisateur.idprofils.creationProfils}" />
+
+                        <h1 class="BigTopic TexAlCenter">Liste des profils</h1>
+
+
+
+                        <p:dataTable value="#{profilsManager.listProfils}" var="item" id="profilsDT" 
+                                     widgetVar="profilsTable" selectionMode="single" resizableColumns="true"
+                                     emptyMessage="Aucune données ne correspond à votre recherche" rows="20" lazy="true"
+                                     rowKey="#{item.idprofils}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                       paginator="true" rowsPerPageTemplate="5,10,15">
+                            <p:ajax event="rowSelect" listener="#{profilsManager.onRowSelect}" update=":form:messages :form:panelGrid" />
+                            <p:column filterBy="#{item.libelle}" sortBy="#{item.libelle}" filterMatchMode="contains" >
+                                <f:facet name="header">
+                                    <h:outputText value="Libelle"/>
+                                </f:facet>
+                                <p:outputLabel  value="#{item.libelle}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Connexion"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true"  value="#{item.connexion}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Souscription"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true"  value="#{item.souscription}"/>
+                            </p:column >
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Resiliation"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true" value="#{item.resiliation}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Creation de Profils"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true" value="#{item.creationProfils}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="ModificationProfils"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true" value="#{item.modificationProfils}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="SuppressionProfils"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true" value="#{item.suppressionProfils}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="CreationUtilisateur"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox disabled="true" value="#{item.creationUtilisateur}"/>
+                            </p:column>
+                            <p:column headerText="Action" >
+                                <p:commandButton actionListener="#{profilsManager.removeProfil(item)}" icon="fa fa-remove"  
+                                                 partialSubmit="true" styleClass="RedButton" title="Supprimer le profil"
+                                                 update=":form:messages :form:panelGrid  @namingcontainer">
+                                    <p:confirm header="Confirmation" message="Voulez-vous supprimer ce profil?" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                                <p:confirmDialog global="true">
+                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                                                     icon="ui-icon-check"/>
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                                     icon="ui-icon-close"/>
+                                </p:confirmDialog>
+                            </p:column>
+
+
+
+                        </p:dataTable>
+
+
+
+                        <!--                        <p:confirmDialog message="Etes-vous sûr de vouloir supprimer cette agence?"
+                                                                 header="Confirmation de suppression" severity="alert"
+                                                                 widgetVar="cd">
+                                                    <p:commandButton value="Oui" 
+                                                                     update="form" oncomplete="PF('cd').hide();" actionListener="#}"/>
+                                                    <p:commandButton value="Non" onclick="PF('cd').hide();" type="button" />
+                                                </p:confirmDialog>-->
+
+
+
+                    </h:form>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

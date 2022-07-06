@@ -1,0 +1,58 @@
+<ui:composition 
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    
+    <div id="layout-topbar" class="ShadowGray">
+    	<div id="layout-topbar-indent">
+            
+            <a href="home.xhtml"><h:graphicImage name="#{loginManager.urlLogo}" styleClass="Fleft" library="spark-layout" id="logo" class="Fleft " style="position: relative;top:-25px; "/></a>
+            <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
+            <a href="#" id="mobile-menu-button-gray" class="BordRad3 white ShowOnMobile"><i class="fa fa-caret-down"></i> Top Menu</a>
+            
+           
+            <ul id="layout-topbar-menu" style="position: relative;top:45px; ">
+            	<li>
+                    
+                    <h:form style="">
+                        <p:commandButton  value="Déconnexion" icon="fa fa-sign-out" styleClass="Fs16 " type="submit" action="#{loginManager.exitinApp}" /> 
+                    </h:form>
+                      
+                </li>
+
+                <li class="fa fa-ellipsis-v menu-separator"></li>
+                <li style="position: relative;right: 5px; ">
+                    <a class="Animated05 CursPointer"><i class="fa fa-user"></i> #{loginManager.utilisateur.prenom} #{loginManager.utilisateur.nom}, Bienvenue <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
+                    <ul style="width:195px; margin-left:-10px;" class="Animated03 submenu">
+                        <h:form>
+                    	<li><a class="Animated05"><i class="fa fa-user Fs30 Fleft"></i> <span class="Fright Fs20 TexAlRight">#{loginManager.utilisateur.prenom} #{loginManager.utilisateur.nom}</span></a></li>
+                        <li><a href="password.xhtml"  class="Animated05"><i class="fa fa-lock"></i>   MOT DE PASSE</a></li>
+                        <li style="" onclick="PF('cd_theme').show()" ><a href="#"  class="Animated05"><i class="fa fa-paint-brush"></i> CHANGER LE THEME</a></li>
+                        
+                        
+                        <li><a href="home.xhtml" class="Animated05"><i class="fa fa-tachometer"></i> DASHBOARD</a></li>
+<!--                       <li><a href="#" class="Animated05"><i class="fa fa-quote-right"></i> Notifications <span class="notification-bubble BordRad3 Fright">18</span></a></li>-->
+                  </h:form>
+                    </ul>
+                    <h:form styleClass="">
+                         <p:confirmDialog message="Vous êtes sur le point de changer l'apparence de l'application. Voulez-vous continuer?"
+                                         header="Changement de thème" severity="info"
+                                         widgetVar="cd_theme">
+                            <p:commandButton value="Oui"
+                                             update="@all"  oncomplete="PF('cd_theme').hide();" actionListener="#{themeView.change()}" type="submit" ajax="false" />
+                            <p:commandButton value="Non" onclick="PF('cd_theme').hide();" type="button" />
+                    </p:confirmDialog>
+                    </h:form>
+                    
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+    
+</ui:composition>

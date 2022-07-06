@@ -1,0 +1,117 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+
+
+    <ui:define name="content">
+
+        <h1 class="BigTopic TexAlCenter titre" >LISTE DES ABONNEMENTS RESILIES</h1>
+
+
+
+        <div class="layout-portlets-box">
+
+
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form id="form">
+
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+
+
+                        <p:dataTable value="#{souscriptionList.listResilie}" var="ab" id="abonnementDT" widgetVar="abonnemetTable" selectionMode="single" rows="20"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     emptyMessage="Aucune données ne correspond à votre recherche"  rowKey="#{ab.idabonnements}" 
+                                     paginator="true" rowsPerPageTemplate="5,10,15" lazy="true" selection="#{souscriptionList.abonnementToPrint}">
+
+<!--                            <p:ajax event="rowSelect" listener="{souscriptionList.onRowSelect}" />-->
+                            <f:facet name="header">
+                                <p:outputLabel value="LISTE DES ABONNES" />
+                            </f:facet>
+
+                            <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="ALIAS"  />
+                                </f:facet>
+
+                                <p:outputLabel value="#{ab.alias}" title="#{ab.alias}"  />
+                            </p:column>
+                            <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}"  filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NOM"  />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.nom}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="PRENOMS" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.prenoms}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="COMPTE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.compte}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.service}" filterMatchMode="equals">
+                                <f:facet name="header">
+                                    <p:outputLabel value="SERVICE" />
+                                </f:facet>
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('abonnemetTable').filter()">
+                                        <f:selectItem itemLabel="Tout" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="CASH IN" itemValue="CASH IN" />
+                                        <f:selectItem itemLabel="CASH OUT" itemValue="CASH OUT" />
+                                        <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="CASH IN-CASH OUT" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{ab.service}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.numerotelephone}" sortBy="#{ab.numerotelephone}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NUMERO DE TELEPHONE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.numerotelephone}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.profil.designationProfils}" sortBy="#{ab.profil.designationProfils}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="PROFIL" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.profil.designationProfils}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.operateur.designationOperateur}" sortBy="#{ab.operateur.designationOperateur}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="OPERATEUR" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.operateur.designationOperateur}" />
+                            </p:column>
+<p:column filterBy="#{ab.userdesactiv}" sortBy="#{ab.userdesactiv}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="AGENT RESILIATEUR" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.userdesactiv}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+
+
+
+                    </h:form>   
+
+                </div>
+            </div>
+        </div>
+
+        <h:form id="form2">
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

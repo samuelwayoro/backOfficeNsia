@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">LISTE DES TRANSACTIONS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100" >
+
+                <h:form id="form2">
+                    <div class="ContainerIndent TexAlCenter">
+
+                        <p:dataTable value="#{transactionManager.listTransac}" var="tr"  rowKey="#{tr.requestid}"   widgetVar="transactDT"
+                                     emptyMessage="Aucune donnée ne correspond à votre recherche" id="DT" resizableColumns="true"
+                                     rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                     paginator="true" rowsPerPageTemplate="5,10,15" lazy="true">
+                            <f:facet name="header">
+                                <p:outputLabel value="TRANSACTIONS" />
+                            </f:facet>
+                            <p:column sortBy="#{tr.requestid}" filterBy="#{tr.requestid}" filterMatchMode="contains"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="REQUETE" />
+                                </f:facet>
+
+                                <p:outputLabel value="#{tr.requestid}" title="#{tr.requestid}"/>
+                            </p:column>
+                            <p:column sortBy="#{tr.agence}" filterBy="#{tr.agence}" filterMatchMode="contains" rendered="#{loginManager.utilisateur.idprofils.transac_ttes_age}">
+                                <f:facet name="header">
+                                    <p:outputLabel value="AGENCE" />
+                                </f:facet>
+
+                                <p:outputLabel value="#{tr.agence}" title="#{tr.agence}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{tr.accountno}" filterBy="#{tr.accountno}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NUMERO DE COMPTE" />
+                                </f:facet>
+
+                                <p:outputLabel value="#{tr.accountno}"/>
+                            </p:column>
+                            <p:column filterBy="#{tr.trandate}" sortBy="#{tr.trandate}" filterMatchMode="contains" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="DATE" />
+                                </f:facet>
+                                <f:facet name="filter">
+                                    <p:calendar id="dateField" onchange="PF('transactDT').filter()" mode="popup" styleClass="Fleft" pattern="yyyy-MM-dd"  readonlyInput="true"  />
+                                </f:facet>
+                                <p:outputLabel value="#{tr.trandate}"/>
+                            </p:column>
+                            <p:column  filterBy="#{tr.requesttype}" filterMatchMode="equals">
+                                <f:facet name="header">
+                                    <p:outputLabel value="TYPE" />
+                                </f:facet>
+                                <f:facet name="filter" >
+                                    <p:selectOneMenu id="typeField" onchange="PF('transactDT').filter()" >
+                                        <f:selectItem itemLabel="Tout" noSelectionOption="true" itemValue="#{null}" />
+                                        <f:selectItems value="#{transactionManager.listTypeTransac}" var="type" itemLabel="#{type.libelleType}" itemValue="#{type.libelleType}" />
+
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{tr.requesttype}"/>
+                            </p:column>
+                            <p:column sortBy="#{tr.responsecode}" filterBy="#{tr.responsecode}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="CODE RETOUR" />
+                                </f:facet>
+                                <p:outputLabel value="#{tr.responsecode}"/>
+                            </p:column>
+
+
+
+                            <p:column >
+                                <f:facet name="header">
+                                    <p:outputLabel value="MONTANTS" />
+                                </f:facet>
+                                <p:outputLabel value="#{tr.amount}">
+                                    <f:convertNumber type="currency"  />
+                                </p:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <p:outputLabel value="COMMISSIONS" />
+                                </f:facet>
+                                <p:outputLabel value="#{tr.commission.intValue()}">
+
+                                </p:outputLabel>
+                            </p:column>
+
+                        </p:dataTable>    
+                                    <h:commandLink>
+                                        <p:graphicImage library="spark-layout" name="images/excel.png" width="24"/>
+                                        <p:dataExporter type="xls" target="DT" fileName="B2W_Transactions" />
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage library="spark-layout" name="images/pdf.png" width="24"/>
+                                        <p:dataExporter type="pdf" target="DT" fileName="B2W_Transactions"  />
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage library="spark-layout" name="images/csv.png" width="24"/>
+                                        <p:dataExporter type="csv" target="DT" fileName="B2W_Transactions"  />
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage library="spark-layout" name="images/xml.png" width="24"/>
+                                        <p:dataExporter type="xml" target="DT" fileName="B2W_Transactions" />
+                                    </h:commandLink>
+
+
+                    </div>
+                    <!--                    <p:poll listener="{transactionManager.rafraichirListTransactions()}" update="DT" interval="60" />-->
+                </h:form>
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

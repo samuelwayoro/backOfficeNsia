@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    
+    <system systemId="http://localhost:8080/B2WServiceProject/OtherService?wsdl" uri="wsdl/localhost_8080/B2WServiceProject/OtherService.wsdl"/>
+    <system systemId="http://w2b.banqueatlantique.net:8080/B2WServiceProject/OtherService?wsdl" uri="wsdl/w2b.banqueatlantique.net_8080/B2WServiceProject/OtherService.wsdl"/>
+    <system systemId="file:/C:/Users/alex/Documents/NetBeansProjects/B2W/B2WServiceProject/src/wsdl/OtherService.wsdl" uri="wsdl/OtherService.wsdl"/>
+    <system systemId="http://192.168.91.9:8080/B2WServiceProject/OtherService?wsdl" uri="wsdl/192.168.91.9_8080/B2WServiceProject/OtherService.wsdl"/>
+    <system systemId="https://10.177.24.77/BankRegistration?wsdl" uri="wsdl/BankRegistration.wsdl"/>
+    <system systemId="http://localhost:8080/OtherWebServiceService/OtherWebService?WSDL" uri="wsdl/localhost_8080/OtherWebServiceService/OtherWebService.wsdl"/>
+    <system systemId="http://localhost:8080/OtherWebServiceService/OtherWebService?xsd=1" uri="wsdl/localhost_8080/OtherWebServiceService/OtherWebService.xsd_1.xsd"/>
+    <system systemId="file:/C:/Users/alex/Documents/eco.wsdl" uri="wsdl/eco.wsdl"/>
+    <system systemId="http://localhost:8080/B2WServiceProject/OtherWebServiceService?WSDL" uri="wsdl/localhost_8080/B2WServiceProject/OtherWebServiceService.wsdl"/>
+    <system systemId="http://localhost:8080/B2WServiceProject/OtherWebServiceService?xsd=1" uri="wsdl/localhost_8080/B2WServiceProject/OtherWebServiceService.xsd_1.xsd"/>
+    <system systemId="file:/C:/Users/alex/Documents/AIRTEL/MCOB2A.wsdl" uri="wsdl/MCOB2A.wsdl"/>
+    <system systemId="file:/C:/Users/ALEXAUGUSTE/Documents/EASYMBANK/MTN/MTN/mbInscriptionWs.wsdl" uri="wsdl/mbInscriptionWs.wsdl"/>
+    <system systemId="file:/C:/Users/ALEXAUGUSTE/Documents/EASYMBANK/MTN/MTN/mbInscriptionWs_1.xsd" uri="wsdl/mbInscriptionWs_1.xsd"/>
+    <system systemId="file:/C:/Users/alexa/Documents/EASYMBANK/BABF/mco.wsdl" uri="wsdl/mco.wsdl"/>
+    <system systemId="file:/C:/Users/alexa/Documents/EASYMBANK/BABF/StandardInbound-3.wsdl" uri="wsdl/StandardInbound-3.wsdl"/>
+    <system systemId="file:/C:/Users/alexa/Documents/EASYMBANK/BABF/mco2.wsdl" uri="wsdl/mco2.wsdl"/>
+    <system systemId="file:/C:/Users/alexa/Documents/EASYMBANK/BABN/wsdl_MoovBenin.wsdl" uri="wsdl/wsdl_MoovBenin.wsdl"/>
+    <system systemId="file:/C:/Users/alexa/Documents/EASYMBANK/BABN/newWsdl2.wsdl" uri="wsdl/newWsdl2.wsdl"/>
+    <system systemId="file:/C:/Users/alexa/Documents/EASYMBANK/BABN/newWsdl3.wsdl" uri="wsdl/newWsdl3.wsdl"/>
+</catalog>

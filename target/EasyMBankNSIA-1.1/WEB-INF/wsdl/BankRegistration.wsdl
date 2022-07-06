@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="BankRegistrationService" targetNamespace="http://mobilebank.tlc.ph.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobilebank.tlc.ph.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://mobilebank.tlc.ph.com/" version="1.0" xmlns:tns="http://mobilebank.tlc.ph.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="delinkAccountRequest" type="tns:delinkAccountRequest"/>
+<xs:element name="delinkAccountRequestResponse" type="tns:delinkAccountRequestResponse"/>
+<xs:element name="getKYCRequest" type="tns:getKYCRequest"/>
+<xs:element name="getKYCRequestResponse" type="tns:getKYCRequestResponse"/>
+<xs:element name="linkAccountRequest" type="tns:linkAccountRequest"/>
+<xs:element name="linkAccountRequestResponse" type="tns:linkAccountRequestResponse"/>
+<xs:complexType name="linkAccountRequest">
+    <xs:sequence>
+      <xs:element name="LinkAccountRequest" type="tns:LinkAccountRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="LinkAccountRequest">
+    <xs:sequence>
+      <xs:element name="token" type="xs:string"/>
+      <xs:element name="operatorcode" type="xs:string"/>
+      <xs:element name="msisdn" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="registeredby" type="xs:string"/>
+      <xs:element name="accountalias" type="xs:string"/>
+      <xs:element name="accountname" type="xs:string"/>
+      <xs:element name="extdata" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="linkAccountRequestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="linkAccountResponse" type="tns:standardResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="standardResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="statusCode" type="xs:int"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="data" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getKYCRequest">
+    <xs:sequence>
+      <xs:element name="AccountInfoRequest" type="tns:AccountInfoRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="AccountInfoRequest">
+    <xs:sequence>
+      <xs:element name="token" type="xs:string"/>
+      <xs:element name="operatorcode" type="xs:string"/>
+      <xs:element name="msisdn" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getKYCRequestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="getKYCResponse" type="tns:standardResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="delinkAccountRequest">
+    <xs:sequence>
+      <xs:element name="DelinkAccountRequest" type="tns:DelinkAccountRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DelinkAccountRequest">
+    <xs:sequence>
+      <xs:element name="token" type="xs:string"/>
+      <xs:element name="operatorcode" type="xs:string"/>
+      <xs:element name="msisdn" type="xs:string"/>
+      <xs:element name="accountalias" type="xs:string"/>
+      <xs:element name="delinkdate" type="xs:string"/>
+      <xs:element name="delinkername" type="xs:string"/>
+      <xs:element name="remarks" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="delinkAccountRequestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="delinkAccountResponse" type="tns:standardResp"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="delinkAccountRequest">
+    <wsdl:part element="tns:delinkAccountRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getKYCRequestResponse">
+    <wsdl:part element="tns:getKYCRequestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="linkAccountRequest">
+    <wsdl:part element="tns:linkAccountRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getKYCRequest">
+    <wsdl:part element="tns:getKYCRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="delinkAccountRequestResponse">
+    <wsdl:part element="tns:delinkAccountRequestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="linkAccountRequestResponse">
+    <wsdl:part element="tns:linkAccountRequestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BankRegistrationServiceSoap">
+    <wsdl:operation name="linkAccountRequest">
+      <wsdl:input message="tns:linkAccountRequest" name="linkAccountRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:linkAccountRequestResponse" name="linkAccountRequestResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getKYCRequest">
+      <wsdl:input message="tns:getKYCRequest" name="getKYCRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getKYCRequestResponse" name="getKYCRequestResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delinkAccountRequest">
+      <wsdl:input message="tns:delinkAccountRequest" name="delinkAccountRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:delinkAccountRequestResponse" name="delinkAccountRequestResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BankRegistrationServiceSoapBinding" type="tns:BankRegistrationServiceSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="linkAccountRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="linkAccountRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="linkAccountRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getKYCRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getKYCRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getKYCRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delinkAccountRequest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="delinkAccountRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="delinkAccountRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BankRegistrationService">
+    <wsdl:port binding="tns:BankRegistrationServiceSoapBinding" name="BankRegistrationServiceSoapPort">
+      <soap:address location="https://10.177.24.77/BankRegistration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

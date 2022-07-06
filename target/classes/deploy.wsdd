@@ -1,0 +1,50 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from RegisterService WSDL service -->
+
+  <service name="RegisterPort" provider="java:RPC" style="rpc" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://om.btow.com/register"/>
+      <parameter name="wsdlServiceElement" value="RegisterService"/>
+      <parameter name="schemaUnqualified" value="urn:Register"/>
+      <parameter name="wsdlServicePort" value="RegisterPort"/>
+      <parameter name="className" value="com.sbs.easymbank.service.omapi.RegisterBindingImpl"/>
+      <parameter name="wsdlPortType" value="RegisterPort"/>
+      <parameter name="typeMappingVersion" value="1.1"/>
+      <operation name="ombRequest" qname="ombRequest" returnQName="return_code" returnType="rtns:short" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:#doRegister" >
+        <parameter qname="msisdn" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="alias" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="INOUT"/>
+        <parameter qname="code_service" type="tns:short" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="libelle" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="devise" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="key" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="active_date" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="ombClose" qname="ombClose" returnQName="return_code" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:#doClose" >
+        <parameter qname="alias" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="INOUT"/>
+        <parameter qname="close_date" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orig" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="motif" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="KYCRequest" qname="KYCRequest" soapAction="urn:#NewOperation" >
+        <parameter qname="msisdn" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="key" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="status" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="OUT"/>
+        <parameter qname="lastname" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="OUT"/>
+        <parameter qname="firstname" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="OUT"/>
+        <parameter qname="dob" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="OUT"/>
+        <parameter qname="cin" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema" mode="OUT"/>
+      </operation>
+      <parameter name="allowedMethods" value="ombClose ombRequest KYCRequest"/>
+
+  </service>
+</deployment>

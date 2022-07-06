@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <div class="Container100" >
+                <h:form id="form1">
+                    <div class="ContainerIndent TexAlCenter">
+                        <h1 class="BigTopic TexAlCenter titre">Informations pour la recherche </h1>
+                        <div class="Container100 Responsive" >
+
+                            <!--                            <p:fieldset legend="CRITERES" toggleable="true">
+                                                            <p:panelGrid columns="4"  layout="grid" style="border:0px !important; background:none;" styleClass="FormContent" >
+                                                                <p:outputLabel value="DATE" for="dateField" styleClass="Fleft"/>
+                                                                <p:calendar id="dateField" mode="popup" styleClass="Fleft" value="{reconciliationAbonnements.selectedDate}" pattern="yyyy-MM-dd"  readonlyInput="true" pagedate="{reconciliationAbonnements.selectedDate}"  >
+                                                                    <p:ajax listener="{reconciliationAbonnements.reglerListeAbonnementFiltre()}" update="form2" event="dateSelect"/>
+                                                                </p:calendar>
+                            
+                                                                <p:outputLabel value="TYPE DE TRANSACTIONS" styleClass="Fleft" for="typeField" />
+                                                                <p:selectOneMenu id="typeField" styleClass="Fleft" style="min-width: 170px;width: 170px;" value="{reconciliationAbonnements.type}" >
+                                                                    <f:selectItem itemLabel="Tout" noSelectionOption="true" />
+                                                                    <f:selectItems value="{reconciliationAbonnements.listTypeAbonnements}" var="type" itemLabel="{type.libelleType}" itemValue="{type.idType}" />
+                                                                    <p:ajax listener="{reconciliationAbonnements.reglerListeAbonnementFiltre()}" update="form2"/>
+                                                                                                        <f:selectItem itemLabel="ACCOUNTTOWALLET"/>
+                                                                                                        <f:selectItem itemLabel="WALLETTOACCOUNT"/>
+                                                                </p:selectOneMenu>
+                                                            </p:panelGrid>
+                                                        </p:fieldset>-->
+
+
+                        </div>
+                    </div>
+                </h:form>
+                <h:form id="form2">
+                    <div class="ContainerIndent TexAlCenter">
+                        <!--                        <h1 class="BigTopic TexAlCenter">Resultats de la recherche </h1>-->
+                        <div class="Container100 Responsive ">
+
+                            <p:dataTable value="#{reconciliationAbonnements.listAbonnementsFiltered}" var="ab" selectionMode="single" rowKey="#{ab.idabonnements}"  resizableColumns="true" emptyMessage="Aucune donnée ne correspond à votre recherche" id="DT" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="ABONNEMENTS" />
+                                </f:facet>
+
+                                <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="ALIAS" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.alias}"/>
+                                </p:column>
+                                <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="NOM" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.nom}" />
+                                </p:column>
+                                <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="PRENOMS" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.prenoms}" />
+                                </p:column>
+                                <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="COMPTE" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.compte}" />
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="RECONCILIE" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.reconcilie}" />
+                                </p:column>
+                                 <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="ORIGINE" />
+                                    </f:facet>
+                                     <p:outputLabel value="#{ab.origineAbonnement}" />
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="DATE DE CREATION" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.datecreation}"/>
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="DATE DE RESILIATION" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.dateresiliation}"/>
+                                </p:column>
+
+                            </p:dataTable>    
+
+
+                        </div>
+
+
+                    </div>
+                    <!--                    <div class="ContainerIndent TexAlCenter">
+                                            <h1 class="BigTopic TexAlCenter">Recapitulatif </h1>
+                                            <div class="Container50 Responsive ">
+                                                <p:fieldset legend="BANQUE">
+                                                    <p:chart type="pie" model="{reconciliationAbonnements.modelrecapitulatifEnNombreParTypeAbonnement}" />
+                                                </p:fieldset>
+                                            </div>
+                                            <div class="Container50 Responsive ">
+                                                <p:fieldset legend="OPERATEUR">
+                                                    <p:chart type="pie" model="{reconciliationAbonnements.modelrecapitulatifEnNombreParTypeAbonnementOrange}" />
+                                                </p:fieldset>
+                                            </div>
+                                        </div>-->
+                </h:form>
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

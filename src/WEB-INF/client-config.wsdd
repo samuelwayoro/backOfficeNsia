@@ -1,0 +1,18 @@
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+<handler name="Log" type="java:org.apache.axis.handlers.LogHandler" >  
+  <parameter name="LogHandler.fileName" value="D://myaxis.log" />  
+  <parameter name="LogHandler.writeToConsole" value="true" />
+</handler> 
+<globalConfiguration>
+<requestFlow>
+<handler type="log"/>
+</requestFlow>
+<responseFlow>
+<handler type="log"/>
+</responseFlow>
+</globalConfiguration>
+
+<transport
+name="http" pivot="java:org.apache.axis.transport.http.HTTPSender"/>
+
+</deployment> 

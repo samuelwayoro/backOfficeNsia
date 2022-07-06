@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="McoBankServerSoapImplService" targetNamespace="http://eco.bankinit.com/" xmlns:ns1="http://www.airtel.com/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://eco.bankinit.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:import location="xsd/eco.xsd" namespace="http://www.airtel.com/">
+    </wsdl:import>
+  <wsdl:binding name="McoBankServerSoapImplServiceSoapBinding" type="ns1:mcoBankServerSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="BankToMe2uMoney">
+      <soap:operation soapAction="http://www.airtel.com/BankToMe2uMoney" style="document"/>
+      <wsdl:input name="BankToMe2uMoney">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankToMe2uMoneyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankDepositInquiry">
+      <soap:operation soapAction="http://www.airtel.com/BankDepositInquiry" style="document"/>
+      <wsdl:input name="BankDepositInquiry">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankDepositInquiryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckingOfAuthorizedAccountNumber">
+      <soap:operation soapAction="http://www.airtel.com/CheckingOfAuthorizedAccountNumber" style="document"/>
+      <wsdl:input name="CheckingOfAuthorizedAccountNumber">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CheckingOfAuthorizedAccountNumberResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankZapDeposit">
+      <soap:operation soapAction="http://www.airtel.com/BankZapDeposit" style="document"/>
+      <wsdl:input name="BankZapDeposit">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankZapDepositResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOfAuthorizedAccountNumber">
+      <soap:operation soapAction="http://www.airtel.com/ChangeOfAuthorizedAccountNumber" style="document"/>
+      <wsdl:input name="ChangeOfAuthorizedAccountNumber">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ChangeOfAuthorizedAccountNumberResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="McoBankServerSoapImplService">
+    <wsdl:port binding="tns:McoBankServerSoapImplServiceSoapBinding" name="McoBankServerSoapImplPort">
+      <soap:address location="https://172.25.23.43:11000/mcoBankServerAPI.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

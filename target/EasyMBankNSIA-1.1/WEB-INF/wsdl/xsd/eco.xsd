@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="mcoBankServerSoap" targetNamespace="http://www.airtel.com/" xmlns:ns1="http://www.airtel.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.airtel.com/" version="1.0" xmlns:tns="http://www.airtel.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="BankDepositInquiry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReferenceID" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData1" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData2" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="BankDepositInquiryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BankDepositInquiryResult" type="tns:retBankDepositInquiry"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="BankToMe2uMoney">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BankName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BranchCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="AccountNumber" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryLastName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryFirstName" type="xs:string"/>
+        <xs:element name="Amount" type="xs:double"/>
+        <xs:element minOccurs="0" name="CurrencyCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="ReferenceID" type="xs:string"/>
+        <xs:element minOccurs="0" name="Timestamp" type="xs:string"/>
+        <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="AuthorizedMobileNumber" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData1" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData2" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="BankToMe2uMoneyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BankToMe2uMoneyResult" type="tns:retBankToMe2uMoney"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="BankZapDeposit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BankName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BranchCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryLastName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryFirstName" type="xs:string"/>
+        <xs:element name="Amount" type="xs:double"/>
+        <xs:element minOccurs="0" name="CurrencyCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="ReferenceID" type="xs:string"/>
+        <xs:element minOccurs="0" name="Timestamp" type="xs:string"/>
+        <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="AuthorizedMobileNumber" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData1" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData2" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="BankZapDepositResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BankZapDepositResult" type="tns:retBankDeposit"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="ChangeOfAuthorizedAccountNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BankName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BranchCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="AccountNumber" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryLastName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryFirstName" type="xs:string"/>
+        <xs:element minOccurs="0" name="ReferenceID" type="xs:string"/>
+        <xs:element minOccurs="0" name="Timestamp" type="xs:string"/>
+        <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="AuthorizedMobileNumber" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData1" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData2" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="ChangeOfAuthorizedAccountNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ChangeOfAuthorizedAccountNumberResult" type="tns:retChangeOfAuthorizedAccountNumber"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="CheckingOfAuthorizedAccountNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BankName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BranchCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="AuthorizedMobileNumber" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryLastName" type="xs:string"/>
+        <xs:element minOccurs="0" name="BeneficiaryFirstName" type="xs:string"/>
+        <xs:element minOccurs="0" name="ReferenceID" type="xs:string"/>
+        <xs:element minOccurs="0" name="Timestamp" type="xs:string"/>
+        <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData1" type="xs:string"/>
+        <xs:element minOccurs="0" name="ExternalData2" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:element name="CheckingOfAuthorizedAccountNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CheckingOfAuthorizedAccountNumberResult" type="tns:retCheckingOfAuthorizedAccountNumber"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+<xs:complexType name="retBankToMe2uMoney">
+    <xs:sequence>
+      <xs:element name="status" type="xs:int"/>
+      <xs:element name="amount" type="xs:double"/>
+      <xs:element minOccurs="0" name="reference" type="xs:string"/>
+      <xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="retCheckingOfAuthorizedAccountNumber">
+    <xs:sequence>
+      <xs:element name="status" type="xs:int"/>
+      <xs:element minOccurs="0" name="authorizedMobileNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="reference" type="xs:string"/>
+      <xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="retBankDepositInquiry">
+    <xs:sequence>
+      <xs:element name="status" type="xs:int"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element name="amount" type="xs:double"/>
+      <xs:element minOccurs="0" name="reference" type="xs:string"/>
+      <xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="retChangeOfAuthorizedAccountNumber">
+    <xs:sequence>
+      <xs:element name="status" type="xs:int"/>
+      <xs:element minOccurs="0" name="currentAccountNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="reference" type="xs:string"/>
+      <xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="retBankDeposit">
+    <xs:sequence>
+      <xs:element name="status" type="xs:int"/>
+      <xs:element name="amount" type="xs:double"/>
+      <xs:element minOccurs="0" name="reference" type="xs:string"/>
+      <xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ChangeOfAuthorizedAccountNumberResponse">
+    <wsdl:part element="ns1:ChangeOfAuthorizedAccountNumberResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckingOfAuthorizedAccountNumber">
+    <wsdl:part element="ns1:CheckingOfAuthorizedAccountNumber" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ChangeOfAuthorizedAccountNumber">
+    <wsdl:part element="ns1:ChangeOfAuthorizedAccountNumber" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankToMe2uMoneyResponse">
+    <wsdl:part element="ns1:BankToMe2uMoneyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankZapDepositResponse">
+    <wsdl:part element="ns1:BankZapDepositResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankZapDeposit">
+    <wsdl:part element="ns1:BankZapDeposit" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankToMe2uMoney">
+    <wsdl:part element="ns1:BankToMe2uMoney" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankDepositInquiryResponse">
+    <wsdl:part element="ns1:BankDepositInquiryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckingOfAuthorizedAccountNumberResponse">
+    <wsdl:part element="ns1:CheckingOfAuthorizedAccountNumberResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BankDepositInquiry">
+    <wsdl:part element="ns1:BankDepositInquiry" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="mcoBankServerSoap">
+    <wsdl:operation name="BankToMe2uMoney">
+      <wsdl:input message="ns1:BankToMe2uMoney" name="BankToMe2uMoney">
+    </wsdl:input>
+      <wsdl:output message="ns1:BankToMe2uMoneyResponse" name="BankToMe2uMoneyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckingOfAuthorizedAccountNumber">
+      <wsdl:input message="ns1:CheckingOfAuthorizedAccountNumber" name="CheckingOfAuthorizedAccountNumber">
+    </wsdl:input>
+      <wsdl:output message="ns1:CheckingOfAuthorizedAccountNumberResponse" name="CheckingOfAuthorizedAccountNumberResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankDepositInquiry">
+      <wsdl:input message="ns1:BankDepositInquiry" name="BankDepositInquiry">
+    </wsdl:input>
+      <wsdl:output message="ns1:BankDepositInquiryResponse" name="BankDepositInquiryResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOfAuthorizedAccountNumber">
+      <wsdl:input message="ns1:ChangeOfAuthorizedAccountNumber" name="ChangeOfAuthorizedAccountNumber">
+    </wsdl:input>
+      <wsdl:output message="ns1:ChangeOfAuthorizedAccountNumberResponse" name="ChangeOfAuthorizedAccountNumberResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankZapDeposit">
+      <wsdl:input message="ns1:BankZapDeposit" name="BankZapDeposit">
+    </wsdl:input>
+      <wsdl:output message="ns1:BankZapDepositResponse" name="BankZapDepositResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

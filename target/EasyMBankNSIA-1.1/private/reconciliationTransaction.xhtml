@@ -1,0 +1,212 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">RECONCILIATION</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100" >
+                <h:form id="form1">
+                    <div class="ContainerIndent TexAlCenter">
+<!--                        <h1 class="BigTopic TexAlCenter">Informations pour la recherche </h1>-->
+                        <div class="Container100 Responsive" >
+<!--
+                            <p:fieldset legend="CRITERES" toggleable="true">
+                                <p:panelGrid columns="4"  layout="grid" style="border:0px !important; background:none;" styleClass="FormContent" >
+                                    <p:outputLabel value="DATE" for="dateField" styleClass="Fleft"/>
+                                    <p:calendar id="dateField" mode="popup" styleClass="Fleft" value="{reconciliation.selectedDate}" pattern="yyyy-MM-dd"  readonlyInput="true" >
+                                        <p:ajax listener="{reconciliation.reglerListeTransactionFiltre()}" update="form2" event="dateSelect"/>
+                                    </p:calendar>
+
+                                    <p:outputLabel value="TYPE DE TRANSACTIONS" styleClass="Fleft" for="typeField" />
+                                    <p:selectOneMenu id="typeField" styleClass="Fleft" style="min-width: 170px;width: 170px;" value="{reconciliation.type}" >
+                                                                            <f:selectItem itemLabel="Tout" noSelectionOption="true" />
+                                        <f:selectItems value="{reconciliation.listTypeTransaction}" var="type" itemLabel="{type.libelleType}" itemValue="{type.libelleType}" />
+                                        <p:ajax listener="{reconciliation.reglerListeTransactionFiltre()}" update="form2"/>
+                                                                            <f:selectItem itemLabel="ACCOUNTTOWALLET"/>
+                                                                            <f:selectItem itemLabel="WALLETTOACCOUNT"/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+                            </p:fieldset>-->
+
+
+                        </div>
+                    </div>
+                </h:form>
+                <h:form id="form2">
+                    <div class="ContainerIndent TexAlCenter">
+<!--                        <h1 class="BigTopic TexAlCenter">Resultats de la recherche </h1>-->
+                      
+
+                        <div class="Container100 Responsive ">
+                            <p:tabView>
+                                <p:tab title="TRANSACTIONS">
+                                    <p:dataTable value="#{reconciliationManager.listTransac}" var="tr"  rowKey="#{tr.requestid}"  resizableColumns="true" widgetVar="transactDT"
+                                                 emptyMessage="Aucune donnée ne correspond à votre recherche" id="DT"
+                                                 rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                                  paginator="true" rowsPerPageTemplate="5,10,15">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="TRANSACTIONS" />
+                                    </f:facet>
+                                        <p:column sortBy="#{tr.requestid}" filterBy="#{tr.requestid}" filterMatchMode="contains"  >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="REQUETE" />
+                                        </f:facet>
+<!--                                           <f:facet name="filter">
+                                               <p:inputText onkeypress="PF('transactDT').filter()" styleClass="Container50" value="{reconciliationManager.formeReqId}" >
+                                                    <p:ajax event="keypress" listener="{reconciliationManager.calculerTotal(1)}" update="DT"/>
+                                                </p:inputText>
+                                            </f:facet> -->
+                                        <p:outputLabel value="#{tr.requestid}"/>
+                                    </p:column>
+                                        <p:column sortBy="#{tr.accountalias}" filterBy="#{tr.accountalias}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="ALIAS" />
+                                        </f:facet>
+<!--                                             <f:facet name="filter">
+                                                <p:inputText onkeypress="PF('transactDT').filter()" styleClass="Container50" value="{reconciliationManager.formeAlias}" >
+                                                    <p:ajax event="keypress" listener="{reconciliationManager.calculerTotal(2)}" update="DT"/>
+                                                </p:inputText>
+                                            </f:facet>-->
+                                        <p:outputLabel value="#{tr.accountalias}"/>
+                                    </p:column>
+                                        <p:column filterBy="#{tr.trandate}" sortBy="#{tr.trandate}" filterMatchMode="contains" >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="DATE" />
+                                        </f:facet>
+                                            <f:facet name="filter">
+                                                
+                                                    <p:calendar id="dateField" onchange="PF('transactDT').filter()" mode="popup" styleClass="Fleft" pattern="yyyy-MM-dd"  readonlyInput="true"   >
+                                                       
+                                                    </p:calendar>    
+                                              
+                                                
+                                            </f:facet>
+                                        <p:outputLabel value="#{tr.trandate}"/>
+                                    </p:column>
+                                        <p:column  filterBy="#{tr.requesttype}" filterMatchMode="equals">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="TYPE" />
+                                        </f:facet>
+                                        <f:facet name="filter" >
+                                            <p:selectOneMenu id="typeField" onchange="PF('transactDT').filter()" >
+                                                    <f:selectItem itemLabel="Tout" noSelectionOption="true" itemValue="#{null}" />
+                                                    <f:selectItems value="#{reconciliationManager.listTypeTransac}" var="type" itemLabel="#{type.libelleType}" itemValue="#{type.libelleType}" />
+                                        
+                                    </p:selectOneMenu>
+                                        </f:facet>
+                                        <p:outputLabel value="#{tr.requesttype}"/>
+                                    </p:column>
+                                        <p:column sortBy="#{tr.responsecode}" filterBy="#{tr.responsecode}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="CODE RETOUR" />
+                                        </f:facet>
+                                        <p:outputLabel value="#{tr.responsecode}"/>
+                                    </p:column>
+                                       
+                                        <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="RECONCILIE" />
+                                        </f:facet>
+                                            <p:selectBooleanCheckbox value="#{tr.reconcilie}" disabled="true" />
+                                    </p:column>
+                                         <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="ORIGINE" />
+                                        </f:facet>
+                                             <p:outputLabel value="#{tr.origine}"/>
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="MONTANTS" />
+                                        </f:facet>
+                                        <p:outputLabel value="#{tr.amount}">
+                                         <f:convertNumber type="currency"  />
+                                        </p:outputLabel>
+                                    </p:column>
+<!--                                        <p:columnGroup type="footer" >
+                                            <p:row>
+                                                <p:column colspan="7" footerText="TOTAL" />
+                                                
+                                           
+                                                <p:column footerText="{reconciliationManager.total}"/>
+                                                 
+                                            </p:row>
+                                            
+                                        </p:columnGroup>-->
+                                </p:dataTable>    
+
+                                </p:tab>
+                                <p:tab title="ABONNEMENTS">
+                                    
+                                    <p:dataTable value="#{reconciliationManager.listAbont}" var="ab" selectionMode="single" rowKey="#{ab.idabonnements}"  resizableColumns="true" 
+                                                 emptyMessage="Aucune donnée ne correspond à votre recherche" id="abDT" 
+                                                 rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                                  paginator="true" rowsPerPageTemplate="5,10,15">
+                                <f:facet name="header">
+                                    <p:outputLabel value="ABONNEMENTS" />
+                                </f:facet>
+
+                                <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="ALIAS" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.alias}"/>
+                                </p:column>
+                                <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="NOM" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.nom}" />
+                                </p:column>
+                                <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="PRENOMS" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.prenoms}" />
+                                </p:column>
+                                <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="COMPTE" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.compte}" />
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="RECONCILIE" />
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{ab.resilie}" disabled="true" />
+                                </p:column>
+                                 <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="ORIGINE" />
+                                    </f:facet>
+                                     <p:outputLabel value="#{ab.origine}" />
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="DATE DE CREATION" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.datecreation}"/>
+                                </p:column>
+                               
+
+                            </p:dataTable>    
+
+                                </p:tab>                             
+
+                            </p:tabView>
+                               
+                        </div>
+                    </div>
+
+                </h:form>
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

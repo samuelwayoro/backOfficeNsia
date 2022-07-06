@@ -1,0 +1,190 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <div class="Container40 Responsive">
+                <div class="ContainerIndent">
+                    <div class="Container100">
+
+                        <div class="DispInlBlock MarTop20">
+                            <div class="Container20"><i class="fa fa-user Fs50 #{themeView.avatarColor} Fleft MarRight10"></i></div>
+                            <div class="Container80">
+                                <div class="Fright">
+                                    <h2 class="black Fs24 FontRalewayMedium">#{loginManager.utilisateur.prenom} #{loginManager.utilisateur.nom}</h2>
+                                    <span class="Fs15 gray FontRalewayRegular DispBlock ">#{loginManager.utilisateur.idprofils.libelle}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Seperator"></div>
+                        <i class="fa fa-clock-o Fleft Fs15 gray MarRight10"></i>
+<!--                        <span class="Fleft Fs12 softgray">Dernière connexion - {loginManager.connexion.dateDebut}  {loginManager.connexion.heureDebut}</span>-->
+                            <span class="Fleft Fs12 softgray">Dernière connexion</span>
+                        <!--                        <div class="Container100 MarTop20 TexAlLeft">
+                                                    <div class="Fs16 gray FontRalewayRegular"><i class="fa fa-star MarRight10 orange"></i>Your Latest Links</div>
+                                                    <div class="Seperator"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Sales Reports</a>
+                                                    <div class="EmptyBox10"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Dealers Map And Info</a>
+                                                    <div class="EmptyBox10"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Marketing Strategies News</a>
+                                                    <div class="EmptyBox10"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Company Turnover Info</a>
+                                                    <div class="EmptyBox10"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Dealers Map And Info</a>
+                                                    <div class="EmptyBox10"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Marketing Strategies News</a>
+                                                    <div class="EmptyBox10"></div>
+                                                    <a href="#" class="Fs14 blue DispBlock FontRalewayRegular Fleft HoverLink"><i class="fa fa-tag"></i> Company Turnover Info</a>
+                                                </div>-->
+
+                    </div>
+                </div>
+            </div>
+            <!--            <div class="Container40 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 TexAlCenter">
+            
+                                    <div class="DispInlBlock TexAlLeft MarTop20">
+                                        <div class="Container20"><i class="fa fa-flag Fs40 orange Fleft MarRight10"></i></div>
+                                        <div class="Container80">
+                                            <div class="Fright">
+                                                <h2 class="black Fs24 FontRalewayMedium">Connexions</h2>
+                                                <span class="Fs15 gray FontRalewayRegular DispBlock">Today, Overall And Online</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="Seperator"></div>
+                                    <div class="Container100">
+                                        <div class="Wid50 BorderedBox Fleft TexAlCenter">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs14 gray FontRalewayRegular">Connexions</div>
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs30 blue FontRalewayLight">795</div>
+                                                <div class="EmptyBox10"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Wid50 BorderedBox Fright TexAlCenter">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs14 gray FontRalewayRegular">Durée maximale</div>
+                                                <div class="EmptyBox10"></div>
+                                               <div class="Fs30 blue FontRalewayLight">{homeManager.maxConnexionTime.hours}h{homeManager.maxConnexionTime.minutes}m{homeManager.maxConnexionTime.seconds}s</div>
+                                                
+                                                <div class="EmptyBox10"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Wid50 BorderedBox Fleft TexAlCenter">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs14 gray FontRalewayRegular">Utilisateurs en ligne</div>
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs30 black FontRalewayLight animated pulse infinite"><i class="fa fa-desktop Fs24"></i> 795</div>
+                                                <div class="EmptyBox10"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Wid50 BorderedBox Fright TexAlCenter">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs14 gray FontRalewayRegular">Last Year</div>
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs30 orange FontRalewayLight">23.189</div>
+                                                <div class="EmptyBox10"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Wid50 BorderedBox Fleft TexAlCenter">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs14 gray FontRalewayRegular">Last Month</div>
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs30 orange FontRalewayLight">7.789</div>
+                                                <div class="EmptyBox10"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Wid50 BorderedBox Fright TexAlCenter">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs14 gray FontRalewayRegular">Last Week</div>
+                                                <div class="EmptyBox10"></div>
+                                                <div class="Fs30 orange FontRalewayLight">1.517</div>
+                                                <div class="EmptyBox10"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                </div>
+                               
+                            </div>
+                        </div>-->
+            <div class="Container60 Responsive ">
+                <div class="ContainerIndent">
+                    <div class="Container100 TexAlCenter">
+
+                        <div class="DispInlBlock TexAlLeft MarTop20">
+                            <i class="fa fa-dashboard
+                               Fs40 gray Fleft MarRight10"></i>
+                            <div class="Fleft">
+                                <h2 class="black Fs24 FontRalewayMedium">Statistiques Activités</h2>
+                                <span class="Fs15 gray FontRalewayRegular DispBlock">Journalier</span>
+                            </div>
+                        </div>
+                        <div class="Seperator"></div>
+                        <div class="Container100">
+                            <a href="#" class="Wid45 BorderedBox Fleft TexAlCenter HoverEffect">
+                                <div class="ContainerIndent">
+                                    <div class="EmptyBox10"></div>
+                                    <!--                                    <h:graphicImage name="images/usa.svg" styleClass="Fleft Wid60" library="demo"/>-->
+                                    <div class="Fs14 gray">Abonnements Effectués</div>
+                                    <div class="Fs24 blue FontRalewayRegular">#{homeManager.listAbonnementsJour.size()}</div>
+                                    <div class="EmptyBox10"></div>
+                                </div>
+                            </a>
+                            <a href="#" class="Wid45 BorderedBox Fright TexAlCenter HoverEffect">
+                                <div class="ContainerIndent">
+                                    <div class="EmptyBox10"></div>
+                                    <!--                                    <h:graphicImage name="images/southamerica.svg" styleClass="Fleft Wid60" library="demo"/>-->
+                                    <div class="Fs14 gray">Abonnements à supprimer</div>
+                                    <h:form>
+                                        <div  ><p:outputLabel styleClass="Fs24 blue FontRalewayRegular" id="suppressionInfo" value="#{homeManager.listAbonnementsASupprimer.size()}"/></div>
+
+                                        <p:poll listener="#{homeManager.rafraichirListAbonnementASupprimer()}" update="suppressionInfo" interval="30" />
+                                    </h:form>
+                                    <div class="EmptyBox10"></div>
+                                </div>
+                            </a>
+                            <!--                            <a href="#" class="Wid45 BorderedBox Fleft TexAlCenter HoverEffect">
+                                                            <div class="ContainerIndent">
+                                                                <div class="EmptyBox10"></div>
+                                                                <h:graphicImage name="images/europe.svg" styleClass="Fleft Wid60" library="demo"/>
+                                                                <div class="Fs14 gray">Europe</div>
+                                                                <div class="Fs24 blue FontRalewayRegular">29.456</div>
+                                                                <div class="EmptyBox10"></div>
+                                                            </div>
+                                                        </a>
+                                                        <a href="#" class="Wid45 BorderedBox Fright TexAlCenter HoverEffect">
+                                                            <div class="ContainerIndent">
+                                                                <div class="EmptyBox10"></div>
+                                                                <h:graphicImage name="images/africa.svg" styleClass="Fleft Wid60" library="demo" />
+                                                                <div class="Fs14 gray">Africa</div>
+                                                                <div class="Fs24 blue FontRalewayRegular">4.657</div>
+                                                                <div class="EmptyBox10"></div>
+                                                            </div>
+                                                        </a>-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--<p:poll listener="" update="" interval="10" />-->
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>   

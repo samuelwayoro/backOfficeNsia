@@ -1,0 +1,326 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre" >LISTE DE VOS SOUSCRIPTIONS</h1>
+        <h:form id="form">
+
+            <p:growl id="growl" showDetail="true" sticky="false" />
+            <p:tabView id="tabview">
+                <p:tab title="EN ATTENTE DE VALIDATION" id="tabvalidate">
+                    <p:dataTable value="#{souscriptionList.listAbonnementsToValidate}" var="ab" id="abonnementDT" widgetVar="abonnemetTable" selectionMode="single" rows="20"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 emptyMessage="Aucune données ne correspond à votre recherche" rowKey="#{ab.idabonnements}"
+                                 paginator="true" rowsPerPageTemplate="5,10,15" resizableColumns="true" lazy="true">
+                        <f:facet name="header">
+                            <p:outputLabel value="LISTE DES ABONNES" />
+                        </f:facet>
+
+                        <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="ALIAS" />
+                            </f:facet>
+
+                            <p:outputLabel value="#{ab.alias}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="NOM" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.nom}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="PRENOMS" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.prenoms}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="COMPTE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.compte}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.label}" sortBy="#{ab.label}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="LIBELLE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.label}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.numerotelephone}" sortBy="#{ab.numerotelephone}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="TELEPHONE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.numerotelephone}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.service}" filterMatchMode="equals">
+                            <f:facet name="header">
+                                <p:outputLabel value="SERVICE" />
+                            </f:facet>
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('abonnemetTable').filter()">
+                                    <f:selectItem itemLabel="Tout" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="CASH IN" itemValue="CASH IN" />
+                                    <f:selectItem itemLabel="CASH OUT" itemValue="CASH OUT" />
+                                    <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="CASH IN-CASH OUT" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{ab.service}" />
+                        </p:column>
+                        
+                        
+                        <p:column >
+                            <f:facet name="header">
+                                <p:outputLabel value="ACTIONS" />
+                            </f:facet>
+                            <div class="Container100 Responsive100">
+
+
+                                <p:commandButton  icon="fa fa-search"   partialSubmit="true" oncomplete="PF('abonnementDialog').show()" update=":form:operateur :form:banque"
+                                                  title="Afficher l'abonnement" styleClass="OrangeButton" actionListener="#{souscriptionList.setAbonnementInfo(ab)}" >
+                                    <!--                                        <f:setPropertyActionListener value="{ab}" target="{souscriptionList.selectedAbonnement}"  />-->
+
+                                </p:commandButton>
+
+
+                            </div>
+                        </p:column>
+
+
+
+                    </p:dataTable>
+                </p:tab>
+
+
+                <p:tab title="REJETES" id="tabrejet">
+                    <p:dataTable value="#{souscriptionList.listAbonnementsToDelete}" var="ab" id="abonnementToDeleteDT" widgetVar="abonnementToDeleteTable" selectionMode="single" rows="20"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 emptyMessage="Aucune données ne correspond à votre recherche" rowKey="#{ab.idabonnements}"
+                                 paginator="true" rowsPerPageTemplate="5,10,15" resizableColumns="true">
+                        <f:facet name="header">
+                            <p:outputLabel value="LISTE DES ABONNES" />
+                        </f:facet>
+
+                        <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="ALIAS" />
+                            </f:facet>
+
+                            <p:outputLabel value="#{ab.alias}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="NOM" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.nom}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="PRENOMS" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.prenoms}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="COMPTE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.compte}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.label}" sortBy="#{ab.label}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="LIBELLE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.label}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.numerotelephone}" sortBy="#{ab.numerotelephone}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="TELEPHONE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.numerotelephone}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.service}" filterMatchMode="equals">
+                            <f:facet name="header">
+                                <p:outputLabel value="SERVICE" />
+                            </f:facet>
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('abonnemetTable').filter()">
+                                    <f:selectItem itemLabel="Tout" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="CASH IN" itemValue="CASH IN" />
+                                    <f:selectItem itemLabel="CASH OUT" itemValue="CASH OUT" />
+                                    <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="CASH IN-CASH OUT" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{ab.service}" />
+                        </p:column>
+
+
+                        <p:column >
+                            <f:facet name="header">
+                                <p:outputLabel value="ACTIONS" />
+                            </f:facet>
+                            <div class="Container100 Responsive100">
+
+                                <p:commandButton  icon="fa fa-remove"   partialSubmit="true" update=":form:tabview :form:growl"
+                                                  title="Supprimer l'abonnement" styleClass="RedButton" actionListener="#{souscriptionList.supprimer(ab)}" >
+<!--                                    <f:setPropertyActionListener value="{ab}" target="{souscriptionList.selectedAbonnement}"  />-->
+
+                                </p:commandButton>
+                                <p:commandButton  icon="fa fa-search"   partialSubmit="true" oncomplete="PF('abonnementDialog').show()" update=":form:operateur :form:banque"
+                                                  title="Afficher l'abonnement" styleClass="OrangeButton" actionListener="#{souscriptionList.setAbonnementInfo(ab)}" >
+                                    <!--                                        <f:setPropertyActionListener value="{ab}" target="{souscriptionList.selectedAbonnement}"  />-->
+
+                                </p:commandButton>
+
+
+                            </div>
+                        </p:column>
+
+
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="VALIDES DE CE JOUR" id="tabvalid">
+                    <p:dataTable value="#{souscriptionList.listAbonnementsValidateDay}" var="ab" id="abonnementValidatedDT" widgetVar="abonnemetTable" selectionMode="single" rows="20"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 emptyMessage="Aucune données ne correspond à votre recherche" rowKey="#{ab.idabonnements}"
+                                 paginator="true" rowsPerPageTemplate="5,10,15" resizableColumns="true">
+                        <f:facet name="header">
+                            <p:outputLabel value="LISTE DES ABONNES" />
+                        </f:facet>
+
+                        <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="ALIAS" />
+                            </f:facet>
+
+                            <p:outputLabel value="#{ab.alias}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="NOM" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.nom}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="PRENOMS" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.prenoms}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="COMPTE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.compte}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.label}" sortBy="#{ab.label}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="LIBELLE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.label}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.numerotelephone}" sortBy="#{ab.numerotelephone}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <p:outputLabel value="TELEPHONE" />
+                            </f:facet>
+                            <p:outputLabel value="#{ab.numerotelephone}" />
+                        </p:column>
+                        <p:column filterBy="#{ab.service}" filterMatchMode="equals">
+                            <f:facet name="header">
+                                <p:outputLabel value="SERVICE" />
+                            </f:facet>
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('abonnemetTable').filter()">
+                                    <f:selectItem itemLabel="Tout" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="CASH IN" itemValue="CASH IN" />
+                                    <f:selectItem itemLabel="CASH OUT" itemValue="CASH OUT" />
+                                    <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="CASH IN-CASH OUT" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{ab.service}" />
+                        </p:column>
+
+
+
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
+
+            <p:dialog header="INFORMATIONS" widgetVar="abonnementDialog" showEffect="fade" modal="true" resizable="false" id="dialog" styleClass="Container80" width="" >
+
+                <div class="Container50 Responsive">
+                    <div class="ContainerIndent">
+                        <p:fieldset legend="OPERATEUR" style="height: 600px ;" id="operateur" >
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;margin: auto;" styleClass="FormContent caracter"
+                                         rendered="#{not empty souscriptionList.selectedAbonnement}" >
+
+                                <p:outputLabel value="CLE D'ACTIVATION" for="activationKeyField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="activationKeyField" value="#{souscriptionList.abonnementTemp.activation}"/>
+                                <p:outputLabel value="NOM" for="nameOperatorField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="nameOperatorField" value="#{souscriptionList.abonnementTemp.nomOperateur}"/>
+                                <p:outputLabel value="PRENOMS" for="prenomOperatorField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="prenomOperatorField" value="#{souscriptionList.abonnementTemp.prenomsOperateur}" />
+                                <p:outputLabel value="DATE DE NAISSANCE" for="birthDayOperatorField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="birthDayOperatorField" value="#{souscriptionList.abonnementTemp.dateNaissanceOperateur}"/>
+                                <p:outputLabel value="CNI" for="cniOperatorResultField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="cniOperatorResultField" value="#{souscriptionList.abonnementTemp.cniOperateur}" />
+
+                                <p:outputLabel value="MSISDN" for="msisdnResultField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="msisdnResultField" value="#{souscriptionList.abonnementTemp.numero}" />
+                                <p:outputLabel value="CODE SERVICE" for="serviceCodeField" styleClass="Fleft"/>
+                                <p:inputText id="serviceCodeField" styleClass=" Fleft Wid90" value="#{souscriptionList.abonnementTemp.service}" readonly="true" />
+
+
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                    </div>
+                </div>
+                <div class="Container50 Responsive">
+                    <div class="ContainerIndent">
+                        <p:fieldset legend="BANQUE" style="height: 600px ;" id="banque" >
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter"
+                                         rendered="#{not empty souscriptionList.selectedAbonnement}" >
+
+                                <p:outputLabel value="ALIAS" for="aliasField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="aliasField" value="#{souscriptionList.abonnementTemp.aliasTmp}"/>
+                                <p:outputLabel value="NOM" for="nameBankField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="nameBankField" value="#{souscriptionList.abonnementTemp.nomBanque}"/>
+                                <p:outputLabel value="PRENOMS" for="prenomBankField" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" readonly="true" id="prenomBankField" value="#{souscriptionList.abonnementTemp.prenomsBanque}" />
+                                <p:outputLabel value="DATE DE NAISSANCE" for="birthDayBankField" styleClass="Fleft " />
+                                <p:inputText styleClass="Wid90 Fleft" id="birthDayBankField" value="#{souscriptionList.abonnementTemp.dateNaissanceBanque}" readonly="true" />
+                                <p:outputLabel value="CNI" for="cniBankRResultField" styleClass="Fleft"/>
+                                <p:inputText  styleClass="Wid90 Fleft"  id="cniBankRResultField" value="#{souscriptionList.abonnementTemp.cniBanque}" readonly="true"  />
+                                <p:outputLabel value="COMPTE" for="account" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" id="account" readonly="true" value="#{souscriptionList.abonnementTemp.compte}"   />
+                                <p:outputLabel value="LIBELLE DU COMPTE" for="accountLabel" styleClass="Fleft"/>
+                                <p:inputText styleClass="Wid90 Fleft" id="accountLabel" readonly="true" value="#{souscriptionList.abonnementTemp.libelleCompte}"   />
+                                <p:outputLabel value="MOTID DE REJET" rendered="#{not empty souscriptionList.selectedAbonnement.motif}" for="motifField" styleClass="Fleft"/>
+                                <p:inputTextarea styleClass="Wid90 Fleft" rendered="#{not empty souscriptionList.selectedAbonnement.motif}" id="motifField" readonly="true" value="#{souscriptionList.selectedAbonnement.motif}"   /> 
+
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </p:dialog>
+
+
+
+        </h:form>   
+
+
+
+    </ui:define>
+
+</ui:composition>

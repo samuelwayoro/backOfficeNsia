@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre" >LISTE DES ABONNES</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="IMPRESSION DE FORMULAIRE DE SOUSCRITION">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:selectOneMenu id="formatField" value="#{souscriptionList.format}" styleClass="Fleft">
+                                    <f:selectItem itemValue="PDF" itemLabel="PDF"  />
+                                    <f:selectItem itemValue="PPT" itemLabel="PPT" />
+                                    <f:selectItem itemValue="DOCX" itemLabel="DOCX" />
+                                </p:selectOneMenu>
+                                <p:commandButton actionListener="#{souscriptionList.report()}" ajax="false" type="submit" icon="fa fa-file-text-o" value="Imprimer"  styleClass="OrangeButton" />
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form id="form">
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:dataTable value="#{souscriptionList.listAbonne}" var="ab" id="abonnementDT" widgetVar="abonnemetTable" selectionMode="single" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Aucune données ne correspond à votre recherche"  rowKey="#{ab.idabonnements}" resizableColumns="true" paginator="true" rowsPerPageTemplate="5,10,15" lazy="true" selection="#{souscriptionList.abonnementToPrint}">
+                            <p:ajax event="rowSelect" listener="#{souscriptionList.onRowSelect}" />
+                            <!--                            <f:facet name="{Exporters}">
+                                                            <div style="float:right;padding-top: 5px;">
+                                                            </div>
+                                                        </f:facet>-->
+                            <f:facet name="header">
+                                <p:outputLabel value="LISTE DES ABONNES" />
+                            </f:facet>
+                            <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="ALIAS"  />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.alias}" title="#{ab.alias}"  />
+                            </p:column>
+                            <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}"  filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NOM"  />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.nom}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="PRENOMS" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.prenoms}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.compte}" sortBy="#{ab.compte}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="COMPTE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.compte}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.libelleAgence}" filterMatchMode="contains" rendered="#{loginManager.utilisateur.idprofils.abonn_ttes_age}">
+                                <f:facet name="header">
+                                    <p:outputLabel value="AGENCE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.libelleAgence}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.numerotelephone}" sortBy="#{ab.numerotelephone}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NUMERO DE TELEPHONE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.numerotelephone}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.profil.designationProfils}" sortBy="#{ab.profil.designationProfils}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="PROFIL" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.profil.designationProfils}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.designationOperateur}" sortBy="#{ab.designationOperateur}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="OPERATEUR" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.designationOperateur=='AIRTEL'?'ORANGE':ab.designationOperateur}" />
+                            </p:column>
+                            <ui:remove>
+                                <p:column filterBy="#{ab.usercreate}" sortBy="#{ab.usercreate}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="AGENT" />
+                                    </f:facet>
+                                    <p:outputLabel value="#{ab.usercreate}" />
+                                </p:column>
+                            </ui:remove>
+                            <p:column rendered="#{loginManager.utilisateur.idprofils.resiliation}" exportable="false">
+                                <div class="Container80" >
+                                    <p:selectOneMenu id="origineField"  styleClass=" Fleft Container100" value="#{ab.origine}"  >
+                                        <f:selectItem itemLabel="Initiateur" itemValue=""></f:selectItem>
+                                        <f:selectItem itemLabel="CLIENT" itemValue="Client"/>
+                                        <f:selectItem itemLabel="BANQUE" itemValue="Bank"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="Container20">
+                                    <p:commandButton    icon="fa fa-remove" title="Résilier l'abonnement"  styleClass="RedButton" update=":form:motifDialog" oncomplete="PF('motifDialog').show();" type="submit" partialSubmit="true">
+                                        <f:setPropertyActionListener value="#{ab}" target="#{souscriptionList.selectedAbonnement}" />
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                        <h:commandLink>
+                            <p:graphicImage library="spark-layout" name="images/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="abonnementDT" fileName="B2W_Abonnements" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage library="spark-layout" name="images/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="abonnementDT" fileName="B2W_Abonnements"  preProcessor="#{souscriptionList.preProcessPDF}"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage library="spark-layout" name="images/csv.png" width="24"/>
+                            <p:dataExporter type="csv" target="abonnementDT" fileName="B2W_Abonnements"  />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage library="spark-layout" name="images/xml.png" width="24"/>
+                            <p:dataExporter type="xml" target="abonnementDT" fileName="B2W_Abonnements" />
+                        </h:commandLink>
+                        <p:confirmDialog message="Etes-vous sûr de vouloir résilier cet abonnement?"
+                                         header="Confirmation de suppression" severity="alert"
+                                         widgetVar="cd">
+                            <p:commandButton value="Oui" 
+                                             update="form"  oncomplete="PF('cd').hide();" actionListener="#{souscriptionList.resilier}" type="submit" />
+                            <p:commandButton value="Non" onclick="PF('cd').hide();" type="button" />
+                        </p:confirmDialog>
+                        
+                        <p:dialog header="MOTIF DE RESILIATION" widgetVar="motifDialog" showEffect="fade" modal="true" resizable="false" >
+                            <p:outputLabel value="Veuillez renseigner le motif du rejet : " />
+                            <div class="Container100 Responsive">
+                                <div class="ContainerIndent">
+                                    <p:fieldset legend="MOTIF" id="motifDialog">
+                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;margin: auto;" styleClass="FormContent caracter"  rendered="#{not empty souscriptionList.selectedAbonnement}"  >
+                                            <p:outputLabel value="MOTIF" for="MotifField" styleClass="Fleft"/>
+                                            <p:inputTextarea styleClass="Wid90 Fleft" id="MotifField" value="#{souscriptionList.selectedAbonnement.motif}" required="true"/>
+                                        </p:panelGrid>
+                                    </p:fieldset>
+                                </div>
+                            </div>
+                            <div class="EmptyBox10" ></div>
+                            <p:commandButton value="OK" oncomplete="PF('motifDialog').hide();" actionListener="#{souscriptionList.resilier}" type="submit" update=":form:abonnementDT :form:growl" />
+                        </p:dialog>
+                        
+                    </h:form>   
+                </div>
+            </div>
+        </div>
+        <h:form id="form2">
+        </h:form>
+    </ui:define>
+</ui:composition>

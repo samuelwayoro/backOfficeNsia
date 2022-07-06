@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <h1 class="BigTopic TexAlCenter titre">GESTION DES PROFILS CLIENTS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+
+                    <h:outputLabel rendered="#{loginManager.utilisateur.idprofils.creationProfilsClients}"><h1 class="BigTopic TexAlCenter">Informations du nouveau profil </h1></h:outputLabel>
+                    <h:form id="form">
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+
+                        <p:fieldset id="fd" toggleable="true" legend="AJOUTER UN NOUVEAU PROFIL" rendered="#{loginManager.utilisateur.idprofils.creationProfilsClients}" >
+                            <p:panelGrid columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter ">
+                                <p:outputLabel value="CODE DU PROFIL" for="codeField" styleClass="Fleft"/>
+                                <p:inputText value="#{profilsClientsManager.newProfilsClients.codeProfils}" id="codeField" styleClass="Fleft"/>
+                                <p:outputLabel value="NOM DU PROFIL" for="labelField" styleClass="Fright"/>
+                                <p:inputText value="#{profilsClientsManager.newProfilsClients.designationProfils}" id="labelField" styleClass="Fright" />
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:commandButton value="Ajouter" icon="fa fa-plus" actionListener="#{profilsClientsManager.creerNouveauProfils()}" update="profisDT fd growl" type="submit" 
+                                         rendered="#{loginManager.utilisateur.idprofils.creationProfilsClients}"/>
+
+                        <h1 class="BigTopic TexAlCenter">Liste des profils</h1>
+                        <p:dataTable value="#{profilsClientsManager.listProfils}" var="pr" id="profisDT" widgetVar="profilTable" selectionMode="single" resizableColumns="true"
+                                     emptyMessage="Aucune données ne correspond à votre recherche"  rowKey="#{pr.idProfils}" >
+                            <f:facet name="header">
+                                <p:outputLabel value="LISTE DES PROFILS" />
+                            </f:facet>
+                            <p:column filterBy="#{pr.codeProfils}" sortBy="#{pr.codeProfils}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="CODE" />
+                                </f:facet>
+
+                                <p:outputLabel value="#{pr.codeProfils}" />
+                            </p:column>
+                            <p:column filterBy="#{pr.designationProfils}" sortBy="#{pr.designationProfils}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NOM" />
+                                </f:facet>
+                                <p:outputLabel value="#{pr.designationProfils}" />
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <p:outputLabel value="DATE DE CREATION" />
+                                </f:facet>
+                                <p:outputLabel value="#{pr.dateCreationProfils}" />
+                            </p:column>
+                            <p:column rendered="#{loginManager.utilisateur.idprofils.suppressionProfilsClients}" >
+                                <p:commandButton type="submit" onclick="PF('cd').show();" icon="fa fa-trash" styleClass="RedButton"  >
+                                    <f:setPropertyActionListener value="#{pr}" target="#{profilsClientsManager.selectedProfilsClients}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable> 
+
+                        <p:confirmDialog message="Etes-vous sûr de vouloir supprimer ce profil?"
+                                         header="Confirmation de suppression" severity="alert"
+                                         widgetVar="cd">
+                            <p:commandButton value="Oui" 
+                                             update="form"  oncomplete="PF('cd').hide();" actionListener="#{profilsClientsManager.supprimerProfilClient()}" />
+                            <p:commandButton value="Non" onclick="PF('cd').hide();" type="button" />
+                        </p:confirmDialog>
+                    </h:form>
+
+                    <br/>
+
+                    <div class="ContainerIndent">
+                        <p:growl id="messag" showDetail="true" sticky="true"/>
+                        <p:fieldset>
+                            <div class="layout-portlets-box">
+                                <div class="Container100">
+                                    <div class="ContainerIndent TexAlCenter">
+
+                                        <h1 class="BigTopic TexAlCenter titre">PARAMETRAGE SUR TRANSACTIONS JOURNALIERES </h1>
+
+                                        <h:form id="B2Wform">
+                                            <p:growl id="growl" showDetail="true" sticky="true" /> 
+
+                                            <div class="Container50 Responsive ">
+                                                <div class="ContainerIndent ">
+                                                    <p:fieldset legend="OPERATION BANK TO WALLET" style=" ">
+                                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter ">
+
+                                                            <p:outputLabel value="NOMBRE BANK TO WALLET /JRS " for="nbreB2W" styleClass="Fleft"/>
+                                                            <p:spinner id="nbreB2W" value="#{profilsClientsManager.nbreMaxBtowParJrs.valeur}" title="nombre transactions bank to wallet journalier " styleClass="Fleft" required="true" min="0" />
+
+                                                            <p:outputLabel value="MONTANT LIMITE /JRS" for="LimiteJournalier" styleClass="Fleft" />
+                                                            <p:spinner id="LimiteJournalier" value="#{profilsClientsManager.montantMaxBtoWParjrs.valeur}" title="nombre transactions bank to wallet journalier " styleClass="Fleft" required="true" min="0" />
+
+                                                            <p:outputLabel value="NOMBRE BANK TO WALLET / MOIS " for="LimiteMensuel" styleClass="Fleft" />
+                                                            <p:spinner id="LimiteMensuel" value="#{profilsClientsManager.montantMaxBtoWParjrs.valeur}" title="nombre transactions bank to wallet journalier " styleClass="Fleft" required="true" min="0" />
+
+
+                                                        </p:panelGrid>
+                                                    </p:fieldset>
+                                                    <p:commandButton />
+
+                                                </div>
+                                            </div>
+                                        </h:form > 
+
+                                        <h:form id="W2Bform">   
+                                            <div class="Container50 Responsive ">
+                                                <div class="ContainerIndent ">
+                                                    <p:fieldset legend="OPERATION WALLET TO BANK">
+                                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+
+                                                            <p:outputLabel value="NOMBRE WALLET TO BANK /JRS " for="nbreW2B" styleClass="Fleft"/>
+                                                            <p:spinner id="nbreW2B" value="#{profilsClientsManager.nbreMaxWtoBParjrs.valeur}" title="nombre transactions wallet to bank journalier" styleClass="Fleft" required="true" min="0" />
+
+                                                            <!--                                        <p:outputLabel value="NUMERO DE COMPTE" for="cpteField" styleClass="Fleft" />
+                                                                                                    <p:inputText styleClass="Wid90 Fleft" placeholder="000000000" id="cpteField" value=""/>-->
+                                                        </p:panelGrid>
+                                                    </p:fieldset>
+                                                    <p:commandButton  />
+
+                                                </div>
+                                            </div>
+                                            <div class="EmptyBox10" ></div>
+                                        </h:form >
+                                    </div>
+                                </div>
+                            </div>
+                        </p:fieldset>
+
+                        <div class="EmptyBox30"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

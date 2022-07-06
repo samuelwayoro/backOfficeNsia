@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.9-b130926.1035 svn-revision#5f6196f2b90e9460065a4c2f4e30e065b245e51e. -->
+<xs:schema xmlns:tns="http://service.ws.mobileBanking.digi/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service.ws.mobileBanking.digi/">
+
+<xs:complexType name="unsubscriptionResponse">
+<xs:sequence>
+<xs:element name="accountAlias" type="xs:string" minOccurs="0"/>
+<xs:element name="operatorCode" type="xs:string" minOccurs="0"/>
+<xs:element name="responseCode" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="kyCrequestResponse">
+<xs:complexContent>
+<xs:extension base="tns:abonnekyc">
+<xs:sequence>
+<xs:element name="responseCode" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="abonnekyc">
+<xs:sequence>
+<xs:element name="dateExpiration" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="imsi" type="xs:string" minOccurs="0"/>
+<xs:element name="KYCrspDOB" type="xs:string" minOccurs="0"/>
+<xs:element name="KYCrspFirstname" type="xs:string" minOccurs="0"/>
+<xs:element name="KYCrspIdRefNo" type="xs:string" minOccurs="0"/>
+<xs:element name="KYCrspLastname" type="xs:string" minOccurs="0"/>
+<xs:element name="KYCrspType" type="xs:string" minOccurs="0"/>
+<xs:element name="nameFilePieceRecto" type="xs:string" minOccurs="0"/>
+<xs:element name="nameFilePieceVerso" type="xs:string" minOccurs="0"/>
+<xs:element name="number" type="xs:string" minOccurs="0"/>
+<xs:element name="pieceRecto" type="xs:string" minOccurs="0"/>
+<xs:element name="pieceVerso" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="subscriptionResponse">
+<xs:complexContent>
+<xs:extension base="tns:abonnekyc">
+<xs:sequence>
+<xs:element name="accountAlias" type="xs:string" minOccurs="0"/>
+<xs:element name="operatorCode" type="xs:string" minOccurs="0"/>
+<xs:element name="responseCode" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>

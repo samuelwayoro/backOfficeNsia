@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function controlSaisie(evt) {
+                //var event=window.event || evt;
+                var keyCode = evt.charCode;
+                //<![CDATA[
+                if ((keyCode >= 48 && keyCode <= 57) || (keyCode == 0)) {
+                    return true;
+                } else {
+                    return false;
+                }
+                //]]>
+            }
+        </script>
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">SOUSCRIPTION MTN</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+                    <h1 class="BigTopic TexAlCenter">Informations pour la recherche </h1>
+                    <h:form id="searchForm">
+                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+
+                        <div class="Container1000 Responsive ">
+                            <div class="ContainerIndent ">
+                                <p:fieldset legend="BANQUE" style=" ">
+                                    <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+                                        <p:outputLabel styleClass="Fleft" value="RACINE" for="racineField"  />
+                                        <p:inputText styleClass="Wid90 Fleft" placeholder="000000000" id="racineField" value="#{souscriptionMTN.customerRoot}"
+                                                     onkeypress=" return controlSaisie(event)">
+
+                                        </p:inputText>
+                                        <!--                                        <p:outputLabel styleClass="Fleft" value="NUMERO DE COMPTE" for="cpteField"  />
+                                                                                <p:inputText styleClass="Wid90 Fleft" placeholder="000000000" id="cpteField" value=""/>-->
+                                    </p:panelGrid>
+                                </p:fieldset>
+                            </div>
+                        </div>
+                        <br/>
+                        <p:commandButton value="Rechercher" icon="fa fa-search" actionListener="#{souscriptionMTN.checkKYCOptionA()}" update="resultsForm" styleClass="commandbutton"/>
+
+
+                    </h:form >
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+
+            <div class="Container100">
+
+                <div class="ContainerIndent TexAlCenter">
+                    <h1 class="BigTopic TexAlCenter">Résultats des recherches</h1>
+                    <h:form id="resultsForm">
+
+                        <div class="Container100 Responsive" >
+                            <div class="ContainerIndent">
+                                <p:fieldset legend="BANQUE" style="height: 250px ;">
+                                    <p:panelGrid columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+                                        <p:outputLabel styleClass="Fleft" value="LISTE DES NUMEROS" for="msisdnListField"/>
+                                        <p:selectOneMenu  styleClass="Wid90 Fleft"  id="msisdnListField" style="min-width:266px; width:266px;"  
+                                                          required="true" requiredMessage="Choisissez un numéro" value="#{souscriptionMTN.newAbonnement.numerotelephone}"  editable="true" >
+                                            <f:selectItem noSelectionOption="true" itemLabel="Selectionnez un numéro"></f:selectItem>
+                                            <f:selectItems itemLabel="#{tel}" value="#{souscriptionMTN.listPhone}" var="tel" itemValue="#{tel}" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel styleClass="Fleft" value="NOM" for="nameBankField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="nameBankField" value="#{souscriptionMTN.newAbonnement.nom}"/>
+                                        <p:outputLabel styleClass="Fleft" value="PRENOMS" for="prenomBankField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="prenomBankField" value="#{souscriptionMTN.newAbonnement.prenoms}" />
+                                        <p:outputLabel styleClass="Fleft" value="DATE DE NAISSANCE" for="birthDayBankField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="birthDayBankField" value="#{souscriptionMTN.newAbonnement.datenaissance}" />
+                                        <p:outputLabel styleClass="Fleft" value="CNI" for="cniBankRResultField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="cniBankRResultField" value="#{souscriptionMTN.newAbonnement.cni}" />
+                                        <p:outputLabel styleClass="Fleft" value="LISTE DES COMPTES CANDIDATS" for="accountList"/>
+                                        <p:selectOneMenu styleClass="Wid90 Fleft" id="accountList" value="#{souscriptionMTN.newAbonnement.compte}" 
+                                                         style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un compte" >
+                                            <f:selectItem itemLabel="Selectionnez un compte" itemValue=""></f:selectItem>
+                                            <f:selectItems itemLabel="#{cpte.nuemro}" value="#{souscriptionMTN.listCpte}" var="cpte" itemValue="#{cpte.nuemro}" itemLabelEscaped="true" />
+
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel styleClass="Fleft" value="CODE SERVICE" for="serviceCodeField"/>
+                                        <p:selectOneMenu id="serviceCodeField" style="min-width:266px; width:266px;" styleClass=" Fleft Container100" value="#{souscriptionMTN.newAbonnement.service}" required="true" requiredMessage="Choisissez un code de service" >
+                                            <f:selectItem itemLabel="Selectionnez un service" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="CASH IN" itemValue="1"></f:selectItem>
+                                            <f:selectItem itemLabel="CASH OUT" itemValue="2"></f:selectItem>
+                                            <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="3"></f:selectItem>
+                                        </p:selectOneMenu>
+
+                                    </p:panelGrid>
+                                </p:fieldset>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <p:commandButton value="Valider"   actionListener="#{souscriptionMTN.enregistrerAbonnement()}" id="validerBtn" rendered="#{parametrageMtnManager.supvalidation}"
+                                         type="submit" icon="fa fa-save" styleClass="commandbutton" update="resultsForm searchForm " />
+                        <p:commandButton value="Valider"   actionListener="#{souscriptionMTN.enregistrerAbonnement()}" id="validerBtn2" ajax="false" rendered="#{!parametrageMtnManager.supvalidation}"
+                                         type="submit" icon="fa fa-save" styleClass="commandbutton" update="resultsForm searchForm " onclick="setTimeout('location.reload();', 10000);"/>
+                        <p:blockUI block="resultsForm" trigger="validerBtn" animate="true" rendered="#{parametrageMtnManager.supvalidation}" />
+                        <p:blockUI block="resultsForm" trigger="validerBtn2" animate="true" rendered="#{!parametrageMtnManager.supvalidation}" />
+                        <p:blockUI block="searchForm" trigger="validerBtn" animate="true" rendered="#{parametrageMtnManager.supvalidation}" />
+                        <p:blockUI block="searchForm" trigger="validerBtn2" animate="true" rendered="#{!parametrageMtnManager.supvalidation}" />
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

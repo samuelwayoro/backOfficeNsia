@@ -1,0 +1,60 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ps="http://primefaces.org/spark"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <ps:menu styleClass="" model="#{mainMenuManager.model}"> 
+            <f:facet name="options">
+<!--                <p:commandButton type="button" icon="fa fa-search Fs18 white" styleClass="Fright"/>
+                <p:inputText placeholder="Search" styleClass="Fright"/>    -->
+            </f:facet>
+
+<!--            <p:submenu label="ADMINISTRATION" icon="fa fa-key" styleClass=""
+                        rendered="{loginManager.userHasAdministrationRight()}" >
+                    <p:menuitem value="PARAMETRAGE" url="parametrage.xhtml" icon="fa fa-gears" rendered="{loginManager.utilisateur.idprofils.parametrage}"/>
+                    <p:menuitem value="GESTION DES AGENCES" url="agences.xhtml" icon="fa fa-flag" rendered="{loginManager.utilisateur.idprofils.creationAgence or loginManager.utilisateur.idprofils.suppressionAgence}"/>
+                    <p:menuitem value="GESTION DES PROFILS" url="profils.xhtml" icon="fa fa-user-secret" rendered="{loginManager.utilisateur.idprofils.creationProfils or loginManager.utilisateur.idprofils.suppressionProfils}" />
+                    <p:menuitem value="GESTION DES UTILISATEURS" url="utilisateurs.xhtml" icon="fa fa-users" 
+                       rendered="{loginManager.utilisateur.idprofils.creationUtilisateur or loginManager.utilisateur.idprofils.reinitialisationUtilisateur or loginManager.utilisateur.idprofils.suppressionUtilisateur}" />
+                    <p:menuitem value="AUDIT" url="audit.xhtml" icon="fa fa-stack-exchange" 
+                                rendered="{loginManager.utilisateur.idprofils.audits}" />
+                    
+                </p:submenu>
+                
+            <p:separator rendered="{loginManager.userHasAdministrationRight()}"/>
+            <p:submenu label="SOUSCRIPTION" icon="fa fa-bank">
+                <p:menuitem value="NOUVELLE SOUSCRIPTION"  url="sousc" icon="fa fa-plus-square"
+                            rendered="{loginManager.utilisateur.idprofils.souscription}"/>
+                <p:menuitem value="LISTE DES ABONNES" icon="fa fa-list" url="listAbonnements.xhtml"/>
+                <p:menuitem value="SUPERVALIDATION" icon="fa fa-check-circle" url="validation.xhtml" rendered="{loginManager.utilisateur.idprofils.supervalidation}"/>
+                <p:menuitem value="MES SOUSCRIPTIONS" icon="fa fa-briefcase" url="mesSouscriptions.xhtml" 
+                            rendered="{loginManager.utilisateur.idprofils.souscription}"/>
+            </p:submenu>
+         <p:separator rendered="{loginManager.utilisateur.idprofils.souscription or loginManager.utilisateur.idprofils.supervalidation}"/>
+
+            <p:submenu label="OPERATIONS" rendered="{loginManager.utilisateur.idprofils.transactions}" icon="fa fa-credit-card" >
+               
+                
+                <p:menuitem value="RECONCILIATIONS" url="reconciliationTransaction.xhtml" icon="fa fa-exchange" />
+               
+           
+                
+                <p:menuitem value="LISTE DES TRANSACTIONS"  url="listTransaction.xhtml" icon="fa fa-money"/>
+                <p:menuitem value="COMMISSIONS"  url="commissions.xhtml" icon="fa fa-eur"/>
+                 
+            </p:submenu>
+           
+            <p:separator rendered="{loginManager.utilisateur.idprofils.transactions}"/>
+            <p:submenu label="REPORTING" icon="fa fa-file-text-o"  >
+                <p:menuitem value="PRODUIRE LES ETATS" url="reporting.xhtml" rendered="{loginManager.utilisateur.idprofils.reporting}" />
+                
+            </p:submenu>
+             -->
+
+        </ps:menu>
+    </h:form>
+
+</ui:composition>

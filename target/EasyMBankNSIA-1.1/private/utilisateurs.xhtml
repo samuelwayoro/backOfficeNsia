@@ -1,0 +1,255 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">GESTIONS DES UTILISATEURS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+                    <p:growl id="message" showDetail="true" life="30000" />
+                    <h:form id="form" rendered="#{loginManager.utilisateur.idprofils.creationUtilisateur}">
+                        <p:growl id="growl" life="30000" />
+                        <p:messages id="messages" autoUpdate="true"  />
+
+                        <p:fieldset toggleable="true" legend="AJOUTER UN NOUVEL UTILISATEUR"> 
+                            <p:panelGrid id="panelGrid" columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent">
+                                <p:outputLabel value="Nom:" for="nom" styleClass="Fleft"/>
+                                <p:inputText id="nom" value="#{userManager.newUtilisateur.nom}" title="Nom" styleClass="Fleft" required="true" />
+                                <p:outputLabel value="Prenom:" for="prenom" styleClass="Fleft" />
+                                <p:inputText id="prenom" value="#{userManager.newUtilisateur.prenom}" title="Prenom" required="true" styleClass="Fright " />
+                                <p:outputLabel value="Login:" for="login" styleClass="Fleft" />
+                                <p:inputText id="login" value="#{userManager.newUtilisateur.login}" styleClass="Fleft" title="Login" required="#{empty userManager.newUtilisateur.login}" disabled="#{not empty userManager.newUtilisateur.login}">
+                                    <ui:remove> <p:ajax listener="#{userManager.passwordGenerator}" update="password" event="blur" /></ui:remove> 
+                                </p:inputText>
+                                <p:outputLabel value="Mot de passe:" for="password" styleClass="Fleft"/>
+                                <p:password id="password" value="#{userManager.newUtilisateur.password}" title="Password" required="#{empty userManager.newUtilisateur.password}" disabled="#{not empty userManager.newUtilisateur.password}" readonly="false" styleClass="Fright" />
+                                <p:outputLabel value="Idprofils:" for="idprofils" styleClass="Fleft" />
+                                <p:selectOneMenu id="idprofils" value="#{userManager.newUtilisateur.idprofils}" style="min-width: 169px;width: 169px;"   
+                                                 styleClass="Fleft" required="true" converter="#{userManager.profilsConverter}" >
+                                    <!-- TODO: update below reference to list of available items-->
+                                    <f:selectItems value="#{userManager.listProfils}" var="pr" itemLabel="#{pr.libelle}" itemValue="#{pr}" itemLabelEscaped="true" />
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Idagences:" for="idagences" styleClass="Fleft" />
+                                <p:selectOneMenu id="idagences" value="#{userManager.newUtilisateur.idagences}" style="min-width: 169px;width: 169px;" 
+                                                 styleClass="Fright" required="true" converter="#{userManager.agencesConverter}" >
+                                    <!-- TODO: update below reference to list of available items-->
+                                    <f:selectItems value="#{userManager.listAgences}" var="ag" itemLabel="#{ag.libelle}" itemValue="#{ag}" itemLabelEscaped="true"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <div class="EmptyBox30"></div>
+                        <p:commandButton value="VALIDER" actionListener="#{userManager.enregistrerUtilisateur}"  type="submit" icon="fa fa-user-plus" 
+                                         update="panelGrid :form2 prenom"/>
+                        <p:commandButton value="ANNULER" actionListener="#{userManager.resetUtilisateur}"
+                                         update="panelGrid messages"  process="@this"
+                                         rendered="#{loginManager.utilisateur.idprofils.creationProfils}" />
+                    </h:form>
+                    <h:form id="form2">
+                        <p:tabView id="tabview">
+                            <p:tab title="ACTIVES">
+                                    
+                                    <p:dataTable value="#{userManager.listUtilisateur}" var="item"    widgetVar="profilsTable"   id="usersDT"
+                                             emptyMessage="Aucune donnée ne correspond à votre recherche" resizableColumns="true"  rows="5" rowKey="#{item.idusers}"   selectionMode="single" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             paginator="true" rowsPerPageTemplate="5,10,15">
+                                    
+                                    <p:ajax event="rowSelect" listener="#{userManager.onRowSelect}" update=":form:messages :form:growl :form:panelGrid" />
+                                    <f:facet name="header">
+                                        <p:outputLabel value="UTILISATEURS"/>
+                                    </f:facet>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Datecreation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.datecreation}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Datemodification"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.datemodification}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date activation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dateactivation}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{item.login}" filterBy="#{item.login}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Login"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.login}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{item.nom}" filterBy="#{item.nom}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Nom"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nom}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{item.prenom}" filterBy="#{item.prenom}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Prenom"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.prenom}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Idprofils"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idprofils.libelle}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Idagences"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idagences.libelle}"/>
+                                    </p:column>
+                                    <p:column rendered="#{loginManager.utilisateur.idprofils.suppressionUtilisateur or loginManager.utilisateur.idprofils.reinitialisationUtilisateur}">
+
+                                        <p:commandButton rendered="#{loginManager.utilisateur.idprofils.suppressionUtilisateur}" icon="fa fa-user-times " type="submit" onclick="PF('cd1').show();" styleClass="RedButton" partialSubmit="true" title="Désactiver le compte" >
+                                            <f:setPropertyActionListener target="#{userManager.selectedUser}" value="#{item}" />
+                                        </p:commandButton>
+                                        <p:commandButton rendered="#{loginManager.utilisateur.idprofils.reinitialisationUtilisateur}" icon="fa fa-recycle " type="submit" onclick="PF('cd2').show();" styleClass="OrangeButton" partialSubmit="true" title="Réinitialiser le compte" >
+                                            <f:setPropertyActionListener target="#{userManager.selectedUser}" value="#{item}" />
+                                        </p:commandButton>
+
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+
+                            <p:tab title="DESACTIVES">
+                                <p:dataTable value="#{userManager.listUtilisateurDesactive}" var="item"    widgetVar="profilsTable2" id="usersDesactiveDT"
+                                             emptyMessage="Aucune donnée ne correspond à votre recherche" resizableColumns="true"  rows="5" rowKey="#{item.idusers}"  selectionMode="single" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             paginator="true" rowsPerPageTemplate="5,10,15">
+                                    
+                                    <p:ajax event="rowSelect" listener="#{userManager.onRowSelect}" update=":form:messages :form:growl :form:panelGrid" />
+                                    <f:facet name="header">
+                                        <p:outputLabel value="UTILISATEURS"/>
+                                    </f:facet>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Datecreation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.datecreation}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Datemodification"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.datemodification}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date desactivation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.datedesactivation}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{item.login}" filterBy="#{item.login}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Login"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.login}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{item.nom}" filterBy="#{item.nom}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Nom"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nom}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{item.prenom}" filterBy="#{item.prenom}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Prenom"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.prenom}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Idprofils"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idprofils.libelle}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Idagences"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idagences.libelle}"/>
+                                    </p:column>
+                                    <p:column rendered="#{loginManager.utilisateur.idprofils.suppressionUtilisateur or loginManager.utilisateur.idprofils.reinitialisationUtilisateur}">
+                                        <p:commandButton rendered="#{loginManager.utilisateur.idprofils.suppressionUtilisateur}" icon="fa fa-check " type="submit" onclick="PF('cd3').show();" styleClass="GreenButton" partialSubmit="true" title="Activer le compte" >
+                                            <f:setPropertyActionListener target="#{userManager.selectedUser}" value="#{item}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab title="CONNECTES">
+                                <p:dataTable value="#{appManager.connexions}" var="connexion"  rowKey="#{connexion.id}"  
+                                             emptyMessage="Aucune donnée ne correspond à votre recherche"   rows="5" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                             paginator="true" rowsPerPageTemplate="5,10,15">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="CONNEXIONS" />
+                                    </f:facet>
+                                    <p:column filterBy="#{connexion.nom}" sortBy="#{connexion.nom}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="NOM" />
+                                        </f:facet>
+                                        <p:outputLabel value="#{connexion.nom}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{connexion.agence}" sortBy="#{connexion.agence}" 
+                                              rendered="#{loginManager.utilisateur.idprofils.connexion_ttes_age}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="AGENCE" />
+                                        </f:facet>
+                                        <p:outputLabel value="#{connexion.agence}"/>
+                                    </p:column>
+                                    <p:column sortBy="#{connexion.creationTime}" >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="DATE CONNEXION" />
+                                        </f:facet>
+                                        <p:outputLabel value="#{connexion.creationTime}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                        </p:tabView>
+                        <p:confirmDialog  message="Etes-vous sûr de vouloir désactiver cet utilisateur?"
+                                          header="Confirmation de désactivation" severity="alert"
+                                          widgetVar="cd1">
+                            <p:commandButton value="Oui" id="confirm1"
+                                             update=":form2:tabview  message"  oncomplete="PF('cd1').hide();" type="submit"
+                                             actionListener="#{userManager.desactiverUtilisateur()}" />
+                            <p:commandButton value="Non" onclick="PF('cd1').hide();" type="button" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog  message="Etes-vous sûr de vouloir réinitialiser cet utilisateur?"
+                                          header="Confirmation de reinitiliation" severity="alert"
+                                          widgetVar="cd2">
+                            <p:commandButton value="Oui" id="confirm2"
+                                             update="message "  oncomplete="PF('cd2').hide();" type="submit"
+                                             actionListener="#{userManager.reinitialiserUtilisateur()}" />
+                            <p:commandButton value="Non" onclick="PF('cd2').hide();" type="button" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog  message="Etes-vous sûr de vouloir activer cet utilisateur?"
+                                          header="Confirmation de d'activation" severity="alert"
+                                          widgetVar="cd3">
+                            <p:commandButton value="Oui" id="confirm3"
+                                             update="message :form2:tabview"  oncomplete="PF('cd3').hide();" type="submit"
+                                             actionListener="#{userManager.activerUtilisateur()}" />
+                            <p:commandButton value="Non" onclick="PF('cd3').hide();" type="button" />
+                        </p:confirmDialog>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <navigation-rule>
+        <from-view-id>/private/souscription.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toList</from-outcome>
+            <to-view-id>/private/listAbonnements.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/souscriptionOptionA.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toList</from-outcome>
+            <to-view-id>/private/listAbonnements.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/parametrage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toList</from-outcome>
+            <to-view-id>/private/listAbonnements.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/souscriptionOptionB.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toList</from-outcome>
+            <to-view-id>/private/listAbonnements.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/listAbonnements.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toResiliation</from-outcome>
+            <to-view-id>/private/resiliation.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/resiliation.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toList</from-outcome>
+            <to-view-id>/private/listAbonnements.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/password.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toHome</from-outcome>
+            <to-view-id>/private/home.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/resetpassword.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toHome</from-outcome>
+            <to-view-id>/private/home.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+<!--    <lifecycle>
+        <phase-listener>com.sbs.easymbank.listeners.LifeCycleListener</phase-listener>
+    </lifecycle>-->
+
+
+</faces-config>

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://other.easymbank.sbs.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://other.easymbank.sbs.com/">
+
+<xs:element name="getSignaletique" type="tns:getSignaletique"/>
+
+<xs:element name="getSignaletiqueResponse" type="tns:getSignaletiqueResponse"/>
+
+<xs:element name="payForService" type="tns:payForService"/>
+
+<xs:element name="payForServiceResponse" type="tns:payForServiceResponse"/>
+
+<xs:complexType name="getSignaletique">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getSignaletiqueResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:client" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="client">
+<xs:sequence>
+<xs:element name="comptes" type="tns:comptes" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="nom" type="xs:string" minOccurs="0"/>
+<xs:element name="prenom" type="xs:string" minOccurs="0"/>
+<xs:element name="racine" type="xs:string" minOccurs="0"/>
+<xs:element name="telephone" type="xs:string" minOccurs="0"/>
+<xs:element name="cni" type="xs:string" minOccurs="0"/>
+<xs:element name="dateNaiss" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="comptes">
+<xs:sequence>
+<xs:element name="agence" type="xs:string" minOccurs="0"/>
+<xs:element name="coddci" type="xs:string" minOccurs="0"/>
+<xs:element name="expl" type="xs:string" minOccurs="0"/>
+<xs:element name="libNcg" type="xs:string" minOccurs="0"/>
+<xs:element name="ncg" type="xs:string" minOccurs="0"/>
+<xs:element name="numero" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="payForService">
+<xs:sequence>
+<xs:element name="arg0" type="tns:paymentRequest" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paymentRequest">
+<xs:sequence>
+<xs:element name="alias" type="xs:string" minOccurs="0"/>
+<xs:element name="commissions" type="xs:double"/>
+<xs:element name="compte" type="xs:string" minOccurs="0"/>
+<xs:element name="datePaiment" type="xs:string" minOccurs="0"/>
+<xs:element name="montant" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="payForServiceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:paymentResponse" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paymentResponse">
+<xs:sequence>
+<xs:element name="statut" type="xs:string" minOccurs="0"/>
+<xs:element name="statutData" type="xs:string" minOccurs="0"/>
+<xs:element name="statutMsg" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

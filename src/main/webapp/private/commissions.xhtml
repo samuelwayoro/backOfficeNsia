@@ -1,0 +1,259 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">PALIERS POUR COMMISSIONS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+                    <p:growl id="message" showDetail="true" sticky="true"/>
+
+                    <p:tabView id="tabview">
+                        <p:tab title="B2W-W2B" id="tab1">
+                            <h:form id="form">
+                                <p:fieldset toggleable="true" legend="AJOUTER UN NOUVEAU PALLIER" rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"> 
+                                    <p:panelGrid id="panelGrid" columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent">
+
+                                        <p:outputLabel value="MINIMUM:" for="minimumField" styleClass="Fleft"/>
+                                        <p:spinner id="minimumField" value="#{commissionsManager.newCommissions.minimum}" title="MINIMUM" styleClass="Fleft" required="true" min="0" />
+                                        <p:outputLabel value="MAXIMUM:" for="maximumField" styleClass="Fleft" />
+                                        <p:spinner id="maximumField" value="#{commissionsManager.newCommissions.maximum}" title="MAXIMUM" required="true" styleClass="Fright" min="0" />
+                                        <p:outputLabel value="TARIF:" for="tarifField" styleClass="Fleft"/>
+                                        <p:spinner id="tarifField" value="#{commissionsManager.newCommissions.tarif}" title="TARIF" styleClass="Fleft" required="true" min="0" />
+                                        <p:outputLabel value="TAUX(%)" for="tauxField" styleClass="Fleft" />
+                                        <p:spinner id="tauxField" value="#{commissionsManager.newCommissions.taux}" title="TAUX" required="true" styleClass="Fright" min="0" />
+                                        <p:outputLabel value="OPERATEUR" for="operateurField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="operateurField" value="#{commissionsManager.newCommissions.operateurs}" title="OPERATEUR" style="min-width: 169px;width: 169px;" 
+                                                         styleClass="Fleft" required="true" converter="#{commissionsManager.operateursConverter}">
+
+                                            <f:selectItems value="#{commissionsManager.listOperateurs}" var="op" itemLabel="#{op.designationOperateur}" itemValue="#{op}" itemLabelEscaped="true" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="PROFIL:" for="profilField" styleClass="Fleft" />
+                                        <p:selectOneMenu id="profilField"  value="#{commissionsManager.newCommissions.profils}" title="PROFIL" required="true" 
+                                                         styleClass="Fright"  style="min-width: 169px;width: 169px;" converter="#{commissionsManager.profilConverter}" >
+
+                                            <f:selectItems value="#{commissionsManager.listProfils}"  var="pr" itemLabel="#{pr.designationProfils}" itemValue="#{pr}" itemLabelEscaped="true" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="SERVICE:" for="sensField" styleClass="Fleft" />
+                                        <p:selectOneMenu id="sensField" value="#{commissionsManager.newCommissions.sens}" title="SENS" required="Fleft" styleClass="Fleft "
+                                                         style="min-width: 169px;width: 169px;">
+                                            <f:selectItem itemLabel="BANKTOWALLET" itemValue="B2W" />
+                                            <f:selectItem itemLabel="WALLETTOBANK" itemValue="W2B" />
+                                        </p:selectOneMenu>
+
+                                    </p:panelGrid>
+                                </p:fieldset>
+                                <div class="EmptyBox30"></div>
+                                <p:commandButton value="VALIDER" actionListener="#{commissionsManager.enregistrerCommission}"  type="submit" icon="fa fa-plus" 
+                                                 update="panelGrid tabview:formDT:commissionsDT message " rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"/>
+                                <p:commandButton value="ANNULER" actionListener="#{commissionsManager.resetCommission}" styleClass="RedButton"
+                                                 update="panelGrid "  process="@this" rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"
+                                                 />
+                                </h:form>
+                                <h:form id="formDT">
+
+                                    <p:dataTable value="#{commissionsManager.listCommissions}" var="item" id="commissionsDT" widgetVar="dt" rows="10"
+                                             selectionMode="single" resizableColumns="true" rowKey="#{item.idPalier}" paginator="true"
+                                             emptyMessage="Aucune donnée ne correspond à votre recherche" rowsPerPageTemplate="5,10,15"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             
+                                                               >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="COMMISSIONS" />
+                                    </f:facet>
+                                    <p:ajax event="rowSelect" listener="#{commissionsManager.onRowSelect}" update="tabview:form:panelGrid" />
+                                    <p:column filterBy="#{item.sens}" sortBy="#{item.sens}" filterMatchMode="contains" >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Sens"/>
+                                        </f:facet>
+<!--                                        <f:facet name="filter" >
+                                            <p:selectOneMenu id="typeField" onchange="PF('dt').filter()" >
+                                                <f:selectItem itemLabel="Tout" noSelectionOption="true" itemValue="{null}" />
+                                                <f:selectItem itemLabel="B2W"  itemValue="B2W" />
+                                                <f:selectItem itemLabel="W2B"  itemValue="W2B" />
+
+
+                                            </p:selectOneMenu>
+                                        </f:facet>-->
+                                        <p:outputLabel value="#{item.sens}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.minimum}" sortBy="#{item.minimum}" filterMatchMode="contains" >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Minimum"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.minimum}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.maximum}" sortBy="#{item.maximum}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Maximum"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.maximum}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.operateurs.designationOperateur}" sortBy="#{item.operateurs.designationOperateur}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Operateur"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.operateurs.designationOperateur}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.profils.designationProfils}" sortBy="#{item.profils.designationProfils}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Profil client"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.profils.designationProfils}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.tarif}" sortBy="#{item.tarif}" filterMatchMode="contains" >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Tarif"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.tarif}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.taux}" sortBy="#{item.taux}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Taux(%)"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.taux}"/>
+                                    </p:column>
+
+
+
+                                    <p:column rendered="#{loginManager.utilisateur.idprofils.suppressionCommissions}" >
+
+
+                                        <p:commandButton  icon="fa fa-remove " type="submit" oncomplete="PF('cd1').show();" styleClass="RedButton" partialSubmit="true" title="Supprimer le palier" >
+                                            <f:setPropertyActionListener target="#{commissionsManager.selectedCommissions}" value="#{item}" />
+                                        </p:commandButton>
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <p:confirmDialog  message="Etes-vous sûr de vouloir supprimer ce palier?"
+                                                  header="Confirmation de suppression" severity="alert"
+                                                  widgetVar="cd1">
+                                    <p:commandButton value="Oui" id="confirm1" partialSubmit="true" 
+                                                     update="commissionsDT  message"  oncomplete="PF('cd1').hide();" type="submit"
+                                                     actionListener="#{commissionsManager.supprimerPalier()}" />
+                                    <p:commandButton value="Non" onclick="PF('cd1').hide();" type="button" />
+                                </p:confirmDialog>
+
+                            </h:form>
+
+                        </p:tab>
+                        
+                        <p:tab title="AUTRES" id="tab2">
+                                                 
+                            <h:form id="form2">
+                                <p:fieldset toggleable="true" legend="AJOUTER UN NOUVEAU TARIF" rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"> 
+                                    <p:panelGrid id="panelGrid2" columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent">
+
+                                        <p:outputLabel value="SERVICE:" for="serviceField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="serviceField" value="#{tarifAutreManager.newTarif.service}" title="SERVICE" required="Fleft" styleClass="Fleft "
+                                                         style="min-width: 169px;width: 169px;">
+                                            <f:selectItem itemLabel="ABONNEMENT" itemValue="ABONNEMENT" />
+                                            <f:selectItem itemLabel="RESILIATION" itemValue="RESILIATION" />
+                                            <f:selectItem itemLabel="SOLDE" itemValue="SOLDE" />
+                                            <f:selectItem itemLabel="MINI-RELEVE" itemValue="MINI-RELEVE" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="TARIF:" for="tarifField" styleClass="Fleft"/>
+                                        <p:spinner id="tarifField" value="#{tarifAutreManager.newTarif.tarif}" title="TARIF" styleClass="Fright" required="true" min="0" />
+                                        <p:outputLabel value="OPERATEUR" for="operatorField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="operatorField" value="#{tarifAutreManager.newTarif.operateurs}" title="OPERATEUR" style="min-width: 169px;width: 169px;" 
+                                                         styleClass="Fleft" required="true" converter="#{tarifAutreManager.operateursConverter}">
+
+                                            <f:selectItems value="#{tarifAutreManager.listOperateurs}" var="op" itemLabel="#{op.designationOperateur}" itemValue="#{op}" itemLabelEscaped="true" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="PROFIL:" for="profField" styleClass="Fleft" />
+                                        <p:selectOneMenu id="profField"  value="#{tarifAutreManager.newTarif.profils}" title="PROFIL" required="true" 
+                                                         styleClass="Fright"  style="min-width: 169px;width: 169px;" converter="#{tarifAutreManager.profilConverter}" >
+
+                                            <f:selectItems value="#{tarifAutreManager.listProfils}"  var="pr" itemLabel="#{pr.designationProfils}" itemValue="#{pr}" itemLabelEscaped="true" />
+                                        </p:selectOneMenu>
+                                    </p:panelGrid>
+                                </p:fieldset>
+                                <div class="EmptyBox30"></div>
+                                <p:commandButton value="VALIDER" actionListener="#{tarifAutreManager.enregistrerTarif()}"  type="submit" icon="fa fa-plus" 
+                                                 update="panelGrid2 tabview:formDT2:tarifDT message message " rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"/>
+                                <p:commandButton value="ANNULER" actionListener="#{tarifAutreManager.resetTarif()}" styleClass="RedButton"
+                                                 update="panelGrid2 "  process="@this" rendered="#{loginManager.utilisateur.idprofils.creationCommissions}"
+                                                 />
+                            </h:form>
+                            <h:form id="formDT2">
+
+                                <p:dataTable value="#{tarifAutreManager.listTarif}" var="item" id="tarifDT" widgetVar="dt2"
+                                             selectionMode="single" resizableColumns="true" rowKey="#{item.idTarifs}"
+                                             emptyMessage="Aucune donnée ne correspond à votre recherche"
+                                             rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                             paginator="true" rowsPerPageTemplate="5,10,15">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="TARIFS" />
+                                    </f:facet>
+                                    <p:ajax event="rowSelect" listener="#{tarifAutreManager.onRowSelect}" update="tabview:form2:panelGrid2" />
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Service"/>
+                                        </f:facet>
+
+                                        <p:outputLabel value="#{item.service}"/>
+                                    </p:column>
+                                   
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Operateur"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.operateurs.designationOperateur}"/>
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Profil client"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.profils.designationProfils}"/>
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Tarif"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.tarif}"/>
+                                    </p:column>
+                                    
+
+
+
+                                    <p:column rendered="#{loginManager.utilisateur.idprofils.suppressionCommissions}" >
+
+
+                                        <p:commandButton  icon="fa fa-remove " type="submit" oncomplete="PF('cd2').show();" styleClass="RedButton" partialSubmit="true" title="Supprimer le tarif" >
+                                            <f:setPropertyActionListener target="#{tarifAutreManager.selectedTarif}" value="#{item}" />
+                                        </p:commandButton>
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <p:confirmDialog  message="Etes-vous sûr de vouloir supprimer ce tarif?"
+                                                  header="Confirmation de suppression" severity="alert"
+                                                  widgetVar="cd2">
+                                    <p:commandButton value="Oui" id="confirm2"
+                                                     update="tarifDT  message"  oncomplete="PF('cd2').hide();" type="submit"
+                                                     actionListener="#{tarifAutreManager.supprimerTarif()}" />
+                                    <p:commandButton value="Non" onclick="PF('cd2').hide();" type="button" />
+                                </p:confirmDialog>
+
+                            </h:form>
+
+                       
+
+                        </p:tab>
+                    </p:tabView>
+
+
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

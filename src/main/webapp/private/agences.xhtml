@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+<h1 class="BigTopic TexAlCenter titre">GESTION DES AGENCES</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+
+                    <h:outputLabel rendered="#{loginManager.utilisateur.idprofils.creationAgence}"><h1 class="BigTopic TexAlCenter">Informations de la nouvelle agence </h1></h:outputLabel>
+                    <h:form id="form">
+                       <p:growl id="growl" showDetail="true" sticky="true" />
+                       <p:messages id="messages" autoUpdate="true"  />
+
+
+                       <p:fieldset id="fd" toggleable="true" legend="AJOUTER UNE NOUVELLE AGENCE" rendered="#{loginManager.utilisateur.idprofils.creationAgence}" >
+                             <p:panelGrid id="panelgrid" columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter ">
+                                 <p:outputLabel value="CODE DE L'AGENCE" for="codeField" styleClass="Fleft"/>
+                                 <p:inputText value="#{agencyManager.newAgence.codeagence}" id="codeField" styleClass="Fleft" required="true" disabled="#{agencyManager.modifEnCours}"/>
+                                 <p:outputLabel value="NOM DE L'AGENCE" for="labelField" styleClass="Fright"/>
+                                 <p:inputText value="#{agencyManager.newAgence.libelle}" id="labelField" styleClass="Fright" required="true" />
+                             </p:panelGrid>
+                        </p:fieldset>
+                       <p:commandButton value="Valider" icon="fa fa-plus" actionListener="#{agencyManager.creerNouvelleAgence}" update="form2:agenceDT growl fd" type="submit" 
+                                        rendered="#{loginManager.utilisateur.idprofils.creationAgence}"/>
+                       <p:commandButton value="Annuler" icon="fa fa-times" actionListener="#{agencyManager.reset}" update="fd" type="reset"
+                                        rendered="#{loginManager.utilisateur.idprofils.creationAgence}" styleClass="RedButton"/>
+                    </h:form>
+                    <h:form id="form2">
+                         <h1 class="BigTopic TexAlCenter">Liste des agences</h1>
+                         <p:dataTable value="#{agencyManager.listAgence}" var="ag" id="agenceDT" widgetVar="agenceTable" selectionMode="single" resizableColumns="true"
+                                      emptyMessage="Aucune données ne correspond à votre recherche" lazy="true" rowKey="#{ag.idagences}" rows="20"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                       paginator="true" rowsPerPageTemplate="5,10,15">
+                                        <p:ajax event="rowSelect" listener="#{agencyManager.onRowSelect}" update=":form:messages :form:panelgrid" />
+                          
+                            <f:facet name="header">
+                                <p:outputLabel value="LISTE DES AGENCES" />
+                            </f:facet>
+                            <p:column filterBy="#{ag.codeagence}" sortBy="#{ag.codeagence}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="ID" />
+                                </f:facet>
+
+                                <p:outputLabel value="#{ag.codeagence}" />
+                            </p:column>
+                            <p:column filterBy="#{ag.libelle}" sortBy="#{ag.libelle}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NOM" />
+                                </f:facet>
+                                <p:outputLabel value="#{ag.libelle}" />
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <p:outputLabel value="DATE DE CREATION" />
+                                </f:facet>
+                                <p:outputLabel value="#{ag.datecreation}" />
+                            </p:column>
+                             <p:column rendered="#{loginManager.utilisateur.idprofils.suppressionAgence}" >
+                                <p:commandButton type="submit" onclick="PF('cd').show();" icon="fa fa-trash" styleClass="RedButton"  >
+                                    <f:setPropertyActionListener value="#{ag}" target="#{agencyManager.selectedAgence}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable> 
+
+                        <p:confirmDialog message="Etes-vous sûr de vouloir supprimer cette agence?"
+                                         header="Confirmation de suppression" severity="alert"
+                                         widgetVar="cd">
+                            <p:commandButton value="Oui" 
+                                             update="form form2:agenceDT"  oncomplete="PF('cd').hide();" actionListener="#{agencyManager.supprimerAgence}" />
+                            <p:commandButton value="Non" onclick="PF('cd').hide();" type="button" />
+                        </p:confirmDialog>
+                        
+                       
+                        
+                    </h:form>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

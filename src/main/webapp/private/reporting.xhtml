@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">REPORTING</h1>
+
+        <div class="layout-portlets-box">
+            <p:growl id="message" showDetail="true" sticky="true"/>
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="COMPTES">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="BORNE INFERIEURE" for="borneInfField" styleClass="Fleft" />
+                                <p:calendar id="borneInfField" value="#{reportManager.borneInf}" mode="popup" required="true" styleClass="Wid70 Fleft" pattern="yyyy-MM-dd" readonlyInput="true"  />
+                                <p:outputLabel value="BORNE SUPERIEURE" for="borneSupField" styleClass="Fleft" />
+                                <p:calendar id="borneSupField" value="#{reportManager.borneSup}" mode="popup" required="true" styleClass="Wid70 Fleft" pattern="yyyy-MM-dd" readonlyInput="true"  />
+                                <p:outputLabel value="COMPTE" for="compteField" styleClass="Fleft" />
+                                <p:inputText id="compteField" value="#{reportManager.compte}" styleClass="Wid70 Fleft" style="min-width: 169px;width: 169px;"/>
+                                <p:outputLabel value="TELEPHONE" for="phoneField" styleClass="Fleft" />
+                                <p:inputText id="phoneField" value="#{reportManager.telephone}" styleClass="Wid70 Fleft" style="min-width: 169px;width: 169px;"/>
+                                <p:outputLabel value="RACINE" for="racineField" styleClass="Fleft" />
+                                <p:inputText id="racineField" value="#{reportManager.racine}" styleClass="Wid70 Fleft" style="min-width: 169px;width: 169px;"/>
+                                <p:outputLabel value="OPERATEUR" for="operateurField" styleClass="Fleft"/>
+                                <p:selectOneMenu id="operateurField" value="#{reportManager.operateurs}" title="OPERATEUR" style="min-width: 169px;width: 169px;" 
+                                                 styleClass="Fleft" required="true"  >
+                                    <f:selectItem itemLabel="TOUT" itemValue="TOUT" />
+                                    <f:selectItems value="#{reportManager.listOperateurs}" var="op" itemLabel="#{op.designationOperateur}" itemValue="#{op.designationOperateur}" itemLabelEscaped="true" />
+                                </p:selectOneMenu>                                
+                                <p:outputLabel value="FORMAT" for="formatField" styleClass="Fleft" />
+                                <p:selectOneMenu id="formatField" value="#{reportManager.format}" style="min-width: 169px;width: 169px;" styleClass="Fleft">
+                                    <f:selectItem itemValue="PDF" itemLabel="PDF"  />
+                                    <f:selectItem itemValue="XLSX" itemLabel="XLSX" />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+
+
+
+                            <p:commandButton actionListener="#{reportManager.report()}" ajax="false" type="submit" icon="fa fa-file-text-o" value="Exporter" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+
+                    <h:form>
+                        <p:fieldset legend="TRANSACTIONS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="BORNE INFERIEURE" for="borneInfField2" styleClass="Fleft" />
+                                <p:calendar id="borneInfField2" value="#{reportTransactionManager.borneInf}" mode="popup" required="true" styleClass="Wid70 Fleft" pattern="yyyy-MM-dd" readonlyInput="true"  />
+                                <p:outputLabel value="BORNE SUPERIEURE" for="borneSupField2" styleClass="Fleft" />
+                                <p:calendar id="borneSupField2" value="#{reportTransactionManager.borneSup}" mode="popup" required="true" styleClass="Wid70 Fleft" pattern="yyyy-MM-dd" readonlyInput="true"  />
+                                <p:outputLabel value="COMPTE" for="compteField" styleClass="Fleft" />
+                                <p:inputText id="compteField" value="#{reportTransactionManager.compte}" styleClass="Wid70 Fleft" style="min-width: 169px;width: 169px;"/>
+                                <p:outputLabel value="TELEPHONE" for="phoneField" styleClass="Fleft" />
+                                <p:inputText id="phoneField" value="#{reportTransactionManager.telephone}" styleClass="Wid70 Fleft" style="min-width: 169px;width: 169px;"/>
+                                <p:outputLabel value="RACINE" for="racineField" styleClass="Fleft" />
+                                <p:inputText id="racineField" value="#{reportTransactionManager.racine}" styleClass="Wid70 Fleft" style="min-width: 169px;width: 169px;"/>
+                                <p:outputLabel value="TYPE" for="typeField" styleClass="Fleft" />
+                                <p:selectOneMenu id="typeField" styleClass="Fleft" required="true" value="#{reportTransactionManager.type}" style="min-width: 169px;width: 169px;">
+                                    <f:selectItem itemValue="all" itemLabel="TOUT"/>
+                                    <f:selectItem itemValue="bank2wallet" itemLabel="B2W"/>
+                                    <f:selectItem itemValue="wallet2bank" itemLabel="W2B"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="OPERATEUR" for="operateurField" styleClass="Fleft"/>
+                                <p:selectOneMenu id="operateurField" value="#{reportTransactionManager.operateurs}" title="OPERATEUR" style="min-width: 169px;width: 169px;" 
+                                                 styleClass="Fleft" required="true" >
+                                    <f:selectItem itemLabel="TOUT" itemValue="TOUT" />
+                                    <f:selectItems value="#{reportTransactionManager.listOperateurs}" var="op" itemLabel="#{op.designationOperateur}" itemValue="#{op.designationOperateur}" itemLabelEscaped="true" />
+                                </p:selectOneMenu>                                
+                                <p:outputLabel value="FORMAT" for="formatField2" styleClass="Fleft" />
+                                <p:selectOneMenu id="formatField2" value="#{reportTransactionManager.format}" styleClass="Fleft" style="min-width: 169px;width: 169px;">
+                                    <f:selectItem itemValue="PDF" itemLabel="PDF"  />
+                                    <f:selectItem itemValue="XLSX" itemLabel="XLSX" />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+
+
+
+                            <p:commandButton actionListener="#{reportTransactionManager.report()}" ajax="false" type="submit" icon="fa fa-file-text-o" value="Exporter" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+
+
+                    <h:form>
+                        <p:fieldset legend="RAPPROCHEMENT">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="BORNE INFERIEURE" for="borneInfField3" styleClass="Fleft" />
+                                <p:calendar id="borneInfField3" value="#{reportTransactionManager.borneInfRap}" mode="popup" required="true" styleClass="Wid70 Fleft" pattern="yyyy-MM-dd" readonlyInput="true"  />
+                                <p:outputLabel value="BORNE SUPERIEURE" for="borneSupField3" styleClass="Fleft" />
+                                <p:calendar id="borneSupField3" value="#{reportTransactionManager.borneSupRap}" mode="popup" required="true" styleClass="Wid70 Fleft" pattern="yyyy-MM-dd" readonlyInput="true"  />
+                                <p:outputLabel value="FORMAT" for="formatField2" styleClass="Fleft" />
+                                <p:selectOneMenu id="formatField2" value="#{reportTransactionManager.formatRap}" styleClass="Fleft" style="min-width: 169px;width: 169px;">
+                                    <f:selectItem itemValue="PDF" itemLabel="PDF"  />
+                                    <f:selectItem itemValue="XLSX" itemLabel="XLSX" />
+                                </p:selectOneMenu>
+                                <p:selectBooleanCheckbox value="#{reportTransactionManager.onlySuccessfullTransactions}" itemLabel="Uniquement les transactions abouties"/>                               
+                            </p:panelGrid>
+
+
+
+                            <p:commandButton actionListener="#{reportTransactionManager.reportRapprochement()}" ajax="false" type="submit" icon="fa fa-file-text-o" value="Exporter" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+                </div>
+            </div>
+
+
+
+        </div>
+    </ui:define>
+
+</ui:composition>

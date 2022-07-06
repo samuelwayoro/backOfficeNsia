@@ -1,0 +1,421 @@
+<wsdl:definitions xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mmwservice/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MMWServiceService" targetNamespace="http://mmwservice/">
+<wsdl:types>
+<xs:schema xmlns:tns="http://mmwservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://mmwservice/" version="1.0">
+<xs:element name="BankToWallet" type="tns:BankToWallet"/>
+<xs:element name="BankToWalletResponse" type="tns:BankToWalletResponse"/>
+<xs:element name="WalletToBank" type="tns:WalletToBank"/>
+<xs:element name="WalletToBankResponse" type="tns:WalletToBankResponse"/>
+<xs:element name="getMobileAccountStatus" type="tns:getMobileAccountStatus"/>
+<xs:element name="getMobileAccountStatusResponse" type="tns:getMobileAccountStatusResponse"/>
+<xs:element name="getMobileAccountStatusWithCode" type="tns:getMobileAccountStatusWithCode"/>
+<xs:element name="getMobileAccountStatusWithCodeResponse" type="tns:getMobileAccountStatusWithCodeResponse"/>
+<xs:element name="getTransactionStatus" type="tns:getTransactionStatus"/>
+<xs:element name="getTransactionStatusResponse" type="tns:getTransactionStatusResponse"/>
+<xs:element name="linkBankAccount" type="tns:linkBankAccount"/>
+<xs:element name="linkBankAccountResponse" type="tns:linkBankAccountResponse"/>
+<xs:element name="pinWithdrawal" type="tns:pinWithdrawal"/>
+<xs:element name="pinWithdrawalResponse" type="tns:pinWithdrawalResponse"/>
+<xs:element name="unlinkBankAccount" type="tns:unlinkBankAccount"/>
+<xs:element name="unlinkBankAccountResponse" type="tns:unlinkBankAccountResponse"/>
+<xs:complexType name="unlinkBankAccount">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="Request" type="tns:unLinkRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="unLinkRequest">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="bankaccountname" type="xs:string"/>
+<xs:element minOccurs="0" name="bankaccountnumber" type="xs:string"/>
+<xs:element minOccurs="0" name="extdata" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+<xs:element minOccurs="0" name="operatorcode" type="xs:string"/>
+<xs:element minOccurs="0" name="registeredby" type="xs:string"/>
+<xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+<xs:element minOccurs="0" name="unlinkreason" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="xmlStruct">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="unlinkBankAccountResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:linkResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="linkResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="bankaccountnumber" type="xs:string"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+<xs:element minOccurs="0" name="status" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="WalletToBank">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="Request" type="tns:bankRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bankRequest">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="accountnumber" type="xs:string"/>
+<xs:element minOccurs="0" name="bankbalanceafter" type="xs:string"/>
+<xs:element minOccurs="0" name="bankbalancebefore" type="xs:string"/>
+<xs:element minOccurs="0" name="banktransactionreferenceid" type="xs:string"/>
+<xs:element minOccurs="0" name="firstname" type="xs:string"/>
+<xs:element minOccurs="0" name="lastname" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+<xs:element minOccurs="0" name="secondname" type="xs:string"/>
+<xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+<xs:element minOccurs="0" name="transamount" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="WalletToBankResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:bankResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bankResponse">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="accountnumber" type="xs:string"/>
+<xs:element minOccurs="0" name="banktransactionreferenceid" type="xs:string"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+<xs:element name="status" type="xs:int"/>
+<xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+<xs:element minOccurs="0" name="transamount" type="xs:string"/>
+<xs:element minOccurs="0" name="transid" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="getMobileAccountStatusWithCode">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="request" type="tns:maiRequestWithCode"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="maiRequestWithCode">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="getMobileAccountStatusWithCodeResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:maiResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="maiResponse">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="accounttype" type="xs:string"/>
+<xs:element name="allowedtransfer" type="xs:int"/>
+<xs:element minOccurs="0" name="city" type="xs:string"/>
+<xs:element minOccurs="0" name="dateofbirth" type="xs:string"/>
+<xs:element minOccurs="0" name="firstname" type="xs:string"/>
+<xs:element minOccurs="0" name="lastname" type="xs:string"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+<xs:element minOccurs="0" name="region" type="xs:string"/>
+<xs:element minOccurs="0" name="secondname" type="xs:string"/>
+<xs:element name="status" type="xs:int"/>
+<xs:element minOccurs="0" name="street" type="xs:string"/>
+<xs:element minOccurs="0" name="subscriberstatus" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="BankToWallet">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="request" type="tns:bankRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BankToWalletResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:bankResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="linkBankAccount">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="Request" type="tns:linkRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="linkRequest">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="bankaccountname" type="xs:string"/>
+<xs:element minOccurs="0" name="bankaccountnumber" type="xs:string"/>
+<xs:element minOccurs="0" name="currency" type="xs:string"/>
+<xs:element minOccurs="0" name="extdata" type="xs:string"/>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+<xs:element minOccurs="0" name="operatorcode" type="xs:string"/>
+<xs:element minOccurs="0" name="registeredby" type="xs:string"/>
+<xs:element minOccurs="0" name="timestamp" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="linkBankAccountResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:linkResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTransactionStatus">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="request" type="tns:transRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="transRequest">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="transid" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="getTransactionStatusResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:transResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="transResponse">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element name="status" type="xs:int"/>
+<xs:element minOccurs="0" name="transid" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="getMobileAccountStatus">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="request" type="tns:maiRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="maiRequest">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="getMobileAccountStatusResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:maiResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="pinWithdrawal">
+<xs:sequence>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+<xs:element minOccurs="0" name="Request" type="tns:pinWithdrawalRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="pinWithdrawalRequest">
+<xs:complexContent>
+<xs:extension base="tns:xmlStruct">
+<xs:sequence>
+<xs:element minOccurs="0" name="amount" type="xs:string"/>
+<xs:element minOccurs="0" name="bankname" type="xs:string"/>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="transid" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="pinWithdrawalResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:transResponse"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="getMobileAccountStatusResponse">
+<wsdl:part element="tns:getMobileAccountStatusResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="linkBankAccountResponse">
+<wsdl:part element="tns:linkBankAccountResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="BankToWallet">
+<wsdl:part element="tns:BankToWallet" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getMobileAccountStatus">
+<wsdl:part element="tns:getMobileAccountStatus" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="pinWithdrawalResponse">
+<wsdl:part element="tns:pinWithdrawalResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="BankToWalletResponse">
+<wsdl:part element="tns:BankToWalletResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="WalletToBank">
+<wsdl:part element="tns:WalletToBank" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="linkBankAccount">
+<wsdl:part element="tns:linkBankAccount" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="unlinkBankAccount">
+<wsdl:part element="tns:unlinkBankAccount" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getMobileAccountStatusWithCodeResponse">
+<wsdl:part element="tns:getMobileAccountStatusWithCodeResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="WalletToBankResponse">
+<wsdl:part element="tns:WalletToBankResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getTransactionStatus">
+<wsdl:part element="tns:getTransactionStatus" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getMobileAccountStatusWithCode">
+<wsdl:part element="tns:getMobileAccountStatusWithCode" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="unlinkBankAccountResponse">
+<wsdl:part element="tns:unlinkBankAccountResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="pinWithdrawal">
+<wsdl:part element="tns:pinWithdrawal" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getTransactionStatusResponse">
+<wsdl:part element="tns:getTransactionStatusResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="MMWService">
+<wsdl:operation name="unlinkBankAccount">
+<wsdl:input message="tns:unlinkBankAccount" name="unlinkBankAccount"> </wsdl:input>
+<wsdl:output message="tns:unlinkBankAccountResponse" name="unlinkBankAccountResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="WalletToBank">
+<wsdl:input message="tns:WalletToBank" name="WalletToBank"> </wsdl:input>
+<wsdl:output message="tns:WalletToBankResponse" name="WalletToBankResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getMobileAccountStatusWithCode">
+<wsdl:input message="tns:getMobileAccountStatusWithCode" name="getMobileAccountStatusWithCode"> </wsdl:input>
+<wsdl:output message="tns:getMobileAccountStatusWithCodeResponse" name="getMobileAccountStatusWithCodeResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="BankToWallet">
+<wsdl:input message="tns:BankToWallet" name="BankToWallet"> </wsdl:input>
+<wsdl:output message="tns:BankToWalletResponse" name="BankToWalletResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="linkBankAccount">
+<wsdl:input message="tns:linkBankAccount" name="linkBankAccount"> </wsdl:input>
+<wsdl:output message="tns:linkBankAccountResponse" name="linkBankAccountResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getTransactionStatus">
+<wsdl:input message="tns:getTransactionStatus" name="getTransactionStatus"> </wsdl:input>
+<wsdl:output message="tns:getTransactionStatusResponse" name="getTransactionStatusResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getMobileAccountStatus">
+<wsdl:input message="tns:getMobileAccountStatus" name="getMobileAccountStatus"> </wsdl:input>
+<wsdl:output message="tns:getMobileAccountStatusResponse" name="getMobileAccountStatusResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="pinWithdrawal">
+<wsdl:input message="tns:pinWithdrawal" name="pinWithdrawal"> </wsdl:input>
+<wsdl:output message="tns:pinWithdrawalResponse" name="pinWithdrawalResponse"> </wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="MMWServiceServiceSoapBinding" type="tns:MMWService">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="WalletToBank">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="WalletToBank">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="WalletToBankResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="unlinkBankAccount">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="unlinkBankAccount">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="unlinkBankAccountResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getMobileAccountStatusWithCode">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="getMobileAccountStatusWithCode">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getMobileAccountStatusWithCodeResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="BankToWallet">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="BankToWallet">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="BankToWalletResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="linkBankAccount">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="linkBankAccount">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="linkBankAccountResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getTransactionStatus">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="getTransactionStatus">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getTransactionStatusResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getMobileAccountStatus">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="getMobileAccountStatus">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getMobileAccountStatusResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="pinWithdrawal">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="pinWithdrawal">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="pinWithdrawalResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="MMWServiceService">
+<wsdl:port binding="tns:MMWServiceServiceSoapBinding" name="MMWServicePort">
+<soap:address location=""/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

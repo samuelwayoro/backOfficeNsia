@@ -1,0 +1,244 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">PARAMETRAGE ONATEL</h1>
+<!--        <div class="layout-portlets-box">-->
+            <p:growl id="message" showDetail="true" sticky="true"/>
+<!--            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="MODE DE SOUSCRIPTION">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+
+                                <p:outputLabel value="MODALITES DE SOUSCRIPTION" for="optionSouscriptionField" styleClass="Fleft" />
+                                <p:selectOneMenu id="optionSouscriptionField" value="{parametrageOnatelManager.selectedModeSouscription.valeur}" style="min-width: 200px;width: 200px;" styleClass="Fleft" 
+                                                 >
+
+                                    <f:selectItems value="{parametrageOnatelManager.listValeursSouscription}" var="val" itemLabel="{val.valeur}" itemValue="{val.codeparam}" itemLabelEscaped="tru"  />
+
+                                </p:selectOneMenu>
+
+                            </p:panelGrid>
+
+
+                                                        <p:ajax event="click" update="mode"/>
+                            <p:commandButton actionListener="{parametrageOnatelManager.enregistrerModeSouscription()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+
+                        </p:fieldset> <br/>
+
+                    </h:form>
+                </div>
+            </div>-->
+
+
+
+<!--        </div>-->
+
+<!--        <div class="layout-portlets-box">
+
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form id="idleForm">
+                        <p:fieldset legend="INDISPONIBILITE">
+                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                            <p:outputLabel value="SERVER" for="indisponibliteField" styleClass="Fleft" />
+                                            <p:inputSwitch id="indisponibliteField" value="{parametrageOnatelManager.idle}" >
+                                                <p:ajax listener="{parametrageOnatelManager.modifierDisponibilite()}" update="message idleForm">
+                                                    <p:confirm header="Confirmation" message="Etes-vous sûr ?" icon="ui-icon-alert" /> 
+                                                </p:ajax>
+                                            </p:inputSwitch>
+
+
+
+                                        </p:panelGrid>
+                                        <p:confirmDialog message="Vous"  header="DECLARATION D'INDISPONIBILITE" severity="alert" global="true" showEffect="fade" hideEffect="fade"
+                                                         widgetVar="cd">
+                                            <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes"  icon="ui-icon-check" />
+                                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                        </p:fieldset>
+
+
+                    </h:form>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="SUPERVALIDATION">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="SUPERVALIDATION" for="supervalidationField" styleClass="Fleft" />
+                                <p:inputSwitch id="supervalidationField" value="#{parametrageOnatelManager.supvalidation}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierSupervalidation()}" update="message">
+                                        <p:confirm header="Confirmation" message="Etes-vous sûr ?" icon="ui-icon-alert" /> 
+                                    </p:ajax>
+                                </p:inputSwitch>
+
+
+
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="AUTORISATIONS DES OPERATIONS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="DEMANDE DE SOLDE" for="soldeField" styleClass="Fleft" />
+                                <p:inputSwitch id="soldeField" value="#{parametrageOnatelManager.balanceAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationBalance()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="DEMANDE DE MINI RELEVE" for="statementField" styleClass="Fleft" />
+                                <p:inputSwitch id="statementField" value="#{parametrageOnatelManager.statementAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationStatement()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT B2W" for="b2wField" styleClass="Fleft" />
+                                <p:inputSwitch id="b2wField" value="#{parametrageOnatelManager.b2wAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationB2W()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT W2B" for="w2bField" styleClass="Fleft" />
+                                <p:inputSwitch id="w2bField" value="#{parametrageOnatelManager.w2bAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationW2B()}" update="message" />
+
+                                </p:inputSwitch>
+
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>  
+                </div>
+            </div>
+        </div>   
+        <div class="layout-portlets-box">
+          <div class="Container100">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:fieldset legend="AUTORISATIONS DE PRELEVEMENT SUR OPERATIONS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="SOUSCRIPTION" for="registerTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="registerTarifField" value="#{parametrageOnatelManager.registerTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationTarifRegister()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="RESILIATION" for="unregisterTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="unregisterTarifField" value="#{parametrageOnatelManager.unregisterTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationTarifUnregister()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="DEMANDE DE SOLDE" for="soldeTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="soldeTarifField" value="#{parametrageOnatelManager.balanceTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationTarifBalance()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="DEMANDE DE MINI RELEVE" for="statementTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="statementTarifField" value="#{parametrageOnatelManager.statementTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationTarifStatement()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT B2W" for="b2wTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="b2wTarifField" value="#{parametrageOnatelManager.b2wTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationTarifB2W()}" update="message" />
+
+                                </p:inputSwitch>
+                                <p:outputLabel value="TRANSFERT W2B" for="w2bTarifField" styleClass="Fleft" />
+                                <p:inputSwitch id="w2bTarifField" value="#{parametrageOnatelManager.w2bTarifAllowed}" >
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierAutorisationTarifW2B()}" update="message" />
+
+                                </p:inputSwitch>
+
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>  
+                </div>
+            </div>  
+        </div>
+        <div class="layout-portlets-box">
+          <div class="Container100">
+              <div class="ContainerIndent">
+                  <h:form>
+                        <p:fieldset legend="TARIFICATION PAR PALIERS">
+                            <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                <p:outputLabel value="TARIFICATION"  styleClass="Fleft" />
+                                <p:selectOneRadio  columns="2" value="#{parametrageOnatelManager.modeTarif}" >
+                                    <f:selectItem itemLabel="VARIABLE" itemValue="TARIFICATION_VARIABLE" />
+                                    <f:selectItem itemLabel="FIXE" itemValue="TARIFICATION_FIXE" />
+                                    <p:ajax listener="#{parametrageOnatelManager.modifierModeTarification()}" update="message" />
+
+                                </p:selectOneRadio>
+                                                          
+                              
+                            </p:panelGrid> 
+                        </p:fieldset>
+                    </h:form>  
+              </div>
+                  
+          </div>
+              
+        </div>
+        <ui:remove>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <h:form>
+                            <p:fieldset legend="PLAFOND DU NOMBRE DE TRANSACTIONS JOURNALIERES">
+                                <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                    <p:outputLabel value="MAXIMUM DE TRANSACTIONS PAR  CLIENT" for="nombreMaxField" styleClass="Fleft" />
+                                    <p:spinner id="nombreMaxField" value="#{parametrageOnatelManager.nombreMaxTrancations.valeur}" min="0" />
+
+                                </p:panelGrid>
+                                <p:commandButton actionListener="#{parametrageOnatelManager.enregistrerNombreMaxTransactions()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+                            </p:fieldset>
+                        </h:form>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <h:form>
+                            <p:fieldset legend="PLAFOND DU MONTANT DE TRANSACTIONS JOURNALIERES">
+                                <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="Container80">
+                                    <p:outputLabel value="MAXIMUM DE TRANSACTIONS PAR  CLIENT" for="montantMaxField" styleClass="Fleft" />
+                                    <p:spinner id="montantMaxField" value="#{parametrageOnatelManager.montantMaxTrancations.valeur}" min="0" stepFactor="100" />
+
+                                </p:panelGrid>
+                                <p:commandButton actionListener="#{parametrageOnatelManager.enregistrerMontantMaxTransactions()}" type="submit" icon="fa fa-thumbs-o-up" value="APPLIQUER" styleClass="commandbuttonparam Fright" update="message"  />  
+                            </p:fieldset>
+                        </h:form>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </ui:remove>
+
+
+
+
+    </ui:define>
+
+</ui:composition>

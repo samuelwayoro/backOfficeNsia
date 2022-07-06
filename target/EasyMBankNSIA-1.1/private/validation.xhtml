@@ -1,0 +1,220 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">VALIDATION DES ABONNEMENTS</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+
+
+
+
+                    <h:form id="form">
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:dataTable value="#{validationManager.listAbonnements}" var="ab" id="abonnementDT" widgetVar="abonnemetTable" selectionMode="single"
+                                     emptyMessage="Aucune données ne correspond à votre recherche"  
+                                     rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                     rowKey="#{ab.idabonnements}" paginator="true" rowsPerPageTemplate="5,10,15" resizableColumns="true" >
+                            <f:facet name="header">
+                                <p:outputLabel value="LISTE DES ABONNEMENTS EN ATTENTE DE VALIDATION" />
+                            </f:facet>
+
+                            <p:column filterBy="#{ab.alias}" sortBy="#{ab.alias}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="ALIAS" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.alias}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.nom}" sortBy="#{ab.nom}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="NOM" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.nom}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.prenoms}" sortBy="#{ab.prenoms}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="PRENOMS" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.prenoms}" />
+
+                            </p:column>
+                            <p:column filterBy="#{ab.libelleAgence}" filterMatchMode="contains" rendered="#{loginManager.utilisateur.idprofils.valide_ttes_age}">
+                                <f:facet name="header">
+                                    <p:outputLabel value="AGENCE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.libelleAgence}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.numerotelephone}" sortBy="#{ab.numerotelephone}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="TELEPHONE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.numerotelephone}" />
+                            </p:column>
+
+                            <p:column filterBy="#{ab.usercreate}" sortBy="#{ab.usercreate}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="AGENT" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.usercreate}" />
+                            </p:column>
+                            <p:column filterBy="#{ab.datecreation}" sortBy="#{ab.datecreation}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="DATE" />
+                                </f:facet>
+                                <p:outputLabel value="#{ab.datecreation}" />
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <p:outputLabel value="ACTIONS" />
+                                </f:facet>
+                                <div class="Container100 Responsive100">
+
+                                    <p:commandButton  icon="fa fa-remove" type="submit" update=":form:motifDialog"
+                                                      oncomplete="PF('motifDialog').show();" styleClass="RedButton" partialSubmit="true" title="Supprimer l'abonnement">
+                                        <f:setPropertyActionListener value="#{ab}" target="#{validationManager.selectedAbonnement}" />
+
+                                    </p:commandButton>
+
+                                    <p:commandButton  icon="fa fa-check"   partialSubmit="true" type="submit" oncomplete="PF('cd1').show();"
+                                                      title="Valider l'abonnement" styleClass="GreenButton"  >
+                                        <f:setPropertyActionListener value="#{ab}" target="#{validationManager.selectedAbonnement}" />
+
+                                    </p:commandButton>
+                                    <p:commandButton  icon="fa fa-search"   partialSubmit="true" oncomplete="PF('abonnementDialog').show()" update=":form:operateur :form:banque"
+                                                      title="Afficher l'abonnement" styleClass="OrangeButton" actionListener="#{validationManager.setAbonnementInfo(ab)}" >
+                                        <!--                                        <f:setPropertyActionListener value="{ab}" target="{validationManager.selectedAbonnement}"  />-->
+
+                                    </p:commandButton>
+
+
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+
+
+                        <p:confirmDialog message="Etes-vous sûr de vouloir supprimer cet abonnement définitivement de la liste?"
+                                         header="Confirmation de suppression" severity="alert"
+                                         widgetVar="cd">
+                            <p:commandButton value="Oui"
+                                             update="form"  oncomplete="PF('cd').hide();" actionListener="#{validationManager.supprimerAbonnement()}" type="submit" />
+                            <p:commandButton value="Non" onclick="PF('cd').hide();" type="button" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog message="Etes-vous sûr de vouloir valider cet abonnement?"
+                                         header="Confirmation de validation" severity="alert"
+                                         widgetVar="cd1">
+                            <p:commandButton value="Oui" process="@this" 
+                                             update="@all"  onclick="setTimeout('location.reload();', 20000);PF('cd1').hide();"  action="#{validationManager.validerAbonnement()}" ajax="false" type="submit"  >
+<!--                                <p:fileDownload value="{validationManager.file}"/>
+                            <p:remoteCommand name="clean" update="@all"/>-->
+                            </p:commandButton>
+                            <p:commandButton value="Non" onclick="PF('cd1').hide();" type="button" />
+                        </p:confirmDialog>
+
+
+                        <p:dialog header="INFORMATIONS POUR VALIDATION" widgetVar="abonnementDialog" showEffect="fade" modal="true" resizable="false" id="dialog" styleClass="Container80" width="" >
+
+                            <div class="Container50 Responsive">
+                                <div class="ContainerIndent">
+                                    <p:fieldset legend="OPERATEUR" style="height: 400px ;" id="operateur" >
+                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;margin: auto;" styleClass="FormContent caracter"
+                                                     rendered="#{not empty validationManager.selectedAbonnement}" >
+
+                                            <p:outputLabel value="CLE D'ACTIVATION" for="activationKeyField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="activationKeyField" value="#{validationManager.abonnementTemp.activation}"/>
+                                            <p:outputLabel value="NOM" for="nameOperatorField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="nameOperatorField" value="#{validationManager.abonnementTemp.nomOperateur}"/>
+                                            <p:outputLabel value="PRENOMS" for="prenomOperatorField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="prenomOperatorField" value="#{validationManager.abonnementTemp.prenomsOperateur}" />
+                                            <p:outputLabel value="DATE DE NAISSANCE" for="birthDayOperatorField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="birthDayOperatorField" value="#{validationManager.abonnementTemp.dateNaissanceOperateur}"/>
+                                            <p:outputLabel value="CNI" for="cniOperatorResultField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="cniOperatorResultField" value="#{validationManager.abonnementTemp.cniOperateur}" />
+
+                                            <p:outputLabel value="MSISDN" for="msisdnResultField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="msisdnResultField" value="#{validationManager.abonnementTemp.numero}" />
+                                            <p:outputLabel value="CODE SERVICE" for="serviceCodeField" styleClass="Fleft"/>
+                                            <p:inputText id="serviceCodeField" styleClass=" Fleft Wid90" value="#{validationManager.abonnementTemp.service}" readonly="true" />
+
+
+                                        </p:panelGrid>
+                                    </p:fieldset>
+
+                                </div>
+                            </div>
+                            <div class="Container50 Responsive">
+                                <div class="ContainerIndent">
+                                    <p:fieldset legend="BANQUE" style="height: 400px ;" id="banque" >
+                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter"
+                                                     rendered="#{not empty validationManager.selectedAbonnement}" >
+
+                                            <p:outputLabel value="ALIAS" for="aliasField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="aliasField" value="#{validationManager.abonnementTemp.aliasTmp}"/>
+                                            <p:outputLabel value="NOM" for="nameBankField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="nameBankField" value="#{validationManager.abonnementTemp.nomBanque}"/>
+                                            <p:outputLabel value="PRENOMS" for="prenomBankField" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" readonly="true" id="prenomBankField" value="#{validationManager.abonnementTemp.prenomsBanque}" />
+                                            <p:outputLabel value="DATE DE NAISSANCE" for="birthDayBankField" styleClass="Fleft " />
+                                            <p:inputText styleClass="Wid90 Fleft" id="birthDayBankField" value="#{validationManager.abonnementTemp.dateNaissanceBanque}" readonly="true" />
+                                            <p:outputLabel value="CNI" for="cniBankRResultField" styleClass="Fleft"/>
+                                            <p:inputText  styleClass="Wid90 Fleft"  id="cniBankRResultField" value="#{validationManager.abonnementTemp.cniBanque}" readonly="true"  />
+                                            <p:outputLabel value="COMPTE" for="account" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" id="account" readonly="true" value="#{validationManager.abonnementTemp.compte}"   />
+                                            <p:outputLabel value="LIBELLE DU COMPTE" for="accountLabel" styleClass="Fleft"/>
+                                            <p:inputText styleClass="Wid90 Fleft" id="accountLabel" readonly="true" value="#{validationManager.abonnementTemp.libelleCompte}"   />
+
+
+                                        </p:panelGrid>
+                                    </p:fieldset>
+
+                                </div>
+                            </div>
+
+
+
+
+                            <f:ajax event="close" listener="#{validationManager.reinit()}" />
+                        </p:dialog>
+
+                        <p:dialog header="MOTIF DE REJET" widgetVar="motifDialog" showEffect="fade" modal="true" resizable="false" >
+                            <p:outputLabel value="Veuillez renseigner le motif du rejet" />
+
+                            <div class="Container100 Responsive">
+                                <div class="ContainerIndent">
+                                    <p:fieldset legend="MOTIF" id="motifDialog">
+                                        <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;margin: auto;" styleClass="FormContent caracter"
+                                                     rendered="#{not empty validationManager.selectedAbonnement}"  >
+
+                                            <p:outputLabel value="MOTIF" for="MotifField" styleClass="Fleft"/>
+                                            <p:inputTextarea styleClass="Wid90 Fleft" id="MotifField" value="#{validationManager.selectedAbonnement.motif}" required="true"/>
+
+
+                                        </p:panelGrid>
+                                    </p:fieldset>
+                                </div>
+                            </div>
+
+                            <div class="EmptyBox10" ></div>
+                            <p:commandButton value="OK" oncomplete="PF('motifDialog').hide();" actionListener="#{validationManager.supprimerAbonnement()}" type="submit" update=":form:abonnementDT" />
+
+
+                        </p:dialog>
+
+                    </h:form>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

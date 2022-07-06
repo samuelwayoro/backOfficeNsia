@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function controlSaisie(evt) {
+                //var event=window.event || evt;
+                var keyCode = evt.charCode;
+                //<![CDATA[
+                if ((keyCode >= 48 && keyCode <= 57) || (keyCode == 0)) {
+                    return true;
+                } else {
+                    return false;
+                }
+                //]]>
+            }
+        </script>
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h1 class="BigTopic TexAlCenter titre">SOUSCRIPTION ONATEL</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+                    <h1 class="BigTopic TexAlCenter">Informations pour la recherche </h1>
+                    <h:form id="searchForm">
+                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+
+                        <div class="Container1000 Responsive ">
+                            <div class="ContainerIndent ">
+                                <p:fieldset legend="BANQUE" style=" ">
+                                    <p:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+                                        <p:outputLabel styleClass="Fleft" value="RACINE" for="racineField"  />
+                                        <p:inputText styleClass="Wid90 Fleft" placeholder="000000000" id="racineField" value="#{souscriptionOnatel.customerRoot}"
+                                                     onkeypress=" return controlSaisie(event)">
+
+                                        </p:inputText>
+                                        <!--                                        <p:outputLabel styleClass="Fleft" value="NUMERO DE COMPTE" for="cpteField"  />
+                                                                                <p:inputText styleClass="Wid90 Fleft" placeholder="000000000" id="cpteField" value=""/>-->
+                                    </p:panelGrid>
+                                </p:fieldset>
+                            </div>
+                        </div>
+                        <br/>
+                        <p:commandButton value="Rechercher" icon="fa fa-search" actionListener="#{souscriptionOnatel.checkKYCOptionA()}" update="resultsForm" styleClass="commandbutton"/>
+
+
+                    </h:form >
+                </div>
+            </div>
+        </div>
+        <div class="layout-portlets-box">
+
+            <div class="Container100">
+
+                <div class="ContainerIndent TexAlCenter">
+                    <h1 class="BigTopic TexAlCenter">Résultats des recherches</h1>
+                    <h:form id="resultsForm">
+
+                        <div class="Container100 Responsive" >
+                            <div class="ContainerIndent">
+                                <p:fieldset legend="BANQUE" style="height: 260px ;">
+                                    <p:panelGrid columns="4" layout="grid" style="border:0px !important; background:none;" styleClass="FormContent caracter">
+                                        <p:outputLabel styleClass="Fleft" value="LISTE DES NUMEROS" for="msisdnListField"/>
+                                        <p:selectOneMenu  styleClass="Wid90 Fleft"  id="msisdnListField" style="min-width:266px; width:266px;"  
+                                                          required="true" requiredMessage="Choisissez un numéro" value="#{souscriptionOnatel.newAbonnement.numerotelephone}"  editable="true" >
+                                            <f:selectItem noSelectionOption="true" itemLabel="Selectionnez un numéro"></f:selectItem>
+                                            <f:selectItems itemLabel="#{tel}" value="#{souscriptionOnatel.listPhone}" var="tel" itemValue="#{tel}" />
+                                        </p:selectOneMenu>
+                                        <p:outputLabel styleClass="Fleft" value="NOM" for="nameBankField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="nameBankField" value="#{souscriptionOnatel.newAbonnement.nom}"/>
+                                        <p:outputLabel styleClass="Fleft" value="PRENOMS" for="prenomBankField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="prenomBankField" value="#{souscriptionOnatel.newAbonnement.prenoms}" />
+                                        <p:outputLabel styleClass="Fleft" value="DATE DE NAISSANCE" for="birthDayBankField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="birthDayBankField" value="#{souscriptionOnatel.newAbonnement.datenaissance}" />
+                                        <p:outputLabel styleClass="Fleft" value="CNI" for="cniBankRResultField"/>
+                                        <p:inputText required="true" styleClass="Wid90 Fleft" readonly="true" id="cniBankRResultField" value="#{souscriptionOnatel.newAbonnement.cni}" />
+                                        <p:outputLabel styleClass="Fleft" value="LISTE DES COMPTES CANDIDATS" for="accountList"/>
+                                        <p:selectOneMenu styleClass="Wid90 Fleft" id="accountList" value="#{souscriptionOnatel.newAbonnement.compte}" style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un compte" >
+                                            <f:selectItem itemLabel="Selectionnez un compte" itemValue=""></f:selectItem>
+                                            <f:selectItems itemLabel="#{cpte.nuemro}" value="#{souscriptionOnatel.listCpte}" var="cpte" itemValue="#{cpte.nuemro}" itemLabelEscaped="true" />
+                                            <p:ajax event="change" listener="#{souscriptionOnatel.updateAccountLabel}" update="labelField"/>
+
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel styleClass="Fleft" value="CODE SERVICE" for="serviceCodeField"/>
+                                        <p:selectOneMenu id="serviceCodeField" style="min-width:266px; width:266px;" styleClass=" Fleft Container100" value="#{souscriptionOnatel.newAbonnement.service}" required="true" requiredMessage="Choisissez un code de service" >
+                                            <f:selectItem itemLabel="Selectionnez un service" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="CASH IN" itemValue="1"></f:selectItem>
+                                            <f:selectItem itemLabel="CASH OUT" itemValue="2"></f:selectItem>
+                                            <f:selectItem itemLabel="CASH IN-CASH OUT" itemValue="3"></f:selectItem>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="LIBELLE DU COMPTE" for="labelField" styleClass="Fleft"/> 
+
+
+                                        <p:inputText required="true" styleClass="Wid90 Fleft"
+                                                     id="labelField" value="#{souscriptionOnatel.newAbonnement.label}"/> 
+                                        <p:outputLabel value="PROFIL CLIENT" for="profilField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="profilField" value="#{souscriptionOnatel.newAbonnement.profil}" styleClass="Wid90 Fleft Responsive"
+                                                         style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un profil"
+                                                         converter="#{souscriptionOnatel.profilConverter}">
+<!--                                            <f:selectItem itemLabel="Selectionnez un profil" itemValue="" noSelectionOption="true"></f:selectItem>-->
+                                            <f:selectItems value="#{souscriptionOnatel.listProfils}" var="pr" itemLabel="#{pr.designationProfils}" itemValue="#{pr}" itemLabelEscaped="true"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="TYPE DE COMPTE" for="typeField" styleClass="Fleft"/>
+                                        <p:selectOneMenu id="typeField" value="#{souscriptionOnatel.newAbonnement.typecompte}" styleClass="Wid90 Fleft Responsive"
+                                                         style="min-width:266px; width:266px;" required="true" requiredMessage="Choisissez un type">
+                                            <f:selectItem itemLabel="Selectionnez un type" itemValue=""></f:selectItem>
+                                            <f:selectItem itemLabel="ENTREPRISE" itemValue="ENTREPRISE"></f:selectItem>
+                                            <f:selectItem itemLabel="PARTICULIER" itemValue="PARTICULIER"></f:selectItem>
+                                        </p:selectOneMenu>
+
+                                    </p:panelGrid>
+                                </p:fieldset>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <p:commandButton value="Valider"   actionListener="#{souscriptionOnatel.enregistrerAbonnement()}" id="validerBtn" rendered="#{parametrageAirtelManager.supvalidation}"
+                                         type="submit" icon="fa fa-save" styleClass="commandbutton" update="resultsForm searchForm " />
+                        <p:commandButton value="Valider"   actionListener="#{souscriptionOnatel.enregistrerAbonnement()}" id="validerBtn2" ajax="false" rendered="#{!parametrageAirtelManager.supvalidation}"
+                                         type="submit" icon="fa fa-save" styleClass="commandbutton" update="resultsForm searchForm " onclick="setTimeout('location.reload();', 10000);"/>
+                        <p:blockUI block="resultsForm" trigger="validerBtn" animate="true" rendered="#{parametrageAirtelManager.supvalidation}" />
+                        <p:blockUI block="resultsForm" trigger="validerBtn2" animate="true" rendered="#{!parametrageAirtelManager.supvalidation}" />
+                        <p:blockUI block="searchForm" trigger="validerBtn" animate="true" rendered="#{parametrageAirtelManager.supvalidation}" />
+                        <p:blockUI block="searchForm" trigger="validerBtn2" animate="true" rendered="#{!parametrageAirtelManager.supvalidation}" />
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

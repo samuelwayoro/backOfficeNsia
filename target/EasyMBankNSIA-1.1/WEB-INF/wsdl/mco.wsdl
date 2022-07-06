@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="McoAtlanticBankServerSoapImplService" targetNamespace="http://server.stdbankinit.com/" xmlns:ns1="http://tempuri.org/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://server.stdbankinit.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:import location="http://172.25.23.47:9920/mcomAtlBankServiceAPI.asmx?wsdl=MCOB2ASoap.wsdl" namespace="http://tempuri.org/">
+    </wsdl:import>
+  <wsdl:binding name="McoAtlanticBankServerSoapImplServiceSoapBinding" type="ns1:MCOB2ASoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="BankDeposit">
+      <soap:operation soapAction="http://tempuri.org/BankDeposit" style="document"/>
+      <wsdl:input name="BankDeposit">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankDepositResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KYCRequest">
+      <soap:operation soapAction="http://tempuri.org/KYCRequest" style="document"/>
+      <wsdl:input name="KYCRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="KYCRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomerRegistration">
+      <soap:operation soapAction="http://tempuri.org/CustomerRegistration" style="document"/>
+      <wsdl:input name="CustomerRegistration">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CustomerRegistrationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transactionEnquiry">
+      <soap:operation soapAction="http://tempuri.org/transactionEnquiry" style="document"/>
+      <wsdl:input name="transactionEnquiry">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="transactionEnquiryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ATMWithdrawalReversal">
+      <soap:operation soapAction="http://tempuri.org/ATMWithdrawalReversal" style="document"/>
+      <wsdl:input name="ATMWithdrawalReversal">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ATMWithdrawalReversalResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ATMWithdrawal">
+      <soap:operation soapAction="http://tempuri.org/ATMWithdrawal" style="document"/>
+      <wsdl:input name="ATMWithdrawal">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ATMWithdrawalResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankAccountDeRegistration">
+      <soap:operation soapAction="http://tempuri.org/BankAccountDeRegistration" style="document"/>
+      <wsdl:input name="BankAccountDeRegistration">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankAccountDeRegistrationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankAccountRegistration">
+      <soap:operation soapAction="http://tempuri.org/BankAccountRegistration" style="document"/>
+      <wsdl:input name="BankAccountRegistration">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankAccountRegistrationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankDepositInquiry">
+      <soap:operation soapAction="http://tempuri.org/BankDepositInquiry" style="document"/>
+      <wsdl:input name="BankDepositInquiry">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankDepositInquiryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BankToMe2uMoney">
+      <soap:operation soapAction="http://tempuri.org/BankToMe2uMoney" style="document"/>
+      <wsdl:input name="BankToMe2uMoney">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BankToMe2uMoneyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="McoAtlanticBankServerSoapImplService">
+    <wsdl:port binding="tns:McoAtlanticBankServerSoapImplServiceSoapBinding" name="McoAtlanticBankServerSoapImplPort">
+      <soap:address location="http://172.25.23.47:9920/mcomAtlBankServiceAPI.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

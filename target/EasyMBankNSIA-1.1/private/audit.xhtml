@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <h1 class="BigTopic TexAlCenter titre">PISTE D'AUDIT</h1>
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent TexAlCenter">
+                    <h:form>
+                        <p:dataTable value="#{auditManager.listLogs}" var="log"  rowKey="#{log.idlogs}"   widgetVar="logsDT"
+                                     emptyMessage="Aucune donnée ne correspond à votre recherche" id="DT" resizableColumns="true" lazy="true"
+                                                 rows="20" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                                 paginator="true" rowsPerPageTemplate="5,10,15" >
+                        <f:facet name="header">
+                                <p:outputLabel value="PISTE D'AUDIT" />
+                            </f:facet>
+                            <p:column filterBy="#{log.login}" sortBy="#{log.login}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="LOGIN" />
+                                </f:facet>
+                                <p:outputLabel value="#{log.login}"/>
+                            </p:column>
+                            <p:column filterBy="#{log.agence}" sortBy="#{log.agence}" filterMatchMode="contains" rendered="#{loginManager.utilisateur.idprofils.audit_ttes_age}">
+                                <f:facet name="header">
+                                    <p:outputLabel value="AGENCE" />
+                                </f:facet>
+                                <p:outputLabel value="#{log.agence}"/>
+                            </p:column>
+                         <p:column filterBy="#{log.action}" sortBy="#{log.action}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="ACTION" />
+                                </f:facet>
+                                <p:outputLabel value="#{log.action}"/>
+                            </p:column>
+                        <p:column filterBy="#{log.machine}" sortBy="#{log.machine}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="POSTE" />
+                                </f:facet>
+                                <p:outputLabel value="#{log.machine}"/>
+                            </p:column>
+                        <p:column filterBy="#{log.dateLog}" sortBy="#{log.dateLog}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="DATE" />
+                                </f:facet>
+                                <p:outputLabel value="#{log.dateLog}"/>
+                            </p:column>
+                        <p:column filterBy="#{log.message}" sortBy="#{log.message}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <p:outputLabel value="MESSAGE" />
+                                </f:facet>
+                            <p:outputLabel value="#{log.message}" title="#{log.message}"/>
+                            </p:column>
+
+                    </p:dataTable>
+                    </h:form>
+                    
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
