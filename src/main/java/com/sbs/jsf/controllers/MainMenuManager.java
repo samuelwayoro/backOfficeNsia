@@ -115,12 +115,12 @@ public class MainMenuManager implements Serializable {
             item.setRendered(loginManager.getUtilisateur().getIdprofils().isCreationProfilsClients() || loginManager.getUtilisateur().getIdprofils().isSuppressionProfilsClients());
             submenu.addElement(item);
             
-            item = new DefaultMenuItem();
-            item.setValue("LIMITES TRANSACTIONNELLES");
-            item.setUrl("limitesTransactions.xhtml");
-            item.setIcon("fa fa fa-minus");
-            item.setRendered(loginManager.getUtilisateur().getIdprofils().isCreationProfilsClients() || loginManager.getUtilisateur().getIdprofils().isSuppressionProfilsClients());
-            submenu.addElement(item);
+//            item = new DefaultMenuItem();
+//            item.setValue("LIMITES TRANSACTIONNELLES");
+//            item.setUrl("limitesTransactions.xhtml");
+//            item.setIcon("fa fa fa-minus");
+//            item.setRendered(loginManager.getUtilisateur().getIdprofils().isCreationProfilsClients() || loginManager.getUtilisateur().getIdprofils().isSuppressionProfilsClients());
+//            submenu.addElement(item);
             
           
 

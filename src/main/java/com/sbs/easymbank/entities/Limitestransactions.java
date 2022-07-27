@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Limitestransactions.findAll", query = "SELECT l FROM Limitestransactions l")
     , @NamedQuery(name = "Limitestransactions.findById", query = "SELECT l FROM Limitestransactions l WHERE l.id = :id")
+    , @NamedQuery(name = "Limitestransactions.findByKeycolumn",query = "SELECT l FROM Limitestransactions l WHERE l.keyColumn = :keycolumn")
     , @NamedQuery(name = "Limitestransactions.findByDesignation", query = "SELECT l FROM Limitestransactions l WHERE l.designation = :designation")
     , @NamedQuery(name = "Limitestransactions.findByValeur", query = "SELECT l FROM Limitestransactions l WHERE l.valeur = :valeur")
     , @NamedQuery(name = "Limitestransactions.findByProfilclient", query = "SELECT l FROM Limitestransactions l WHERE l.profilclient = :profilclient")})
@@ -60,13 +61,33 @@ public class Limitestransactions implements Serializable {
     private String typeTransaction;
     @Column(name = "KEYCOLUMN")
     private String keyColumn;
-    @Column(name = "TYPELIMITE")
-    private String typelimite;
+    @Column(name = "INFOS")
+    private String infos;
+    @Column(name = "OPERATEUR")
+    private String operateur;
     
 
     public Limitestransactions() {
     }
 
+    public Limitestransactions(String designation, String valeur, String profilclient, String typeTransaction, String keyColumn,String infos, String operateur) {
+        this.designation = designation;
+        this.valeur = valeur;
+        this.profilclient = profilclient;
+        this.typeTransaction = typeTransaction;
+        this.keyColumn = keyColumn;
+        this.infos = infos;
+        this.operateur = operateur;
+    }    
+
+    public String getOperateur() {
+        return operateur;
+    }
+
+    public void setOperateur(String operateur) {
+        this.operateur = operateur;
+    }
+    
     public Limitestransactions(BigDecimal id) {
         this.id = id;
     }
@@ -125,14 +146,14 @@ public class Limitestransactions implements Serializable {
         this.profilclient = profilclient;
     }
 
-    public String getTypelimite() {
-        return typelimite;
+
+    public String getInfos() {
+        return infos;
     }
 
-    public void setTypelimite(String typelimite) {
-        this.typelimite = typelimite;
+    public void setInfos(String infos) {
+        this.infos = infos;
     }
-    
     
 
     @Override
@@ -157,7 +178,7 @@ public class Limitestransactions implements Serializable {
 
     @Override
     public String toString() {
-        return "com.sbs.easymbank.entities.Limitestransactions[ id=" + id + " ]";
+        return "DESIGNATION:   " + designation + " PROFILCLIENT: "+profilclient+" TYPETRANSAC: "+typeTransaction+" KEYCOLUMN: "+keyColumn+" INFOS: "+infos+" OPERATEUR: "+operateur;
     }
     
 }

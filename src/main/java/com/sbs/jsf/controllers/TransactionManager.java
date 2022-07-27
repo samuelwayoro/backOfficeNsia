@@ -54,12 +54,17 @@ public class TransactionManager implements Serializable {
         listTransac =new LazyTransactionDataModel(transactionsFacade.findTransactionsByAgence(loginManager.getUtilisateur().getIdagences().getCodeagence())) ;
         listTypeTransac = typeTrFacade.findAll();
         for(Transactions tr:((LazyTransactionDataModel)listTransac).getDatasource()){
-            tr.setDesignationOperateur(tr.getOperateurs().getDesignationOperateur());
+            try {
+               tr.setDesignationOperateur(tr.getOperateurs().getDesignationOperateur());
             tr.setAbonnements(abonnementsFacade.findByAlias(tr.getAccountalias()));
             if(tr.getAbonnements() != null)
                 tr.setAgence(agencesFacade.findLibelleByCode(tr.getAbonnements().getAgence()));
             if(tr.getIdtransactions()>maxId)
-                maxId=tr.getIdtransactions();
+                maxId=tr.getIdtransactions(); 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
         }
     }
 
