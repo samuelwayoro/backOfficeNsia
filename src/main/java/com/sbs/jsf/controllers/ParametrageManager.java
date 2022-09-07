@@ -17,7 +17,9 @@ import com.sbs.easymbank.service.omapi.IdleServiceLocator;
 import com.sbs.exceptions.*;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +32,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.xml.rpc.ServiceException;
 
 /**
  *
@@ -125,7 +128,7 @@ public class ParametrageManager implements Serializable {
             // String pattern[]={"AUTORISATION"};
             listValeursSouscription = parametresFacade.findListValeursForParam("MODESOUSCRIPTION_VALUE");
             listValeursIdle = parametresFacade.findListValeursForParam("MODEIDLE_VALUE");
-            // System.out.println("LISTE VALEUR: " + listValeursSouscription.size());
+            System.out.println("LISTE VALEUR: " + listValeursSouscription.size());
             //Paramètre définissant l'état du mode idle
             List<Parametres> l = parametresFacade.findByCodeParam("MODEIDLE");
             if (l != null && !l.isEmpty()) {
@@ -193,8 +196,9 @@ public class ParametrageManager implements Serializable {
                 selectedModeSouscription = new Parametres();
                 selectedPageSouscription = listPagesouscription.get(0);
             }
-            System.out.println("IDLE: " + modeIdle.getCodeparam());
+            System.out.println("VALEUR ACTUEL DE MODEIDLE ORANGE EN BD  ---: " + modeIdle.getValeur());
             idle = !modeIdle.getValeur().equals("IDLE_OUI");
+            System.out.println("valeure prise par idle en fonction de MODEIDLE   "+idle);
             supvalidation = supervalidation.getValeur().equals("SUPERVALIDATION_OUI");
 
             System.out.println("valeur de supervalidation  " + supervalidation.getValeur());
@@ -290,7 +294,6 @@ public class ParametrageManager implements Serializable {
         }
 
     }
-
 
     public SSLClientAxisEngineConfig getsSLConfig() {
         return sSLConfig;
@@ -403,7 +406,6 @@ public class ParametrageManager implements Serializable {
     public void setLimiteReleve(Parametres limiteReleve) {
         this.limiteReleve = limiteReleve;
     }
-
 
     public ParametresFacade getParametresFacade() {
         return parametresFacade;
@@ -670,22 +672,24 @@ public class ParametrageManager implements Serializable {
     }
 
     public void modifierDisponibilite() {
-
+        System.out.println("lacement du changement de la disponibilite de mode idle");
+        System.out.println("entree dans sendIdleRequest pour recup dans ok ");
         boolean ok = sendIdleRequest();
-        // System.out.println("IDLE: " + ok);
+        System.out.println("fin de sendIdleRequest");
+        System.out.println(" VALEUR DE ok  " + ok);
+        System.out.println("changement de la valeur d idle en fonction de celle de ok - valeure actuelle de idle :  " + idle);
+
         if (!ok) {
             idle = !idle;
             addMessage("DISPONIBILITE", "Le serveur ne peut changer d'état en ce moment");
         } else {
             addMessage("DISPONIBILITE", "Le serveur a changé d'état avec succès");
-
         }
 
         if (idle) {
             for (Parametres val : listValeursIdle) {
                 if (val.getCodeparam().equals("IDLE_NON")) {
                     modeIdle.setValeur(val.getCodeparam());
-
                     break;
                 }
             }
@@ -701,7 +705,6 @@ public class ParametrageManager implements Serializable {
         reglerPageSouscription();
         parametresFacade.edit(modeIdle);
         // List<Object> l=new ArrayList();
-
         //System.out.println(valeursparametresFacade.test_procedure());
     }
 
@@ -751,14 +754,19 @@ public class ParametrageManager implements Serializable {
     }
 
     public boolean sendIdleRequest() {
+        System.out.println("lacement de la methode sendIdlerequest");
+        System.out.println("parametrage de locator de type IdleServiceLocator ");
         IdleServiceLocator locator = new IdleServiceLocator(sSLConfig);
+        System.out.println("recup de IDLE_URL dans la bd");
         List<Parametres> url = parametresFacade.findByCodeParam("IDLE_URL");
+        System.out.println("nbre de IDLE_URL trouve  :"+url.size());
         try {
+            System.out.println("valeur de idle pour parametrage de indispo  " + idle);
             String indispo = idle ? "false" : "true";
+            System.out.println("valeur prise par indispo    " + indispo);
             IdlePort_PortType rgpt = locator.getIdlePort(new URL(url.get(0).getValeur()));
             return rgpt.setIdle(indispo);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (MalformedURLException | RemoteException | ServiceException ex) {
             return false;
         }
     }
@@ -890,8 +898,6 @@ public class ParametrageManager implements Serializable {
     private boolean isLimitationEnabled(Parametres parametres) {
         return (parametres != null && parametres.getValeur() != null && !parametres.getValeur().isEmpty());
     }
-
-   
 
     public void resetParamsupdate() {
         System.out.println("reset param");

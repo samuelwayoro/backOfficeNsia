@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "AccLinkService", targetNamespace = "http://receiveWebService.mmoney.com/", wsdlLocation = "file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/BankLinkService.wsdl")
+@WebServiceClient(name = "AccLinkService", targetNamespace = "http://receiveWebService.mmoney.com/", wsdlLocation = "file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/BankLinkService.wsdl")
 public class AccLinkService
     extends Service
 {
@@ -30,7 +30,7 @@ public class AccLinkService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/BankLinkService.wsdl");
+            url = new URL("file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/BankLinkService.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "McoBankServerSoapImplService", targetNamespace = "http://eco.bankinit.com/", wsdlLocation = "file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/eco.wsdl")
+@WebServiceClient(name = "McoBankServerSoapImplService", targetNamespace = "http://eco.bankinit.com/", wsdlLocation = "file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/eco.wsdl")
 public class McoBankServerSoapImplService
     extends Service
 {
@@ -30,7 +30,7 @@ public class McoBankServerSoapImplService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/eco.wsdl");
+            url = new URL("file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/eco.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

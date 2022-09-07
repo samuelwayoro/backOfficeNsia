@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "OtherService", targetNamespace = "http://other.easymbank.sbs.com/", wsdlLocation = "file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/OtherService.wsdl")
+@WebServiceClient(name = "OtherService", targetNamespace = "http://other.easymbank.sbs.com/", wsdlLocation = "file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/OtherService.wsdl")
 public class OtherService_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class OtherService_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/OtherService.wsdl");
+            url = new URL("file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/OtherService.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

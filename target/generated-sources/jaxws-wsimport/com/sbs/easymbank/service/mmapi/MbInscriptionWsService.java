@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "mbInscriptionWsService", targetNamespace = "http://service.ws.mobileBanking.digi/", wsdlLocation = "file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/mbInscriptionWs.wsdl")
+@WebServiceClient(name = "mbInscriptionWsService", targetNamespace = "http://service.ws.mobileBanking.digi/", wsdlLocation = "file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/mbInscriptionWs.wsdl")
 public class MbInscriptionWsService
     extends Service
 {
@@ -30,7 +30,7 @@ public class MbInscriptionWsService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/mbInscriptionWs.wsdl");
+            url = new URL("file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/mbInscriptionWs.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

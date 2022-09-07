@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "MMWServiceService", targetNamespace = "http://mmwservice/", wsdlLocation = "file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/newWsdl3.wsdl")
+@WebServiceClient(name = "MMWServiceService", targetNamespace = "http://mmwservice/", wsdlLocation = "file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/newWsdl3.wsdl")
 public class MMWServiceService
     extends Service
 {
@@ -30,7 +30,7 @@ public class MMWServiceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/D:/NetBeansProjects/EASYMBANK__/EasyMBankNSIA/src/wsdl/newWsdl3.wsdl");
+            url = new URL("file:/D:/apache_netbeans_projects/EasyMBankNSIA/src/wsdl/newWsdl3.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
